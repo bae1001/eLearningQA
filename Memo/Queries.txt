@@ -1,0 +1,35 @@
+Analisis:
+-Todos los profesores están matriculados
+-Roles asignados correctamente
+-La división en grupos es correcta
+-Estudiantes en su grupo correspondiente
+
+Diseño:
+-Las opciones de progreso del estudiante están activadas
+-Se detallan los objetivos de aprendizaje del tema
+-Se proporcionan contenidos en diferentes formatos
+-Existen contenidos con distintos niveles de profundidad
+
+Implementación:
+-Los recursos que se ofrecen están actualizados
+-Títulos y etiquetas de los temas son correctos
+-Recursos externos enlazados y accesibles desde UBUVirtual
+
+Realización:
+-Títulos y etiquetas de las tareas correctos y visibles
+-Enunciado de la Tarea ajustado al esquema e-tivities
+-Disponibilidad: fechas de apertura y cierre son correctas
+-Se especifica qué producto se debe entregar (y formato) en las tareas
+-Los recursos necesarios para realizarla están disponibles
+-Se detallan los criterios de evaluación (rúbricas, ejemplos)
+-El profesor interviene en los foros
+-El profesor responde en los foros dentro del límite de 48 horas lectivas 
+desde que se plantea la duda
+-Se ofrece retroalimentación de las tareas
+-Las tareas están calificadas
+
+Evaluación:
+-Sistemas evaluación coinciden con Guía Docente
+-Pesos coinciden con los establecidos en la Guía Docente
+-Título y etiquetas de los cuestionarios correctos y visibles
+-Descripción detallada de las condiciones de los cuestionarios
