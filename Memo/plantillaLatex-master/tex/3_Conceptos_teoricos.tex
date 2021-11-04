@@ -65,3 +65,83 @@ El punto de vista que se centra en la consecución de los objetivos del curso de
 
 
 \section{Consultas}
+En este apartado definiré qué información intentamos conseguir de cada fase, rol y perspectiva mediante distintos métodos.
+Leyenda:
+Responsabilidad:R=Responsable,I=Involucrado
+
+\subsection{Analisis:} 
+Consulta:La división en grupos es correcta 
+
+Queries:Comprobar en los logs que no hay ningún alumno que no pertenezca a ningún grupo
+
+Perspectivas:Pedagógica, Estratégica 
+Diseñador:I Facilitador:\_ Proveedor:R
+
+\subsection{Diseño:}
+Consulta:Las opciones de progreso del estudiante están activadas
+
+Queries:Llamar a la función core\_completion\_get\_activities\_completion\_status
+
+Perspectivas:Pedagógica
+Diseñador:R Facilitador:I Proveedor:\_
+\subsubsection{}
+Consulta:Se proporcionan contenidos en diferentes formatos
+
+Queries:Comprobar mediante webscraping que hay contenido audiovisual embedido
+
+Perspectivas:Pedagógica, Tecnológica 
+Diseñador:R Facilitador:I Proveedor:I
+
+\subsection{Implementación:}
+Consulta:Los recursos estan actualizados
+
+Queries:Accede a las fechas de los archivos para comprobar si son recientes o no
+
+Perspectivas:Pedagógica, Tecnológica 
+Diseñador:R Facilitador:I Proveedor:I
+
+\subsection{Realización:}
+Consulta:Fechas de apertura y cierre de tareas son correctas
+
+Queries:Comprobar que las fechas son de hace menos de 6 meses y que la de apertura es anterior a la de cierre
+
+Perspectivas:Pedagógica, Tecnológica 
+Diseñador:I Facilitador:R Proveedor:I
+\subsubsection{}
+Consulta:Se detallan los criterios de evaluación (rúbricas, ejemplos)
+
+Queries:Comprobar mediante webscraping que hay una rúbrica en la tarea
+
+Perspectivas:Pedagógica, Tecnológica 
+Diseñador:R Facilitador:I Proveedor:I
+\subsubsection{}
+Consulta:El profesor responde en los foros dentro del límite de 48 horas lectivas desde que se plantea la duda
+
+Queries:Comprobación de la actividad en los foros en los logs
+
+Perspectivas:Pedagógica, Tecnológica 
+Diseñador:I Facilitador:R Proveedor:\_
+\subsubsection{}
+Consulta:Se ofrece retroalimentación de las tareas
+
+Queries:Comprobación en los logs de que haya un comentario del profesor en las tareas cerradas hace una semana
+
+Perspectivas:Pedagógica, Tecnológica 
+Diseñador:\_ Facilitador:R Proveedor:\_
+\subsubsection{}
+Consulta:Las tareas están calificadas
+
+Queries:Comprobación en los logs de que se hayan calificado todas las tareas cerradas hace una semana
+
+Perspectivas:Pedagógica, Tecnológica 
+Diseñador:\_ Facilitador:R Proveedor:\_
+
+\subsection{Evaluación:}
+Consulta:La mayoría de alumnos responden a los feedbacks
+
+Queries:Llamar a la función mod\_feedback\_get\_non\_respondents
+
+Perspectivas:Pedagógica, Tecnológica, Estratégica
+Diseñador:I Facilitador:R Proveedor:I
+
+
