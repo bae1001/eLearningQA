@@ -65,83 +65,61 @@ El punto de vista que se centra en la consecución de los objetivos del curso de
 
 
 \section{Consultas}
-En este apartado definiré qué información intentamos conseguir de cada fase, rol y perspectiva mediante distintos métodos.
+En este apartado definiré qué información intentamos conseguir de cada fase (nos vamos a centrar en las fases de diseño, implementación y realización), rol y perspectiva mediante distintos métodos. La mayoría de consultas provienen de la lista de comprobación de UBUCEV de asignaturas virtuales.
 Leyenda:
-Responsabilidad:R=Responsable,I=Involucrado
-
-\subsection{Analisis:} 
-Consulta:La división en grupos es correcta 
-
-Queries:Comprobar en los logs que no hay ningún alumno que no pertenezca a ningún grupo
-
-Perspectivas:Pedagógica, Estratégica 
-Diseñador:I Facilitador:\_ Proveedor:R
+Responsabilidad: R=Responsable,X=Involucrado
+Perspectivas: P=Pedagógica, T=Tecnológica, E=Estratégica
 
 \subsection{Diseño:}
-Consulta:Las opciones de progreso del estudiante están activadas
-
-Queries:Llamar a la función core\_completion\_get\_activities\_completion\_status
-
-Perspectivas:Pedagógica
-Diseñador:R Facilitador:I Proveedor:\_
-\subsubsection{}
-Consulta:Se proporcionan contenidos en diferentes formatos
-
-Queries:Comprobar mediante webscraping que hay contenido audiovisual embedido
-
-Perspectivas:Pedagógica, Tecnológica 
-Diseñador:R Facilitador:I Proveedor:I
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|l|l|l|l|l|l|l|}
+			\hline
+			Consulta                                                                                               & Queries                                                                                                                      & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular}              \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Las opciones de\\ progreso del \\ estudiante\\ están activadas\end{tabular} & \begin{tabular}[c]{@{}l@{}}Llamar a la función \\ core\_completion\_ge-\\ t\_activities\_comple-\\ tion\_status\end{tabular} & P            & R         & X           &           & D-5     & Temas                                                                       \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Se proporcionan\\ contenidos \\ en diferentes \\ formatos\end{tabular}      & \begin{tabular}[c]{@{}l@{}}Comprobar mediante\\ webscraping que hay\\ contenido audiovisual\\ embedido\end{tabular}          & PT           & R         & X           & X         & D-4     & \begin{tabular}[c]{@{}l@{}}Temas, \\ tareas y \\ cuestionarios\end{tabular} \\ \hline
+		\end{tabular}%
+	}
+\end{table}
 
 \subsection{Implementación:}
-Consulta:Los recursos estan actualizados
-
-Queries:Accede a las fechas de los archivos para comprobar si son recientes o no
-
-Perspectivas:Pedagógica, Tecnológica 
-Diseñador:R Facilitador:I Proveedor:I
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|l|l|l|l|l|l|l|}
+			\hline
+			Consulta                                                                     & Queries                                                                                                                         & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular} \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Los recursos \\ están actualizados\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Accede a las fechas\\ de los archivos para\\ comprobar si son \\ recientes o no\end{tabular}         & PT           & R         & X           & X         & I-1     & Archivos                                                       \\ \hline
+			\begin{tabular}[c]{@{}l@{}}La división en \\ grupos es correcta\end{tabular} & \begin{tabular}[c]{@{}l@{}}Comprobar en los logs\\ que no hay ningún\\ alumno que no\\ pertenezca a ningún\\ grupo\end{tabular} & TE           & X         &             & R         & I-4     & Alumnos                                                        \\ \hline
+		\end{tabular}%
+	}
+\end{table}
 
 \subsection{Realización:}
-Consulta:Fechas de apertura y cierre de tareas son correctas
 
-Queries:Comprobar que las fechas son de hace menos de 6 meses y que la de apertura es anterior a la de cierre
-
-Perspectivas:Pedagógica, Tecnológica 
-Diseñador:I Facilitador:R Proveedor:I
-\subsubsection{}
-Consulta:Se detallan los criterios de evaluación (rúbricas, ejemplos)
-
-Queries:Comprobar mediante webscraping que hay una rúbrica en la tarea
-
-Perspectivas:Pedagógica, Tecnológica 
-Diseñador:R Facilitador:I Proveedor:I
-\subsubsection{}
-Consulta:El profesor responde en los foros dentro del límite de 48 horas lectivas desde que se plantea la duda
-
-Queries:Comprobación de la actividad en los foros en los logs
-
-Perspectivas:Pedagógica, Tecnológica 
-Diseñador:I Facilitador:R Proveedor:\_
-\subsubsection{}
-Consulta:Se ofrece retroalimentación de las tareas
-
-Queries:Comprobación en los logs de que haya un comentario del profesor en las tareas cerradas hace una semana
-
-Perspectivas:Pedagógica, Tecnológica 
-Diseñador:\_ Facilitador:R Proveedor:\_
-\subsubsection{}
-Consulta:Las tareas están calificadas
-
-Queries:Comprobación en los logs de que se hayan calificado todas las tareas cerradas hace una semana
-
-Perspectivas:Pedagógica, Tecnológica 
-Diseñador:\_ Facilitador:R Proveedor:\_
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|l|l|l|l|l|l|l|}
+			\hline
+			Consulta                                                                                                                                              & Queries                                                                                                                                                  & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular}   \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Fechas de apertura\\ y cierre de tareas\\ son correctas\end{tabular}                                                       & \begin{tabular}[c]{@{}l@{}}Comprobar que las\\ fechas son de hace\\ menos de 6 meses y\\ que la de apertura es\\ anterior a la de cierre\end{tabular}    & PT           & X         & R           & X         & R-2     & \begin{tabular}[c]{@{}l@{}}Tareas y\\ cuestionarios\end{tabular} \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Se detallan los\\ criterios de\\ evaluación \\ (rúbricas, ejemplos)\end{tabular}                                           & \begin{tabular}[c]{@{}l@{}}Comprobar mediante\\ webscraping que hay\\ una rúbrica en la tarea\end{tabular}                                               & PT           & R         & X           & X         & R-3     & Tareas                                                           \\ \hline
+			\begin{tabular}[c]{@{}l@{}}El profesor responde\\ en los foros dentro\\ del límite de 48 horas\\ lectivas desde que se\\ plantea la duda\end{tabular} & \begin{tabular}[c]{@{}l@{}}Comprobación de la\\ actividad en los foros\\ en los logs\end{tabular}                                                        & PT           & X         & R           & X         & R-2     & Foros                                                            \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Se ofrece\\ retroalimentación\\ de las tareas\end{tabular}                                                                 & \begin{tabular}[c]{@{}l@{}}Comprobación en los\\ logs de que haya un\\ comentario del\\ profesor en las tareas\\ cerradas hace\\ una semana\end{tabular} & PT           & X         & R           & X         & R-2     & Tareas                                                           \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Las tareas están\\ calificadas\end{tabular}                                                                                & \begin{tabular}[c]{@{}l@{}}Comprobación en los\\ logs de que se\\ hayan calificado\\ todas las tareas\\ cerradas hace una\\ semana\end{tabular}          & PT           & X         & R           & X         & R-2     & Tareas                                                           \\ \hline
+			\begin{tabular}[c]{@{}l@{}}El calificador\\ muestra cómo\\ ponderan las\\ diferentes tareas\end{tabular}                                              & \begin{tabular}[c]{@{}l@{}}Comprobar mediante\\ webscraping que\\ aparece la columna\\ "Peso calculado" en\\ el calificador\end{tabular}                 & PT           & X         & R           & X         & R-2     & Calificador                                                      \\ \hline
+		\end{tabular}%
+	}
+\end{table}
 
 \subsection{Evaluación:}
-Consulta:La mayoría de alumnos responden a los feedbacks
-
-Queries:Llamar a la función mod\_feedback\_get\_non\_respondents
-
-Perspectivas:Pedagógica, Tecnológica, Estratégica
-Diseñador:I Facilitador:R Proveedor:I
-
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|l|l|l|l|l|l|l|}
+			\hline
+			Consulta                                                                                    & Queries                                                                                                      & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular} \\ \hline
+			\begin{tabular}[c]{@{}l@{}}La mayoría de\\ alumnos responden\\ a los feedbacks\end{tabular} & \begin{tabular}[c]{@{}l@{}}Llamar a la función\\ mod\_feedback\_ge-\\ t\_non\_respondents\end{tabular}       & PTE          & X         & X           & R         & E-2     & Feedbacks                                                      \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Se utilizan\\ encuestas de\\ opinión\end{tabular}                & \begin{tabular}[c]{@{}l@{}}Llamar a la función\\ mod\_survey\_ge-\\ t\_surveys\_by\_cour-\\ ses\end{tabular} & PTE          & X         & X           & R         & E-2     & Encuestas                                                      \\ \hline
+		\end{tabular}%
+	}
+\end{table}
 
