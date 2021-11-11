@@ -1,7 +1,7 @@
 \capitulo{3}{Conceptos teóricos}
 
 
-\section{Definiciones}
+\section{Definiciones básicas}
 
 \subsection{E-learning}
 
@@ -15,17 +15,23 @@ Moodle es una plataforma de aprendizaje que permite a los profesores crear entor
 
 La calidad se puede definir como la capacidad de satisfacer una serie de necesidades y en el caso del e-learning se trata de las necesidades educativas del alumno, como la calidad del material educativo o la ayuda a la comprensión de este.
 
+\section{Herramientas con las que extraemos la información necesaria}
+
 \subsection{Web scraping}
 
-Es el conjunto de técnicas utilizadas para extraer y almacenar información de la web, un programa que hace esto de forma automática se llama web crawler.
+Es el conjunto de técnicas utilizadas para extraer y almacenar información de la web, un programa que hace esto de forma automática se llama web crawler. Algunas de estas técnicas nos permiten obtener información que no podríamos sacar con otras herramientas como por ejemplo si una página contiene enlaces fuera de Moodle a partir de su código HTML.
 
 \subsection{Web services}
 
-Es un medio de comunicación entre dos aplicaciones en ordenadores distintos dentro de una red mediante el uso de distintos protocolos. Se puede pedir cierta información o acciones al servidor por medio de llamadas a funciones. En el caso de los web services que proporciona Moodle existe un servidor que hace de intermediario entre cliente y proveedor \cite{moodle-2020}.
+Es un medio de comunicación entre dos aplicaciones en ordenadores distintos dentro de una red mediante el uso de distintos protocolos. Se puede pedir cierta información o acciones al servidor por medio de llamadas a funciones. En el caso de los web services que proporciona Moodle existe un servidor que hace de intermediario entre cliente y proveedor \cite{moodle-2020}. Por ejemplo, llamando a la función 	core\_grades\_get\_grades podríamos obtener las notas de un alumno.
 
-Ahora paso a explicar las tres dimensiones del marco de referencia de calidad del e-learning del MOOQ \cite{stracke2018quality}, en el que me baso:
+\subsection{Logs}
+Son registros de actividad que Moodle crea a partir de los eventos que realizan los usuarios, como publicar en un foro o empezar un cuestionario. Se pueden descargar en forma de archivo. Un ejemplo del uso que le daríamos sería obtener la actividad de un profesor para saber si responde a las dudas de los alumnos en los foros.
+
+\section{Marco de referencia de calidad del MOOQ}
+Ahora paso a explicar las tres dimensiones del marco de referencia de calidad del e-learning del MOOQ \cite{stracke2018quality}. MOOQ es la allianza europea por la calidad de los MOOC (Massive Open Online Courses). Un MOOC varía respecto al caso de e-learning para el que pretendemos crear la aplicación, pero al digerir la calidad del diseño instruccional en sus fases, roles y perspectivas aplicado a un tipo de e-learning es lo suficientemente válido como para sernos útil.
 \subsection{Fases}
-
+El diseño instruccional tiene cinco fases en las que se realizan distintos procesos. Cada fase se sustenta en los resultados de la fase previa.
 \subsubsection{Análisis}
 En esta fase se definen los objetivos, el contexto, y los recursos (docentes, tiempo, presupuesto...) para la ejecución para comprender la situación inicial.
 
@@ -42,7 +48,7 @@ Esta fase es en la que se interactúa con el alumno, se gestionan los problemas 
 En esta última fase se evalúa la calidad del resto de fases mediante encuestas, entrevistas, u otros medios.
 
 \subsection{Roles}
-
+Los roles son conjuntos de responsabilidades asumidos por una o más personas. Una persona podría tomar dos o más roles dado el caso (diseñador y facilitador, por ejemplo).
 \subsubsection{Diseñadores}
 Los encargados de decidir de qué forma se van a impartir el curso y generan el contenido (Autores, expertos en el tema, diseñadores instruccionales). 
 
@@ -53,7 +59,7 @@ Son aquellos que conocen la materia a enseñar y son capaces de explicarlo y dar
 Son los encargados de proveer los medios digitales para llevar a cabo el e-learning (programadores, diseñadores y desarrolladores de software).
 
 \subsection{Perspectivas}
-
+Las perspectivas son distintos puntos de vista que se fijan en los distintos tipos de necesidades del proyecto de e-learning.
 \subsubsection{Pedagógica}
 El punto de vista que se centra en el contenido y en el aprendizaje por parte del alumno. Los procesos relacionados tienen que ver con el contenido, el feedback, y la evaluación de los alumnos.
 
