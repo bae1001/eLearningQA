@@ -60,54 +60,59 @@ Perspectivas: P=Pedagógica, T=Tecnológica, E=Estratégica
 
 \subsection{Diseño:}
 \begin{table}[H]
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|l|l|l|l|l|l|l|}
-			\hline
-			Consulta                                                                                               & Queries                                                                                                                      & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular}              \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Las opciones de\\ progreso del \\ estudiante\\ están activadas\end{tabular} & \begin{tabular}[c]{@{}l@{}}Llamar a la función \\ core\_completion\_ge-\\ t\_activities\_comple-\\ tion\_status\end{tabular} & P            & R         & X           &           & D-5     & Temas                                                                       \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Se proporcionan\\ contenidos \\ en diferentes \\ formatos\end{tabular}      & \begin{tabular}[c]{@{}l@{}}Comprobar mediante\\ webscraping que hay\\ contenido audiovisual\\ embedido\end{tabular}          & PT           & R         & X           & X         & D-4     & \begin{tabular}[c]{@{}l@{}}Temas, \\ tareas y \\ cuestionarios\end{tabular} \\ \hline
-		\end{tabular}%
-	}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|l|l|l|l|l|l|}
+		\hline
+		Consulta                                                                                                                             & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Las opciones\\ de progreso\\ del estudiante\\ están activadas\end{tabular}                                & P            & R         & X           &           & D-5     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Se proporcionan\\ contenidos en\\ diferentes formatos\end{tabular}                                        & PT           & R         & X           & X         & D-4     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}El curso tiene\\ grupos\end{tabular}                                                                      & P            & R         & X           & X         & D-3     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}El curso tiene\\ actividades\\ grupales\end{tabular}                                                      & P            & R         & X           & X         & D-3     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Los estudiantes\\ pueden ver las\\ condiciones\\ necesarias para\\ completar una\\ actividad\end{tabular} &              &           &             &           &         \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Todas las\\ actividades tienen\\ la misma nota\\ máxima en el\\ calificador\end{tabular}                  &              &           &             &           &         \\ \hline
+	\end{tabular}%
+}
 \end{table}
 
 \subsection{Implementación:}
 \begin{table}[H]
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|l|l|l|l|l|l|l|}
-			\hline
-			Consulta                                                                     & Queries                                                                                                                         & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular} \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Los recursos \\ están actualizados\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Accede a las fechas\\ de los archivos para\\ comprobar si son \\ recientes o no\end{tabular}         & PT           & R         & X           & X         & I-1     & Archivos                                                       \\ \hline
-			\begin{tabular}[c]{@{}l@{}}La división en \\ grupos es correcta\end{tabular} & \begin{tabular}[c]{@{}l@{}}Comprobar en los logs\\ que no hay ningún\\ alumno que no\\ pertenezca a ningún\\ grupo\end{tabular} & TE           & X         &             & R         & I-4     & Alumnos                                                        \\ \hline
-		\end{tabular}%
-	}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|l|l|l|l|l|l|}
+		\hline
+		Consulta                                                                                                   & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Los recursos\\ están actualizados\end{tabular}                                  & PT           & R         & X           & X         & I-1     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Fechas de apertura\\ y cierre de tareas\\ son correctas\end{tabular}            & PT           & X         & R           & X         & R-2     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Se detallan los\\ criterios de\\ evaluación\\ (rúbricas, ejemplos)\end{tabular} & PT           & R         & X           & X         & R-3     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}El calificador no\\ tiene demasiado\\ anidamiento\end{tabular}                  &              &           &             &           &         \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Los alumnos\\ están divididos\\ en grupos\end{tabular}                          & TE           & X         &             & R         & I-6     \\ \hline
+	\end{tabular}%
+}
 \end{table}
 
 \subsection{Realización:}
 
 \begin{table}[H]
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|l|l|l|l|l|l|l|}
-			\hline
-			Consulta                                                                                                                                              & Queries                                                                                                                                                  & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular}   \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Fechas de apertura\\ y cierre de tareas\\ son correctas\end{tabular}                                                       & \begin{tabular}[c]{@{}l@{}}Comprobar que las\\ fechas son de hace\\ menos de 6 meses y\\ que la de apertura es\\ anterior a la de cierre\end{tabular}    & PT           & X         & R           & X         & R-2     & \begin{tabular}[c]{@{}l@{}}Tareas y\\ cuestionarios\end{tabular} \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Se detallan los\\ criterios de\\ evaluación \\ (rúbricas, ejemplos)\end{tabular}                                           & \begin{tabular}[c]{@{}l@{}}Comprobar mediante\\ webscraping que hay\\ una rúbrica en la tarea\end{tabular}                                               & PT           & R         & X           & X         & R-3     & Tareas                                                           \\ \hline
-			\begin{tabular}[c]{@{}l@{}}El profesor responde\\ en los foros dentro\\ del límite de 48 horas\\ lectivas desde que se\\ plantea la duda\end{tabular} & \begin{tabular}[c]{@{}l@{}}Comprobación de la\\ actividad en los foros\\ en los logs\end{tabular}                                                        & PT           & X         & R           & X         & R-2     & Foros                                                            \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Se ofrece\\ retroalimentación\\ de las tareas\end{tabular}                                                                 & \begin{tabular}[c]{@{}l@{}}Comprobación en los\\ logs de que haya un\\ comentario del\\ profesor en las tareas\\ cerradas hace\\ una semana\end{tabular} & PT           & X         & R           & X         & R-2     & Tareas                                                           \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Las tareas están\\ calificadas\end{tabular}                                                                                & \begin{tabular}[c]{@{}l@{}}Comprobación en los\\ logs de que se\\ hayan calificado\\ todas las tareas\\ cerradas hace una\\ semana\end{tabular}          & PT           & X         & R           & X         & R-2     & Tareas                                                           \\ \hline
-			\begin{tabular}[c]{@{}l@{}}El calificador\\ muestra cómo\\ ponderan las\\ diferentes tareas\end{tabular}                                              & \begin{tabular}[c]{@{}l@{}}Comprobar mediante\\ webscraping que\\ aparece la columna\\ "Peso calculado" en\\ el calificador\end{tabular}                 & PT           & X         & R           & X         & R-2     & Calificador                                                      \\ \hline
-		\end{tabular}%
-	}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|l|l|l|l|l|l|}
+		\hline
+		Consulta                                                                                                                                                & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso \\ \hline
+		\begin{tabular}[c]{@{}l@{}}El profesor\\ responde en los\\ foros dentro del\\ límite de 48 horas\\ lectivas desde que\\ se plantea la duda\end{tabular} & PT           & X         & R           & X         & R-2     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Se ofrece\\ retroalimentación\\ de las tareas\end{tabular}                                                                   & PT           & X         & R           & X         & R-2     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Las tareas están\\ calificadas\end{tabular}                                                                                  & PT           & X         & R           & X         & R-2     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}El calificador\\ muestra cómo\\ ponderan las\\ diferentes tareas\end{tabular}                                                & PT           & X         & R           & X         & R-2     \\ \hline
+	\end{tabular}%
+}
 \end{table}
 
 \subsection{Evaluación:}
 \begin{table}[H]
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|l|l|l|l|l|l|l|}
-			\hline
-			Consulta                                                                                    & Queries                                                                                                      & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso & \begin{tabular}[c]{@{}l@{}}Elementos\\ examinados\end{tabular} \\ \hline
-			\begin{tabular}[c]{@{}l@{}}La mayoría de\\ alumnos responden\\ a los feedbacks\end{tabular} & \begin{tabular}[c]{@{}l@{}}Llamar a la función\\ mod\_feedback\_ge-\\ t\_non\_respondents\end{tabular}       & PTE          & X         & X           & R         & E-2     & Feedbacks                                                      \\ \hline
-			\begin{tabular}[c]{@{}l@{}}Se utilizan\\ encuestas de\\ opinión\end{tabular}                & \begin{tabular}[c]{@{}l@{}}Llamar a la función\\ mod\_survey\_ge-\\ t\_surveys\_by\_cour-\\ ses\end{tabular} & PTE          & X         & X           & R         & E-2     & Encuestas                                                      \\ \hline
-		\end{tabular}%
-	}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|l|l|l|l|l|l|}
+		\hline
+		Consulta                                                                                    & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso \\ \hline
+		\begin{tabular}[c]{@{}l@{}}La mayoría de\\ alumnos responden\\ a los feedbacks\end{tabular} & PTE          & X         & X           & R         & E-2     \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Se utilizan encuestas\\ de opinión\end{tabular}                  & PTE          & X         & X           & R         & E-2     \\ \hline
+	\end{tabular}%
+}
 \end{table}
 
