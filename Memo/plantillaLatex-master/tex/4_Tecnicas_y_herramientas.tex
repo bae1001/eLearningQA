@@ -1,5 +1,5 @@
 \capitulo{4}{Técnicas y herramientas}
-
+\section{Herramientas para acceder a la información}
 \begin{itemize}
 	\item \textbf{Web scraping:}
 	Es el conjunto de técnicas utilizadas para extraer y almacenar información de la web, un programa que hace esto de forma automática se llama web crawler. Algunas de estas técnicas nos permiten obtener información que no podríamos sacar con otras herramientas como por ejemplo si una página contiene enlaces fuera de Moodle a partir de su código HTML.
@@ -8,13 +8,13 @@
 	\item \textbf{Logs:}
 	Son registros de actividad que Moodle crea a partir de los eventos que realizan los usuarios, como publicar en un foro o empezar un cuestionario. Se pueden descargar en forma de archivo. Un ejemplo del uso que le daríamos sería obtener la actividad de un profesor para saber si responde a las dudas de los alumnos en los foros.
 \end{itemize}
-
+\section{Framework de desarrollo web }
 Respecto a qué framework utilizar para el desarrollo de la aplicación web hemos barajado estas opciones:
 \begin{itemize}
 	\item \textbf{Spring:}
-	Es un framework para la creación de aplicaciones Java. Gestiona las dependencias entre objetos de forma automática y ofrece un framework para desarrollo de aplicaciones web. Su fuerte es la escalabillidad.
+	Es un framework para la creación de aplicaciones Java. Gestiona las dependencias entre objetos de forma automática lo que permite un bajo nivel de acoplamiento y ofrece un framework para desarrollo de aplicaciones web. Su fuerte es la escalabillidad, pero es complicado aprender a usarlo.
 	\item \textbf{Vaadin:}
-	Es un framework de desarrollo web con una gran librería de componentes web. Usa GWT (Google Web Toolkit) para compilar Java a JavaScript y evitar al programador usar otros lenguajes aparte de Java. Su versión de pago ofrece una herramienta de edición gráfica que acelera el proceso de creación. Su fuerte es la velocidad de creación de prototipos.
+	Es un framework de desarrollo web con una gran librería de componentes web. Usa GWT (Google Web Toolkit) para compilar Java a JavaScript y evitar al programador usar otros lenguajes aparte de Java. Su versión de pago ofrece una herramienta de edición gráfica que acelera el proceso de creación. Su fuerte es la velocidad de creación de prototipos, pero tiene mala escalabilidad.
 \end{itemize}
 
 De entre estas dos me decanto por Spring, ya que la escalabilidad es bastante mejor y es mucho más popular que Vaadin, lo que me ayudará a encontrar documentación y tutoriales a la hora de encontrar problemas durante el desarrollo.
