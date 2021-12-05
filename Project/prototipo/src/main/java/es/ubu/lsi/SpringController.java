@@ -12,7 +12,7 @@ public class SpringController{
         return "login";
     }
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public String list(@ModelAttribute String username) {
         return "list";
     }
