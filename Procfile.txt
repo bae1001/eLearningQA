@@ -1,1 +1,0 @@
-web: java -jar Project/prototipo/target/prototipo-1.0-SNAPSHOT.war
