@@ -13,7 +13,13 @@ public class SpringController{
     }
 
     @PostMapping("/list")
-    public String list(@ModelAttribute String username) {
+    public String list() {
         return "list";
+    }
+
+    //@ModelAttribute String username
+    @GetMapping("/informe")
+    public String informe() {
+        return "informe";
     }
 }

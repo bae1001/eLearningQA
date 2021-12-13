@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="es.ubu.lsi.WebServiceClient" %>
+<%@ page import="es.ubu.lsi.Fachada" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,13 +9,11 @@
     <h2>Lista de cursos recientes</h2>
     <%session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
-      session.setAttribute("token", WebServiceClient.login((String)session.getAttribute("username"),(String)session.getAttribute("password")));
-      /*String token=WebServiceClient.login(request.getParameter("username"),request.getParameter("password"));*/
-      String respuesta=WebServiceClient.callFunction("core_course_get_recent_courses",(String)session.getAttribute("token"));%>
+      Fachada fachada= new Fachada((String)session.getAttribute("username"),(String)session.getAttribute("password"));
+      session.setAttribute("fachada", fachada);
+      session.setAttribute("token", fachada.conectarse((String)session.getAttribute("username"),(String)session.getAttribute("password")));
+      String respuesta=fachada.generarListaCursos((String)session.getAttribute("token"));%>
 
 <p><%=respuesta%></p>
-${course}
-<br/>
-</c:forEach>
 </body>
 </html>
