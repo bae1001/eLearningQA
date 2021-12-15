@@ -15,7 +15,7 @@ public class Fachada {
 
     public String generarListaCursos(String token){
         List<Curso> listaCursos=WebServiceClient.obtenerCursos(token);
-        String listaEnTabla="<table border=\"1\">";
+        String listaEnTabla="<table border=\"1\"><tr><th>Lista de cursos</th></tr>";
         for (Curso curso: listaCursos) {
             listaEnTabla+="<tr><td><a href=\"../informe?courseid="+String.valueOf(curso.getId())+"\">"+curso.getFullname()+"<a></td></tr>";
         }
@@ -24,7 +24,30 @@ public class Fachada {
     }
 
     public String generarInformeEspecifico(String token, int courseid){
-        return "El curso "+Integer.toString(courseid)+(WebServiceClient.tieneGrupos(token,courseid)?" si":" no")+" tiene grupos";
+        Curso curso=WebServiceClient.obtenerCursoPorId(token, courseid);
+        boolean tienegrupos=WebServiceClient.tieneGrupos(token,courseid);
+        boolean sonVisiblesCondiciones=WebServiceClient.sonVisiblesCondiciones(token,courseid);
+        int contadorDiseno=0;
+        int checksDiseno=2;
+        int contadorTotal=0;
+        int checksTotal=0;
+        if(tienegrupos){contadorDiseno++;}
+        if(sonVisiblesCondiciones){contadorDiseno++;}
+        contadorTotal=contadorDiseno;
+        checksTotal=checksDiseno;//Aqui se suman todas las categorias
+        return "<h2>Informe: "+curso.getFullname()+"</h2>"+
+                "<table border=\"1\">"+
+                "<tr><td><p style=\"text-align: right\">Puntuacion general:</p></td><td>"+
+                    "<meter value=\""+String.valueOf(contadorTotal)+"\" min=\"0\" max=\""+String.valueOf(checksTotal)+"\"></meter>"+
+                        String.valueOf(((float)contadorTotal/(float)checksTotal)*100)+"%"+"</td>"+
+                "<tr><td><p style=\"text-align: right\">Diseno:</p></td><td>"+
+                    "<meter value=\""+String.valueOf(contadorDiseno)+"\" min=\"0\" max=\""+String.valueOf(checksDiseno)+"\"></meter>"+
+                        String.valueOf(((float)contadorDiseno/(float)checksDiseno)*100)+"%"+"</td>"+
+                "<tr><td><p style=\"text-align: right\">El curso tiene grupos</p></td><td>"+
+                    (tienegrupos?"Si":"No")+"</td>"+
+                "<tr><td><p style=\"text-align: right\">Los estudiantes pueden ver las condiciones necesarias para completar una actividad</p></td><td>"+
+                    (sonVisiblesCondiciones?"Si":"No")+"</td>"+
+                "</table>";
     }
 
     public String generarInformeGlobal(String token){

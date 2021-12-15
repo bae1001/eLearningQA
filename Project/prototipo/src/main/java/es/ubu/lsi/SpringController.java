@@ -12,7 +12,8 @@ public class SpringController{
         return "login";
     }
 
-    @PostMapping("/list")
+    //@PostMapping("/list")
+    @RequestMapping(value="/list", method = { RequestMethod.POST,RequestMethod.GET })
     public String list() {
         return "list";
     }

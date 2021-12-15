@@ -6,7 +6,6 @@
     <title>Prototipo</title>
 </head>
 <body>
-    <h2>Informe</h2>
     <%Fachada fachada=(Fachada)session.getAttribute("fachada");
       String courseid= request.getParameter("courseid");
       String informe="";

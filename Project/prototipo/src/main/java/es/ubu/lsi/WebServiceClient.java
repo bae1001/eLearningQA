@@ -39,6 +39,22 @@ public class WebServiceClient {
         return listaCursos;
     }
 
+    public static Curso obtenerCursoPorId(String token, int courseid){
+        RestTemplate restTemplate = new RestTemplate();
+        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&wstoken="+token+"&field=id&value="+Integer.toString(courseid);
+        ParameterizedTypeReference<ListaCursos> responseType =
+                new ParameterizedTypeReference<ListaCursos>() {};
+        ResponseEntity response = null;
+        try {
+            response = restTemplate.exchange(url, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url)), responseType, new HashMap<String,String>());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        ListaCursos listaCursosConVariablesExtra=(ListaCursos)response.getBody();
+        List<Curso> listaCursos=listaCursosConVariablesExtra.getCourses();
+        return listaCursos.get(0);
+    }
+
     public static boolean tieneGrupos(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
         String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_group_get_course_groups&moodlewsrestformat=json&wstoken="+token+"&courseid="+Integer.toString(courseid);
@@ -52,6 +68,14 @@ public class WebServiceClient {
         }
         List<Grupo> listaGrupos=(List<Grupo>)response.getBody();
         return listaGrupos.size()!=0;
+    }
+
+    public static boolean sonVisiblesCondiciones(String token, int courseid){
+        Curso curso=obtenerCursoPorId(token, courseid);
+        if(curso.getShowcompletionconditions()!=null){
+            return curso.getShowcompletionconditions();
+        }
+        return false;
     }
 
 
