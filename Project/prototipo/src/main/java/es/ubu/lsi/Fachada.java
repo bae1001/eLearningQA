@@ -14,7 +14,7 @@ public class Fachada {
     }
 
     public String generarListaCursos(String token){
-        List<Curso> listaCursos=WebServiceClient.obtenerCursos(token);
+        List<Curso> listaCursos= getListaCursos(token);
         String listaEnTabla="<table border=\"1\"><tr><th>Lista de cursos</th></tr>";
         for (Curso curso: listaCursos) {
             listaEnTabla+="<tr><td><a href=\"../informe?courseid="+String.valueOf(curso.getId())+"\">"+curso.getFullname()+"<a></td></tr>";
@@ -23,10 +23,14 @@ public class Fachada {
         return listaEnTabla;
     }
 
+    public List<Curso> getListaCursos(String token) {
+        return WebServiceClient.obtenerCursos(token);
+    }
+
     public String generarInformeEspecifico(String token, int courseid){
-        Curso curso=WebServiceClient.obtenerCursoPorId(token, courseid);
-        boolean tienegrupos=WebServiceClient.tieneGrupos(token,courseid);
-        boolean sonVisiblesCondiciones=WebServiceClient.sonVisiblesCondiciones(token,courseid);
+        Curso curso= getCursoPorId(token, courseid);
+        boolean tienegrupos= isTieneGrupos(token, courseid);
+        boolean sonVisiblesCondiciones= isSonVisiblesCondiciones(token, courseid);
         int contadorDiseno=0;
         int checksDiseno=2;
         int contadorTotal=0;
@@ -39,10 +43,10 @@ public class Fachada {
                 "<table border=\"1\">"+
                 "<tr><td><p style=\"text-align: right\">Puntuacion general:</p></td><td>"+
                     "<meter value=\""+String.valueOf(contadorTotal)+"\" min=\"0\" max=\""+String.valueOf(checksTotal)+"\"></meter>"+
-                        String.valueOf(((float)contadorTotal/(float)checksTotal)*100)+"%"+"</td>"+
+                        String.valueOf(porcentajeFraccion(contadorTotal,checksTotal))+"%"+"</td>"+
                 "<tr><td><p style=\"text-align: right\">Diseno:</p></td><td>"+
                     "<meter value=\""+String.valueOf(contadorDiseno)+"\" min=\"0\" max=\""+String.valueOf(checksDiseno)+"\"></meter>"+
-                        String.valueOf(((float)contadorDiseno/(float)checksDiseno)*100)+"%"+"</td>"+
+                        String.valueOf(porcentajeFraccion(contadorDiseno,checksDiseno))+"%"+"</td>"+
                 "<tr><td><p style=\"text-align: right\">El curso tiene grupos</p></td><td>"+
                     (tienegrupos?"Si":"No")+"</td>"+
                 "<tr><td><p style=\"text-align: right\">Los estudiantes pueden ver las condiciones necesarias para completar una actividad</p></td><td>"+
@@ -50,11 +54,27 @@ public class Fachada {
                 "</table>";
     }
 
+    public boolean isSonVisiblesCondiciones(String token, int courseid) {
+        return WebServiceClient.sonVisiblesCondiciones(token, courseid);
+    }
+
+    public boolean isTieneGrupos(String token, int courseid) {
+        return WebServiceClient.tieneGrupos(token, courseid);
+    }
+
+    public Curso getCursoPorId(String token, int courseid) {
+        return WebServiceClient.obtenerCursoPorId(token, courseid);
+    }
+
+    public float porcentajeFraccion(float numerador, float denominador){
+        return numerador/denominador*100;
+    };
+
     public String generarInformeGlobal(String token){
-        List<Curso> listaCursos=WebServiceClient.obtenerCursos(token);
+        List<Curso> listaCursos= getListaCursos(token);
         int counter=0;
         for (Curso curso: listaCursos) {
-            if(WebServiceClient.tieneGrupos(token,curso.getId())){
+            if(isTieneGrupos(token, curso.getId())){
                 counter++;
             }
         }
