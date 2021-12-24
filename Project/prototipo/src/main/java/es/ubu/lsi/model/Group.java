@@ -1,6 +1,6 @@
 package es.ubu.lsi.model;
 
-public class Grupo {
+public class Group {
     private int id;
     private int courseid;
     private String name;
@@ -8,9 +8,10 @@ public class Grupo {
     private int descriptionformat;
     private String enrolmentkey;
     private String idnumber;
+    private Urls urls;
 
 
-    public Grupo() {}
+    public Group() {}
 
     public int getId() {
         return id;
@@ -66,5 +67,13 @@ public class Grupo {
 
     public void setIdnumber(String idnumber) {
         this.idnumber = idnumber;
+    }
+
+    public Urls getUrls() {
+        return urls;
+    }
+
+    public void setUrls(Urls urls) {
+        this.urls = urls;
     }
 }

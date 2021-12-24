@@ -1,6 +1,8 @@
 package es.ubu.lsi.model;
 
-public class Curso {
+import java.util.List;
+
+public class Course {
     private int id;
     private String fullname;
     private String shortname;
@@ -22,8 +24,10 @@ public class Curso {
     //private int timeaccess;
     private Boolean showshortname;
     private String coursecategory;
+    private int timemodified;
+    private List<Assignment> assignments;
 
-    public Curso(){}
+    public Course(){}
 
     public int getId() {
         return id;
@@ -191,5 +195,21 @@ public class Curso {
 
     public void setCoursecategory(String coursecategory) {
         this.coursecategory = coursecategory;
+    }
+
+    public int getTimemodified() {
+        return timemodified;
+    }
+
+    public void setTimemodified(int timemodified) {
+        this.timemodified = timemodified;
+    }
+
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<Assignment> assignments) {
+        this.assignments = assignments;
     }
 }
