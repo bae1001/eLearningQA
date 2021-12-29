@@ -28,4 +28,9 @@ public class SpringController{
     public String logout() {
         return "logout";
     }
+
+    @GetMapping("/manual")
+    public String manual() {
+        return "manual";
+    }
 }
