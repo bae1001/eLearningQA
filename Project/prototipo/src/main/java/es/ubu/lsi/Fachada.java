@@ -18,7 +18,7 @@ public class Fachada {
         List<Course> listaCursos= getListaCursos(token);
         String listaEnTabla="<table border=\"1\"><tr><th>Lista de cursos</th></tr>";
         for (Course curso: listaCursos) {
-            listaEnTabla+="<tr><td><a href=\"../informe?courseid="+String.valueOf(curso.getId())+"\">"+curso.getFullname()+"<a></td></tr>";
+            listaEnTabla+="<tr><td><a target=\"_blank\" href=\"../informe?courseid="+String.valueOf(curso.getId())+"\">"+curso.getFullname()+"<a></td></tr>";
         }
         listaEnTabla+="</table>";
         return listaEnTabla;

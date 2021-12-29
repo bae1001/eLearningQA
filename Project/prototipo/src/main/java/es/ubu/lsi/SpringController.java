@@ -23,4 +23,9 @@ public class SpringController{
     public String informe() {
         return "informe";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "logout";
+    }
 }

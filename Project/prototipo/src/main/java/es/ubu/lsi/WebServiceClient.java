@@ -1,29 +1,22 @@
 package es.ubu.lsi;
 
 import es.ubu.lsi.model.*;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+
+
 import java.util.*;
 
 public class WebServiceClient {
     public static String login(String username, String password){
         RestTemplate restTemplate = new RestTemplate();
-        String token = restTemplate.getForObject("https://school.moodledemo.net/login/token.php?username="+username+"&password="+password+"&service=moodle_mobile_app", String.class).split("\"", 0)[3];
-        //String token = restTemplate.getForObject("https://school.moodledemo.net/login/token.php?username="+username+"&password="+password+"&service=moodle_mobile_app", String.class);
-        return token;
+        return restTemplate.getForObject("https://school.moodledemo.net/login/token.php?username="+username+"&password="+password+"&service=moodle_mobile_app", String.class).split("\"", 0)[3];
     }
 
-    public static List<User> obtenerUsuarios(String token, int courseid) throws URISyntaxException {
+    public static List<User> obtenerUsuarios(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_enrol_get_enrolled_users&moodlewsrestformat=json&wstoken="+token+"&courseid="+Integer.toString(courseid);
-        List<User> listaUsuarios=new ArrayList<User>(Arrays.asList(restTemplate.getForObject(new URI(url),User[].class)));
-        return listaUsuarios;
+        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_enrol_get_enrolled_users&moodlewsrestformat=json&wstoken="+token+"&courseid="+courseid;
+        return new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, User[].class)));
     }
 
     public static boolean esProfesor(List<User> usuarios, int userid){
@@ -37,7 +30,7 @@ public class WebServiceClient {
         return false;
     }
 
-    public static boolean esAlumno(List<User> usuarios, int userid) throws URISyntaxException {
+    public static boolean esAlumno(List<User> usuarios, int userid){
         for (User usuario:usuarios) {
             if(usuario.getId()==userid){
                 for (Role rol: usuario.getRoles()) {
@@ -51,48 +44,19 @@ public class WebServiceClient {
     public static List<Course> obtenerCursos(String token){
         RestTemplate restTemplate = new RestTemplate();
         String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_enrolled_courses_by_timeline_classification&moodlewsrestformat=json&wstoken="+token+"&classification=inprogress";
-        //String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_recent_courses&moodlewsrestformat=json&wstoken="+token;
-        ParameterizedTypeReference<CourseList> responseType =
-                new ParameterizedTypeReference<CourseList>() {};
-        ResponseEntity response = null;
-        try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url)), responseType, new HashMap<String,String>());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        CourseList listaCursosConVariablesExtra=(CourseList)response.getBody();
-        List<Course> listaCursos=listaCursosConVariablesExtra.getCourses();
-        return listaCursos;
+        return restTemplate.getForObject(url,CourseList.class).getCourses();
     }
 
     public static Course obtenerCursoPorId(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&wstoken="+token+"&field=id&value="+Integer.toString(courseid);
-        ParameterizedTypeReference<CourseList> responseType =
-                new ParameterizedTypeReference<CourseList>() {};
-        ResponseEntity response = null;
-        try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url)), responseType, new HashMap<String,String>());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        CourseList listaCursosConVariablesExtra=(CourseList)response.getBody();
-        List<Course> listaCursos=listaCursosConVariablesExtra.getCourses();
-        return listaCursos.get(0);
+        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&wstoken="+token+"&field=id&value="+courseid;
+        return restTemplate.getForObject(url,CourseList.class).getCourses().get(0);
     }
 
     public static boolean tieneGrupos(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_group_get_course_groups&moodlewsrestformat=json&wstoken="+token+"&courseid="+Integer.toString(courseid);
-        ParameterizedTypeReference<List<Group>> responseType =
-                new ParameterizedTypeReference<List<Group>>() {};
-        ResponseEntity response = null;
-        try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url)), responseType, new HashMap<String,String>());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        List<Group> listaGrupos=(List<Group>)response.getBody();
+        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_group_get_course_groups&moodlewsrestformat=json&wstoken="+token+"&courseid="+courseid;
+        List<Group> listaGrupos= new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, Group[].class)));
         return listaGrupos.size()!=0;
     }
 
@@ -106,78 +70,41 @@ public class WebServiceClient {
 
     public static boolean estaProgresoActivado(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_enrol_get_enrolled_users&moodlewsrestformat=json&wstoken="+token+"&courseid="+Integer.toString(courseid);
-        ParameterizedTypeReference<List<User>> responseType =
-                new ParameterizedTypeReference<List<User>>() {};
-        ResponseEntity response = null;
-        try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url)), responseType, new HashMap<String,String>());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        List<User> listaUsuarios=(List<User>)response.getBody();
+        List<User> listaUsuarios=obtenerUsuarios(token,courseid);
         int idProfesor=listaUsuarios.get(0).getId();
-        String url2 ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_completion_get_activities_completion_status&moodlewsrestformat=json&wstoken="+token+"&courseid="+Integer.toString(courseid)+"&userid="+Integer.toString(idProfesor);
-        ParameterizedTypeReference<StatusList> responseType2 =
-                new ParameterizedTypeReference<StatusList>() {};
-        ResponseEntity response2 = null;
-        try {
-            response2 = restTemplate.exchange(url2, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url2)), responseType2, new HashMap<String,String>());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        for (User usuario:listaUsuarios) {
+            if(esProfesor(listaUsuarios,usuario.getId())){
+                idProfesor=usuario.getId();
+            }
         }
-        System.out.println(response2.toString());
-        StatusList listaEstados=(StatusList) response2.getBody();
+        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_completion_get_activities_completion_status&moodlewsrestformat=json&wstoken="+token+"&courseid="+courseid+"&userid="+idProfesor;
+        StatusList listaEstados=restTemplate.getForObject(url,StatusList.class);
         return listaEstados.isHasCompletion();
     }
 
     public static boolean estaCorregidoATiempo(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&wstoken="+token;
-        ParameterizedTypeReference<CourseList> responseType =
-                new ParameterizedTypeReference<CourseList>() {};
-        ResponseEntity response = null;
-        try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url)), responseType, new HashMap<String,String>());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        CourseList listaCursos=(CourseList)response.getBody();
-        List<Assignment> listaTareas=new ArrayList<Assignment>();
-        for (Course curso:listaCursos.getCourses()) {
-            if(curso.getId()==courseid) {
-                listaTareas.addAll(curso.getAssignments());
-            }
-        }
-        Map<Integer, Integer> mapaFechasLimite=new HashMap<Integer, Integer>();
+        List<Assignment> listaTareas = getListaTareas(token, courseid);
+        Map<Integer, Integer> mapaFechasLimite= new HashMap<>();
         for (Assignment tarea:listaTareas) {
             if(tarea.getDuedate()!=0){
                 mapaFechasLimite.put(tarea.getId(),tarea.getDuedate());
             }
         }
         if(mapaFechasLimite.size()==0){return true;}
-        String url2 ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_assign_get_grades&moodlewsrestformat=json&wstoken="+token;
+        StringBuilder url2 = new StringBuilder("https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_assign_get_grades&moodlewsrestformat=json&wstoken=" + token);
         int contador=0;
         for (Integer id:mapaFechasLimite.keySet()) {
-            url2+="&assignmentids["+Integer.toString(contador)+"]="+Integer.toString(id);
+            url2.append("&assignmentids[").append(contador).append("]=").append(id);
         }
-        ParameterizedTypeReference<AssignmentList> responseType2 =
-                new ParameterizedTypeReference<AssignmentList>() {};
-        ResponseEntity response2 = null;
-        try {
-            response2 = restTemplate.exchange(url2, HttpMethod.GET, new RequestEntity(HttpMethod.GET, new URI(url2)), responseType2, new HashMap<String,String>());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        AssignmentList listaTareasConNotas=(AssignmentList) response2.getBody();
-        List<Assignment> tareasConNotas= listaTareasConNotas.getAssignments();
+        List<Assignment> tareasConNotas= restTemplate.getForObject(url2.toString(),AssignmentList.class).getAssignments();
         if (tareasConNotas!=null) {
             for (Assignment tarea : tareasConNotas) {
                 List<Grade> notas = tarea.getGrades();
                 for (Grade nota : notas) {
-                    if(nota.getGrade()==""){nota.setGrade("-1.00000");}
+                    if(Objects.equals(nota.getGrade(), "")){nota.setGrade("-1.00000");}
                     if (nota.getTimemodified() - mapaFechasLimite.get(tarea.getId()) > 604800 ||
-                            (System.currentTimeMillis() / 1000l) - mapaFechasLimite.get(tarea.getId()) > 604800 && Float.parseFloat(nota.getGrade()) < 0) {
+                            (System.currentTimeMillis() / 1000L) - mapaFechasLimite.get(tarea.getId()) > 604800 && Float.parseFloat(nota.getGrade()) < 0) {
                         return false;
                     }
                 }
@@ -186,30 +113,36 @@ public class WebServiceClient {
         return true;
     }
 
-    public static boolean respondeATiempo(String token, int courseid) throws URISyntaxException {
+    private static List<Assignment> getListaTareas(String token, int courseid) {
         RestTemplate restTemplate = new RestTemplate();
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_forums_by_courses&moodlewsrestformat=json&wstoken="+token+"&courseids[0]="+Integer.toString(courseid);
-        Forum[] arrayForos= restTemplate.getForObject(new URI(url), Forum[].class);
-        List<Forum> listaForos= new ArrayList<Forum>(Arrays.asList(arrayForos));
-        String url2="";
-        DiscussionList listaDebates;
-        List<Discussion> listaDebatesCompleta=new ArrayList<Discussion>();
-        for (Forum foro:listaForos) {
-            url2="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_forum_discussions&moodlewsrestformat=json&wstoken="+token+"&forumid="+Integer.toString(foro.getId());
-            listaDebates=restTemplate.getForObject(new URI(url2),DiscussionList.class);
-            listaDebatesCompleta.addAll(listaDebates.getDiscussions());
+        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&wstoken="+ token;
+        CourseList listaCursos= restTemplate.getForObject(url,CourseList.class);
+        List<Assignment> listaTareas= new ArrayList<>();
+        for (Course curso:listaCursos.getCourses()) {
+            if(curso.getId()== courseid) {
+                listaTareas.addAll(curso.getAssignments());
+            }
         }
-        String url3="";
-        PostList listaPostsDebate;
-        List<Post> listaPostsCompleta=new ArrayList<Post>();
+        return listaTareas;
+    }
+
+    public static boolean respondeATiempo(String token, int courseid){
+        List<Forum> listaForos=getListaForos(token, courseid);
+        List<Discussion> listaDebates;
+        List<Discussion> listaDebatesCompleta= new ArrayList<>();
+        for (Forum foro:listaForos) {
+            listaDebates = getListaDebates(token, foro);
+            listaDebatesCompleta.addAll(listaDebates);
+        }
+        List<Post> listaPostsDebate;
+        List<Post> listaPostsCompleta= new ArrayList<>();
         for (Discussion debate: listaDebatesCompleta) {
-            url3="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_discussion_posts&moodlewsrestformat=json&wstoken="+token+"&discussionid="+Integer.toString(debate.getDiscussion());
-            listaPostsDebate=restTemplate.getForObject(new URI(url3),PostList.class);
-            listaPostsCompleta.addAll(listaPostsDebate.getPosts());
+            listaPostsDebate = getListaPosts(token, debate);
+            listaPostsCompleta.addAll(listaPostsDebate);
         }
         List<User> listaUsuarios=obtenerUsuarios(token,courseid);
-        Map<Integer,Post> dudasAlumnosSinRespuesta=new HashMap<Integer,Post>();
-        List<Post> listaRespuestasProfesores=new ArrayList<Post>();
+        Map<Integer,Post> dudasAlumnosSinRespuesta= new HashMap<>();
+        List<Post> listaRespuestasProfesores= new ArrayList<>();
         for (Post comentario:listaPostsCompleta) {
             if (esAlumno(listaUsuarios,comentario.getAuthor().getId())&&comentario.getMessage().contains("?")){
                 dudasAlumnosSinRespuesta.put(comentario.getId(),comentario);
@@ -227,5 +160,26 @@ public class WebServiceClient {
         return dudasAlumnosSinRespuesta.size()==0;
     }
 
+    private static List<Post> getListaPosts(String token, Discussion debate) {
+        RestTemplate restTemplate = new RestTemplate();
+        PostList listaPostsDebate;
+        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_discussion_posts&moodlewsrestformat=json&wstoken="+ token +"&discussionid="+debate.getDiscussion();
+        listaPostsDebate=restTemplate.getForObject(url,PostList.class);
+        return listaPostsDebate.getPosts();
+    }
 
+    private static List<Discussion> getListaDebates(String token, Forum foro) {
+        RestTemplate restTemplate = new RestTemplate();
+        DiscussionList listaDebates;
+        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_forum_discussions&moodlewsrestformat=json&wstoken="+ token +"&forumid="+foro.getId();
+        listaDebates= restTemplate.getForObject(url,DiscussionList.class);
+        return listaDebates.getDiscussions();
+    }
+
+    private static List<Forum> getListaForos(String token, int courseid) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_forums_by_courses&moodlewsrestformat=json&wstoken="+ token +"&courseids[0]="+courseid;
+        Forum[] arrayForos= restTemplate.getForObject(url, Forum[].class);
+        return new ArrayList<>(Arrays.asList(arrayForos));
+    }
 }

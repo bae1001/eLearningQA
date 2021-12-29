@@ -5,17 +5,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Prototipo</title>
+    <title>MoodleQA-Informe</title>
 </head>
 <body>
-    <%Fachada fachada=(Fachada)session.getAttribute("fachada");
+    <%String informe="";
+      try{Fachada fachada=(Fachada)session.getAttribute("fachada");
       String courseid= request.getParameter("courseid");
-      String informe="";
       if(courseid==null){
         informe=fachada.generarInformeGlobal((String)session.getAttribute("token"));
       }else{
         informe=fachada.generarInformeEspecifico((String)session.getAttribute("token"), Integer.valueOf(courseid));
-      }%>
+      }
+      }catch(Exception e){
+        response.sendRedirect("");
+      }
+      %>
 
 <%=informe%>
 </body>
