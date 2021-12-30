@@ -3,7 +3,34 @@
 \section{Introducción}
 
 \section{Diseño de datos}
-\imagen{DiagramaClases.png}{Diagrama de clases}
+En la siguiente tabla se recogen las entidades asociadas a cada una de las consultas para determinar parte de las clases necesarias para el proyecto.
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{Consulta}                                                                                                                                        & \textbf{Entidades}        \\ \hline
+			Las opciones de progreso del estudiante están activadas                                                                                         & Curso            \\ \hline
+			Se proporcionan contenidos en diferentes formatos                                                                                               & Curso, Recurso            \\ \hline
+			El curso tiene grupos                                                                                                                           & Grupo, Curso     \\ \hline
+			El curso tiene actividades grupales                                                                                                             & Actividad, Curso \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Los estudiantes pueden ver las condiciones\\ necesarias para completar una actividad\end{tabular}                    & Curso            \\ \hline
+			Todas las actividades tienen la misma nota máxima en el calificador                                                                             & Actividad, Curso            \\ \hline
+			Los recursos están actualizados                                                                                                                 & Curso, Recurso        \\ \hline
+			Fechas de apertura y cierre de tareas son correctas                                                                                             & Actividad, Curso \\ \hline
+			Se detallan los criterios de evaluación (rúbricas, ejemplos)                                                                                    & Curso            \\ \hline
+			El calificador no tiene demasiado anidamiento                                                                                                   & Curso            \\ \hline
+			Los alumnos están divididos en grupos                                                                                                           & Alumno, Grupo    \\ \hline
+			\begin{tabular}[c]{@{}l@{}}El profesor responde en los foros dentro del límite de\\ 48 horas lectivas desde que se plantea la duda\end{tabular} & Curso, Foro          \\ \hline
+			Se ofrece retroalimentación de las tareas                                                                                                       & Tarea, Curso     \\ \hline
+			Las tareas están calificadas                                                                                                                    & Tarea, Curso     \\ \hline
+			El calificador muestra cómo ponderan las diferentes tareas                                                                                      & Curso            \\ \hline
+			La mayoría de alumnos responden a los feedbacks                                                                                                 & Feedback, Curso  \\ \hline
+			Se utilizan encuestas de opinión                                                                                                                & Survey, Curso    \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+La siguiente imagen muestra las relaciones entre entidades que utiliza la aplicación.
+\imagen{ModeloDatos.png}{Modelo de datos base}
 \section{Diseño procedimental}
 \imagen{BocetoInterfaz.png}{Boceto de la interfaz}
 \section{Diseño arquitectónico}

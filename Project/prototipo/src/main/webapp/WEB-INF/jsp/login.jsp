@@ -9,7 +9,7 @@
 </head>
 <body>
     <h2>Login</h2>
-    <p style="text-align: right"><a target="_blank" href="../manual">Manual de usuario</button></p>
+    <p style="text-align: right"><a target="_blank" href="../manual">Manual de usuario</a></button></p>
 <form action="list" method="post">
   <p>Username: <input type="text" name="username" size="40"></p>
   <p>Password: <input type="password" name="password" size="40"></p>
