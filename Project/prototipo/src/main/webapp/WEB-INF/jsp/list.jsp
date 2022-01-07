@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="es.ubu.lsi.Fachada" %>
+<%@ page import="es.ubu.lsi.MoodleQAFacade" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,17 +9,10 @@
 </head>
 <body>
 
-    <%if(null == session.getAttribute("username")){
-        // User is not logged in.
-        System.out.println("no");
-      }else{
-        // User IS logged in.
-        System.out.println("si");
-      }
-      String username=request.getParameter("username");
+    <%String username=request.getParameter("username");
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
-      Fachada fachada= new Fachada((String)session.getAttribute("username"),(String)session.getAttribute("password"));
+      MoodleQAFacade fachada= new MoodleQAFacade((String)session.getAttribute("username"),(String)session.getAttribute("password"));
       session.setAttribute("fachada", fachada);
       session.setAttribute("token", fachada.conectarse((String)session.getAttribute("username"),(String)session.getAttribute("password")));
       if((String)session.getAttribute("token")=="Invalid login, please try again"){response.sendRedirect("/");}

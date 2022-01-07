@@ -26,6 +26,7 @@ public class User {
     private List<Role> roles;
     private List<Preference> preferences;
     private List<Course> enrolledcourses;
+    private boolean started;
 
     public User() {}
 
@@ -211,5 +212,13 @@ public class User {
 
     public void setEnrolledcourses(List<Course> enrolledcourses) {
         this.enrolledcourses = enrolledcourses;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 }
