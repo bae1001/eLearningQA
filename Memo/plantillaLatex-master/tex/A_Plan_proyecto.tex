@@ -1,8 +1,32 @@
 \apendice{Plan de Proyecto Software}
 
 \section{Introducción}
-
+En este apéndice se trata sobre los costes y viabilidad del proyecto. Contiene una planificación temporal que hablará de la cantidad de tiempo estimada que va a costar realizar el proyecto. También un estudio de viabilidad dividido en dos partes: un estudio de viabilidad económica que tratará los costes y beneficios teóricos de la realización del proyecto en un escenario real a pesar de que el fin de este trabajo sea educativo, y un estudio de viabilidad legal que discutirá si hay o no problemas derivados de las licencias de las herramientas usadas y/o infracciones de copyright.
 \section{Planificación temporal}
+En esta sección se habla de la cantidad de tiempo estimada necesaria al principio del proyecto y la cantidad de tiempo que ha acabado llevando, detallando lo ocurrido durante el proceso.
+
+La planificación del proyecto se ha llevado a cabo en sprints de una duración de dos semanas. Normalmente se realizó una reunión entre sprint y sprint en la que se discutían los resultados del sprint anterior y los objetivos para el siguiente. En GitHub, los sprints están definidos como milestones (hitos) y los objetivos del sprint como issues (problemas, asuntos). Para cada sprint he creado un nuevo milestone y he incluido los issues respectivos a los objetivos del sprint a dicho milestone.
+
+Al comienzo estimé que para completar el proyecto necesitaría 400 horas de trabajo a lo largo de 16 semanas, lo que conllevaría 25 horas de trabajo a la semana.
+
+Ahora paso a resumir los objetivos y sucesos de cada sprint:
+
+\subsection{Sprint 0 (7/10/2021 - 21/10/2021)}
+	En este sprint los objetivos propuestos eran instalar la plantilla de la memoria en LaTeX proporcionada por la UBU, redactar una introducción y definir los objetivos del proyecto, y sintetizar una lista de comprobaciones a realizar por parte de la aplicación a partir de unos marcos de calidad. En la reunión de cierre del sprint los tutores se mostraron disconformes con mi forma de redactar excesivamente técnica y breve y se propuso el realizar reuniones a mitad de sprint cuando yo lo viera conveniente.
+\subsection{Sprint 1 (21/10/2021 - 4/11/2021)}
+	En este sprint se definieron como objetivos incluir en la introducción un resumen de la situación actual respecto del control de calidad en el e-learning y añadir las dimensiones de roles y perspectivas a la lista de comprobaciones y añadir la lista a la memoria. En la reunión de mitad de sprint se remarcó la falta de referencias bibliográficas y se me pidió que expandiera el apartado de conceptos teóricos. En la reunión de cierre del sprint los tutores se mostraron bastante más conformes con mi trabajo.
+\subsection{Sprint 2 (4/11/2021 - 18/11/2021)}
+	En este sprint se definieron como objetivos añadir definiciones al apartado de conceptos teóricos, mostrar la lista de consultas definida en forma de tabla, y decantarme por alguna de los tres frameworks para el desarrollo de la aplicación (Vaadin, JavaFX, o Spring). En la reunión de mitad de sprint se me dieron indicaciones sobre aspectos a mejorar que realicé antes de acabar el sprint. Elegí Spring para crear la aplicación web.
+\subsection{Sprint 3 (18/11/2021 - 2/12/2021)}
+	En este sprint el objetivo principal fue la creación de un prototipo. Creé un prototipo muy simple que mostraba la lista de cursos recientemente accedidos en la plataforma de demostración Mount Orange School tras introducir usuario y contraseña. En la reunión de final de sprint se me propuso utilizar el patrón de diseño fachada para separar la responsabilidad de acceder a los servicios web y generar el contenido para mostrarlo en HTML.
+\subsection{Sprint 4 (2/12/2021 - 16/12/2021)}
+	En este sprint se definieron como objetivos comenzar con el diseño de la aplicación, crear un pipeline de integración continua/despliegue continuo con GitHub Actions y Heroku, y añadir funcionalidad al prototipo. En la primera semana del sprint creé un boceto de la interfaz de la aplicación y un diagrama de clases preliminar, además de implementar la integración continua con GitHub Actions y despliegue continuo en Heroku. En la reunión de mitad de sprint mostré los avances que había conseguido a Raúl Marticorena (Carlos López estaba ocupado ese día) y me instó a añadir funciones al prototipo. Durante la segunda semana añadí una versión reducida del informe específico que mostraba la comprobación de si un curso tenía grupos definidos o no. En la reunión de final de sprint mostré los avances que había conseguido a Carlos López (Raúl Marticorena estaba ocupado ese día) y establecimos que no íbamos a poder reunirnos hasta la vuelta de las vacaciones y me motivó diciendo que a partir de ese punto el resultado del proyecto dependía de la cantidad de trabajo que invirtiera en él y que gracias al trabajo que había realizado hasta ese punto el proyecto estaba encarrilado.
+\subsection{Sprint 5 (16/12/2021 - 30/12/2021)}
+	En este sprint se definieron como objetivos refactorizar la fachada de forma que se puedan realizar tests sobre ella, añadir tests, y seguir implementando consultas sobre los cursos Moodle en el prototipo.
+\subsection{Sprint 6 (30/12/2021 - 13/1/2022)}
+	
+
+
 
 \section{Estudio de viabilidad}
 
