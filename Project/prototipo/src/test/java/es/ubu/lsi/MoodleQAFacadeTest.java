@@ -3,6 +3,8 @@ package es.ubu.lsi;
 import es.ubu.lsi.model.Course;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,17 +246,20 @@ class MoodleQAFacadeTest {
 
     @org.junit.jupiter.api.Test
     void generarCampoRelativoTest() {
-        assertEquals(fachada.generarCampoRelativo(-0.1f,100),"<td class=\"tg-pred\"><meter value=\"-0.1\" min=\"0\" max=\"100.0\"></meter>-0,1%</td>");
-        assertEquals(fachada.generarCampoRelativo(0,100),"<td class=\"tg-pred\"><meter value=\"0.0\" min=\"0\" max=\"100.0\"></meter>0,0%</td>");
-        assertEquals(fachada.generarCampoRelativo(19.9f,100),"<td class=\"tg-pred\"><meter value=\"19.9\" min=\"0\" max=\"100.0\"></meter>19,9%</td>");
-        assertEquals(fachada.generarCampoRelativo(20,100),"<td class=\"tg-oran\"><meter value=\"20.0\" min=\"0\" max=\"100.0\"></meter>20,0%</td>");
-        assertEquals(fachada.generarCampoRelativo(39.9f,100),"<td class=\"tg-oran\"><meter value=\"39.9\" min=\"0\" max=\"100.0\"></meter>39,9%</td>");
-        assertEquals(fachada.generarCampoRelativo(40.0f,100),"<td class=\"tg-yell\"><meter value=\"40.0\" min=\"0\" max=\"100.0\"></meter>40,0%</td>");
-        assertEquals(fachada.generarCampoRelativo(59.9f,100),"<td class=\"tg-yell\"><meter value=\"59.9\" min=\"0\" max=\"100.0\"></meter>59,9%</td>");
-        assertEquals(fachada.generarCampoRelativo(60,100),"<td class=\"tg-char\"><meter value=\"60.0\" min=\"0\" max=\"100.0\"></meter>60,0%</td>");
-        assertEquals(fachada.generarCampoRelativo(79.9f,100),"<td class=\"tg-char\"><meter value=\"79.9\" min=\"0\" max=\"100.0\"></meter>79,9%</td>");
-        assertEquals(fachada.generarCampoRelativo(80,100),"<td class=\"tg-pgre\"><meter value=\"80.0\" min=\"0\" max=\"100.0\"></meter>80,0%</td>");
-        assertEquals(fachada.generarCampoRelativo(100,100),"<td class=\"tg-pgre\"><meter value=\"100.0\" min=\"0\" max=\"100.0\"></meter>100,0%</td>");
-        assertEquals(fachada.generarCampoRelativo(100.1f,100),"<td class=\"tg-pgre\"><meter value=\"100.1\" min=\"0\" max=\"100.0\"></meter>100,1%</td>");
+        DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance();
+        DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
+        char sep=symbols.getDecimalSeparator();
+        assertEquals(fachada.generarCampoRelativo(-0.1f,100),"<td class=\"tg-pred\"><meter value=\"-0.1\" min=\"0\" max=\"100.0\"></meter>-0"+sep+"1%</td>");
+        assertEquals(fachada.generarCampoRelativo(0,100),"<td class=\"tg-pred\"><meter value=\"0.0\" min=\"0\" max=\"100.0\"></meter>0"+sep+"0%</td>");
+        assertEquals(fachada.generarCampoRelativo(19.9f,100),"<td class=\"tg-pred\"><meter value=\"19.9\" min=\"0\" max=\"100.0\"></meter>19"+sep+"9%</td>");
+        assertEquals(fachada.generarCampoRelativo(20,100),"<td class=\"tg-oran\"><meter value=\"20.0\" min=\"0\" max=\"100.0\"></meter>20"+sep+"0%</td>");
+        assertEquals(fachada.generarCampoRelativo(39.9f,100),"<td class=\"tg-oran\"><meter value=\"39.9\" min=\"0\" max=\"100.0\"></meter>39"+sep+"9%</td>");
+        assertEquals(fachada.generarCampoRelativo(40.0f,100),"<td class=\"tg-yell\"><meter value=\"40.0\" min=\"0\" max=\"100.0\"></meter>40"+sep+"0%</td>");
+        assertEquals(fachada.generarCampoRelativo(59.9f,100),"<td class=\"tg-yell\"><meter value=\"59.9\" min=\"0\" max=\"100.0\"></meter>59"+sep+"9%</td>");
+        assertEquals(fachada.generarCampoRelativo(60,100),"<td class=\"tg-char\"><meter value=\"60.0\" min=\"0\" max=\"100.0\"></meter>60"+sep+"0%</td>");
+        assertEquals(fachada.generarCampoRelativo(79.9f,100),"<td class=\"tg-char\"><meter value=\"79.9\" min=\"0\" max=\"100.0\"></meter>79"+sep+"9%</td>");
+        assertEquals(fachada.generarCampoRelativo(80,100),"<td class=\"tg-pgre\"><meter value=\"80.0\" min=\"0\" max=\"100.0\"></meter>80"+sep+"0%</td>");
+        assertEquals(fachada.generarCampoRelativo(100,100),"<td class=\"tg-pgre\"><meter value=\"100.0\" min=\"0\" max=\"100.0\"></meter>100"+sep+"0%</td>");
+        assertEquals(fachada.generarCampoRelativo(100.1f,100),"<td class=\"tg-pgre\"><meter value=\"100.1\" min=\"0\" max=\"100.0\"></meter>100"+sep+"1%</td>");
     }
 }
