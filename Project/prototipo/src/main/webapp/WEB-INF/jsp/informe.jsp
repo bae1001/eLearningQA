@@ -6,6 +6,18 @@
 <head>
     <meta charset="UTF-8">
     <title>MoodleQA-Informe</title>
+    <style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:0px 0px;word-break:normal;}
+    .tg .tg-plgr{background-color:#C0C0C0;font-weight:bold;text-align:center;vertical-align:middle}
+    .tg .tg-ltgr{background-color:#EFEFEF;text-align:right;vertical-align:middle}
+    .tg .tg-pgre{background-color:#00FF00;text-align:center;vertical-align:middle}
+    .tg .tg-char{background-color:#7FFF00;text-align:center;vertical-align:middle}
+    .tg .tg-yell{background-color:#FFFF00;text-align:center;vertical-align:middle}
+    .tg .tg-oran{background-color:#FF7F00;text-align:center;vertical-align:middle}
+    .tg .tg-pred{background-color:#FF0000;text-align:center;vertical-align:middle}
+    </style>
 </head>
 <body>
     <%String informe="";

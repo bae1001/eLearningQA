@@ -77,56 +77,51 @@ public class MoodleQAFacade {
         contadorTotal=contadorDiseno+contadorImplementacion+contadorRealizacion+contadorEvaluacion;
         checksTotal=checksDiseno+checksImplementacion+checksRealizacion+checksEvaluacion;//Aqui se suman todas las categorias
         return "<h2>Informe: "+curso.getFullname()+"</h2>"+
-                "<table border=\"1\">"+
-                "<tr><td><p style=\"text-align: right\">Puntuación general:</p></td><td>"+
-                    "<meter value=\""+ contadorTotal +"\" min=\"0\" max=\""+ checksTotal +"\"></meter>"+
-                        String.format("%.2f",porcentajeFraccion(contadorTotal, checksTotal)) +"%"+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Diseño:</p></td><td>"+
-                    "<meter value=\""+ contadorDiseno +"\" min=\"0\" max=\""+ checksDiseno +"\"></meter>"+
-                        String.format("%.2f",porcentajeFraccion(contadorDiseno, checksDiseno)) +"%"+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Las opciones de progreso del estudiante están activadas</p></td><td>"+
-                    (progresoActivado?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Se proporcionan contenidos en diferentes formatos</p></td><td>"+
-                    (variedadFormatos?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">El curso tiene grupos</p></td><td>"+
-                    (tienegrupos?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">El curso tiene actividades grupales</p></td><td>"+
-                    (tareasGrupales?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Los estudiantes pueden ver las condiciones necesarias para completar una actividad</p></td><td>"+
-                    (sonVisiblesCondiciones?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Todas las actividades tienen la misma nota máxima en el calificador</p></td><td>"+
-                    (notaMaxConsistente?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Implementación:</p></td><td>"+
-                    "<meter value=\""+ contadorImplementacion +"\" min=\"0\" max=\""+ checksImplementacion +"\"></meter>"+
-                        String.format("%.2f",porcentajeFraccion(contadorImplementacion, checksImplementacion)) +"%"+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Los recursos están actualizados</p></td><td>"+
-                    (recursosActualizados?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Fechas de apertura y cierre de tareas son correctas</p></td><td>"+
-                    (fechasCorrectas?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Se detallan los criterios de evaluación (rúbricas, ejemplos)</p></td><td>"+
-                    (muestraCriterios?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">El calificador no tiene demasiado anidamiento</p></td><td>"+
-                    (anidamientoAceptable?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Los alumnos están divididos en grupos</p></td><td>"+
-                    (alumnosEnGrupos?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Realización:</p></td><td>"+
-                    "<meter value=\""+ contadorRealizacion +"\" min=\"0\" max=\""+ checksRealizacion +"\"></meter>"+
-                        String.format("%.2f",porcentajeFraccion(contadorRealizacion, checksRealizacion)) +"%"+"</td>"+
-                "<tr><td><p style=\"text-align: right\">El profesor responde en los foros dentro del límite de 48 horas lectivas desde que se plantea la duda</p></td><td>"+
-                    (respondeATiempo?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Se ofrece retroalimentación de las tareas</p></td><td>"+
-                    (hayRetroalimentacion?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Las tareas están calificadas</p></td><td>"+
-                    (corregidoATiempo?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">El calificador muestra cómo ponderan las diferentes tareas</p></td><td>"+
-                    (ponderacionVisible?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Evaluación:</p></td><td>"+
-                    "<meter value=\""+ contadorEvaluacion +"\" min=\"0\" max=\""+ checksEvaluacion +"\"></meter>"+
-                        String.format("%.2f",porcentajeFraccion(contadorEvaluacion, checksEvaluacion)) +"%"+"</td>"+
-                "<tr><td><p style=\"text-align: right\">La mayoría de alumnos responden a los feedbacks</p></td><td>"+
-                    (respondenFeedbacks?"Si":"No")+"</td>"+
-                "<tr><td><p style=\"text-align: right\">Se utilizan encuestas de opinión</p></td><td>"+
-                    (usaSurveys?"Si":"No")+"</td>"+
+                "<table class=\"tg\">"+
+                "<tr><td class=\"tg-plgr\">Puntuación general:</td>"+
+                    generarCampoRelativo(contadorTotal,checksTotal)+
+                "<tr><td class=\"tg-plgr\">Diseño:</td>"+
+                    generarCampoRelativo(contadorDiseno,checksDiseno)+
+                "<tr><td class=\"tg-ltgr\">Las opciones de progreso del estudiante están activadas</td>"+
+                    generarCampoAbsoluto(progresoActivado)+
+                "<tr><td class=\"tg-ltgr\">Se proporcionan contenidos en diferentes formatos</td>"+
+                    generarCampoAbsoluto(variedadFormatos)+
+                "<tr><td class=\"tg-ltgr\">El curso tiene grupos</td>"+
+                    generarCampoAbsoluto(tienegrupos)+
+                "<tr><td class=\"tg-ltgr\">El curso tiene actividades grupales</td>"+
+                    generarCampoAbsoluto(tareasGrupales)+
+                "<tr><td class=\"tg-ltgr\">Los estudiantes pueden ver las condiciones necesarias para completar una actividad</td>"+
+                    generarCampoAbsoluto(sonVisiblesCondiciones)+
+                "<tr><td class=\"tg-ltgr\">Todas las actividades tienen la misma nota máxima en el calificador</td>"+
+                    generarCampoAbsoluto(notaMaxConsistente)+
+                "<tr><td class=\"tg-plgr\">Implementación:</td>"+
+                    generarCampoRelativo(contadorImplementacion,checksImplementacion)+
+                "<tr><td class=\"tg-ltgr\">Los recursos están actualizados</td>"+
+                    generarCampoAbsoluto(recursosActualizados)+
+                "<tr><td class=\"tg-ltgr\">Fechas de apertura y cierre de tareas son correctas</td>"+
+                    generarCampoAbsoluto(fechasCorrectas)+
+                "<tr><td class=\"tg-ltgr\">Se detallan los criterios de evaluación (rúbricas, ejemplos)</td>"+
+                    generarCampoAbsoluto(muestraCriterios)+
+                "<tr><td class=\"tg-ltgr\">El calificador no tiene demasiado anidamiento</td>"+
+                    generarCampoAbsoluto(anidamientoAceptable)+
+                "<tr><td class=\"tg-ltgr\">Los alumnos están divididos en grupos</td>"+
+                    generarCampoAbsoluto(alumnosEnGrupos)+
+                "<tr><td class=\"tg-plgr\">Realización:</td>"+
+                    generarCampoRelativo(contadorRealizacion,checksRealizacion)+
+                "<tr><td class=\"tg-ltgr\">El profesor responde en los foros dentro del límite de 48 horas lectivas desde que se plantea la duda</td>"+
+                    generarCampoAbsoluto(respondeATiempo)+
+                "<tr><td class=\"tg-ltgr\">Se ofrece retroalimentación de las tareas</td>"+
+                    generarCampoAbsoluto(hayRetroalimentacion)+
+                "<tr><td class=\"tg-ltgr\">Las tareas están calificadas</td>"+
+                    generarCampoAbsoluto(corregidoATiempo)+
+                "<tr><td class=\"tg-ltgr\">El calificador muestra cómo ponderan las diferentes tareas</td>"+
+                    generarCampoAbsoluto(ponderacionVisible)+
+                "<tr><td class=\"tg-plgr\">Evaluación:</td>"+
+                    generarCampoRelativo(contadorEvaluacion,checksEvaluacion)+
+                "<tr><td class=\"tg-ltgr\">La mayoría de alumnos responden a los feedbacks</td>"+
+                    generarCampoAbsoluto(respondenFeedbacks)+
+                "<tr><td class=\"tg-ltgr\">Se utilizan encuestas de opinión</td>"+
+                    generarCampoAbsoluto(usaSurveys)+
                 "</table>";
     }
 
@@ -205,6 +200,28 @@ public class MoodleQAFacade {
     public float porcentajeFraccion(float numerador, float denominador){
         return numerador/denominador*100;
     };
+
+    public String generarCampoAbsoluto(boolean resultado){
+        if (resultado){
+            return "<td class=\"tg-pgre\">Sí</td>";
+        }else{
+            return "<td class=\"tg-pred\">No</td>";
+        }
+    }
+
+    public String generarCampoRelativo(float numerador, float denominador){
+        float resultado= numerador/denominador;
+        String campoAMedias="<meter value=\""+numerador+"\" min=\"0\" max=\""+denominador+"\"></meter>"+
+                String.format("%.1f",porcentajeFraccion(numerador, denominador))+"%"+"</td>";
+        if (resultado<0.2){return "<td class=\"tg-pred\">"+campoAMedias;}
+        if (resultado<0.4){return "<td class=\"tg-oran\">"+campoAMedias;}
+        if (resultado<0.6){return "<td class=\"tg-yell\">"+campoAMedias;}
+        if (resultado<0.8){
+            return "<td class=\"tg-char\">"+campoAMedias;
+        }else{
+            return "<td class=\"tg-pgre\">"+campoAMedias;
+        }
+    }
 
     public String generarInformeGlobal(String token){
         List<Course> listaCursos= getListaCursos(token);
