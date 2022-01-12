@@ -192,6 +192,11 @@ public class WebServiceClient {
     }
 
     public static boolean alumnosEnGrupos(String token, int courseid){
+        List<User> listaUsuariosHuerfanos = obtenerAlumnosSinGrupo(token, courseid);
+        return listaUsuariosHuerfanos.size()==0;
+    }
+
+    public static List<User> obtenerAlumnosSinGrupo(String token, int courseid) {
         List<User> listaUsuarios=obtenerUsuarios(token, courseid);
         List<User> listaUsuariosHuerfanos=new ArrayList<>();
         for (User usuario:listaUsuarios) {
@@ -199,8 +204,9 @@ public class WebServiceClient {
                 listaUsuariosHuerfanos.add(usuario);
             }
         }
-        return listaUsuariosHuerfanos.size()==0;
+        return listaUsuariosHuerfanos;
     }
+
 
     public static List<Table> obtenerCalificadores(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
@@ -276,17 +282,23 @@ public class WebServiceClient {
     }
 
     public static boolean estanActualizadosRecursos(String token, int courseid){
+        List<Resource> listaRecursosDesfasados = obtenerRecursosDesfasados(token, courseid);
+        return listaRecursosDesfasados.size()==0;
+    }
+
+    public static List<Resource> obtenerRecursosDesfasados(String token, int courseid) {
         Course curso=obtenerCursoPorId(token, courseid);
         List<Resource> listaRecursos=obtenerRecursos(token, courseid);
+        List<Resource> listaRecursosDesfasados=new ArrayList<>();
         int fechaUmbral=curso.getStartdate()-15780000;
         for (Resource recurso:listaRecursos) {
             for (Contentfile archivo: recurso.getContentfiles()) {
                 if(archivo.getTimemodified()<fechaUmbral){
-                    return false;
+                    listaRecursosDesfasados.add(recurso);
                 }
             }
         }
-        return true;
+        return listaRecursosDesfasados;
     }
 
     public static List<Module> obtenerListaModulos(String token, int courseid){
@@ -301,11 +313,17 @@ public class WebServiceClient {
     }
 
     public static boolean sonFechasCorrectas(String token, int courseid){
+        List<Module> listaModulosMalFechados = obtenerModulosMalFechados(token, courseid);
+        return listaModulosMalFechados.size()==0;
+    }
+
+    public static List<Module> obtenerModulosMalFechados(String token, int courseid) {
         Course curso=obtenerCursoPorId(token, courseid);
         int startdate=curso.getStartdate();
         int enddate=curso.getEnddate();
         List<Date> dates;
         List<Module> listaModulos=obtenerListaModulos(token, courseid);
+        List<Module> listaModulosMalFechados=new ArrayList<>();
         int opendate=0;
         int duedate=0;
         for (Module modulo:listaModulos) {
@@ -313,7 +331,7 @@ public class WebServiceClient {
                 if (modulo.getDates().size()==1){
                     duedate=modulo.getDates().get(0).getTimestamp();
                     if(duedate>enddate&&enddate!=0||duedate<startdate){
-                        return false;
+                        listaModulosMalFechados.add(modulo);
                     }
                 }else{
                     dates=modulo.getDates();
@@ -325,12 +343,12 @@ public class WebServiceClient {
                         }
                     }
                     if(opendate>enddate&&enddate!=0||opendate<startdate||duedate>enddate&&enddate!=0||duedate<startdate|| opendate>duedate){
-                        return false;
+                        listaModulosMalFechados.add(modulo);
                     }
                 }
             }
         }
-        return true;
+        return listaModulosMalFechados;
     }
 
     public static int numeroAlumnos(String token, int courseid){

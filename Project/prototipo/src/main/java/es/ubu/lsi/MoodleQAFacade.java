@@ -1,6 +1,9 @@
 package es.ubu.lsi;
 
 import es.ubu.lsi.model.Course;
+import es.ubu.lsi.model.Module;
+import es.ubu.lsi.model.Resource;
+import es.ubu.lsi.model.User;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -57,6 +60,9 @@ public class MoodleQAFacade {
         boolean ponderacionVisible=isCalificadorMuestraPonderacion(token,courseid);
         boolean respondenFeedbacks=isRespondenFeedbacks(token,courseid);
         boolean usaSurveys=isUsaSurveys(token,courseid);
+        List<User> alumnosSinGrupo=WebServiceClient.obtenerAlumnosSinGrupo(token,courseid);
+        List<Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(token,courseid);
+        List<Resource> recursosDesfasados=WebServiceClient.obtenerRecursosDesfasados(token,courseid);
         int[] puntosComprobaciones = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         if(progresoActivado){contadorDiseno++;puntosComprobaciones[0]++;}
         if(variedadFormatos){contadorDiseno++;puntosComprobaciones[1]++;}
@@ -126,7 +132,9 @@ public class MoodleQAFacade {
                     generarCampoAbsoluto(respondenFeedbacks)+
                 "</tr><tr><td class=\"tg-ltgr\">Se utilizan encuestas de opinión</td>"+
                     generarCampoAbsoluto(usaSurveys)+
-                "</tr></table>";
+                "</tr></table>"+
+                "<h3>Aspectos a mejorar</h3>"+
+                generarListaMejoras(alumnosSinGrupo,modulosMalFechados,recursosDesfasados);
     }
 
     public boolean isSonVisiblesCondiciones(String token, int courseid) {
@@ -263,6 +271,32 @@ public class MoodleQAFacade {
                 "</tr><tr><td class=\"tg-plgr\">Estratégica</td>"+generarCampoRelativo(puntuaciones[6],puntuacionesMax[6])+
                 generarCampoRelativo(puntuaciones[7],puntuacionesMax[7])+generarCampoRelativo(puntuaciones[8],puntuacionesMax[8])+
                 "</tr></table>";
+    }
+
+    public String generarListaMejoras(List<User> alumnosSinGrupo, List<Module> modulosMalFechados, List<Resource> recursosDesfasados){
+        StringBuilder listaAspectosAMejorar=new StringBuilder();
+        if (alumnosSinGrupo.size()!=0){
+            listaAspectosAMejorar.append("<p>Usuarios no asignados a un grupo:</p><ul>");
+            for (User alumno:alumnosSinGrupo) {
+                listaAspectosAMejorar.append("<li>"+alumno.getFullname()+"</li>");
+            }
+            listaAspectosAMejorar.append("</ul>");
+        }
+        if (modulosMalFechados.size()!=0){
+            listaAspectosAMejorar.append("<p>Módulos con fechas incorrectas:</p><ul>");
+            for (Module modulo:modulosMalFechados) {
+                listaAspectosAMejorar.append("<li>"+modulo.getName()+"</li>");
+            }
+            listaAspectosAMejorar.append("</ul>");
+        }
+        if (recursosDesfasados.size()!=0){
+            listaAspectosAMejorar.append("</ul><p>Recursos sin actualizar:</p><ul>");
+            for (Resource recurso:recursosDesfasados) {
+                listaAspectosAMejorar.append("<li>"+recurso.getName()+"</li>");
+            }
+            listaAspectosAMejorar.append("</ul>");
+        }
+        return listaAspectosAMejorar.toString();
     }
 
     public String generarInformeGlobal(String token){
