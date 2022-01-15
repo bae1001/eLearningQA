@@ -11,6 +11,8 @@
 \usepackage{microtype}
 \usepackage{placeins}
 
+\usepackage{url}
+
 \RequirePackage{booktabs}
 \RequirePackage[table]{xcolor}
 \RequirePackage{xtab}
@@ -21,6 +23,9 @@
 \hypersetup{
 	allcolors = {red}
 }
+
+% Bibliography management
+\usepackage[numbers,sort]{natbib}
 
 % Ecuaciones
 \usepackage{amsmath}
@@ -464,7 +469,8 @@ Web application, isnstructional design, metrics, quality, e-learning, automatic 
 \include{./tex/7_Conclusiones_Lineas_de_trabajo_futuras}
 
 
-\bibliographystyle{plain}
+%\bibliographystyle{plain}
+\bibliographystyle{plainurl}
 \bibliography{bibliografia}
 
 \end{document}
