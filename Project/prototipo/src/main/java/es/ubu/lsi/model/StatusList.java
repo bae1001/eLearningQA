@@ -24,10 +24,13 @@ public class StatusList {
         this.warnings = warnings;
     }
 
+    /*
     public boolean isHasCompletion(){
         if(statuses.size()==0){return true;}
         return statuses.get(0).isHascompletion();
     }
+
+     */
 
 
 

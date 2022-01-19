@@ -1,12 +1,10 @@
 package es.ubu.lsi;
 
-import es.ubu.lsi.model.Course;
-import es.ubu.lsi.model.Module;
-import es.ubu.lsi.model.Resource;
-import es.ubu.lsi.model.User;
+import es.ubu.lsi.model.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 public class MoodleQAFacade {
     public MoodleQAFacade(String username, String password) {
@@ -43,26 +41,39 @@ public class MoodleQAFacade {
         int contadorTotal=0;
         int checksTotal=0;
         Course curso= getCursoPorId(token, courseid);
-        boolean progresoActivado=isestaProgresoActivado(token,courseid);
-        boolean variedadFormatos=isHayVariedadFormatos(token,courseid);
-        boolean tienegrupos= isTieneGrupos(token, courseid);
-        boolean tareasGrupales=isHayTareasGrupales(token,courseid);
-        boolean sonVisiblesCondiciones= isSonVisiblesCondiciones(token, courseid);
-        boolean notaMaxConsistente=isEsNotaMaxConsistente(token,courseid);
-        boolean recursosActualizados=isEstanActualizadosRecursos(token,courseid);
-        boolean fechasCorrectas=isSonFechasCorrectas(token,courseid);
-        boolean muestraCriterios=isMuestraCriterios(token,courseid);
-        boolean anidamientoAceptable=isAnidamientoCalificadorAceptable(token,courseid);
-        boolean alumnosEnGrupos=isAlumnosEnGrupos(token,courseid);
-        boolean respondeATiempo=isRespondeATiempo(token,courseid);
-        boolean hayRetroalimentacion=isHayRetroalimentacion(token,courseid);
-        boolean corregidoATiempo=isEstaCorregidoATiempo(token,courseid);
-        boolean ponderacionVisible=isCalificadorMuestraPonderacion(token,courseid);
-        boolean respondenFeedbacks=isRespondenFeedbacks(token,courseid);
-        boolean usaSurveys=isUsaSurveys(token,courseid);
-        List<User> alumnosSinGrupo=WebServiceClient.obtenerAlumnosSinGrupo(token,courseid);
-        List<Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(token,courseid);
-        List<Resource> recursosDesfasados=WebServiceClient.obtenerRecursosDesfasados(token,courseid);
+        List<User> listaUsuarios= WebServiceClient.obtenerUsuarios(token, courseid);
+        StatusList listaEstados=WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios);
+        List<Module> listaModulos=WebServiceClient.obtenerListaModulos(token, courseid);
+        List<Group> listaGrupos=WebServiceClient.obtenerListaGrupos(token, courseid);
+        List<Assignment> listaTareas=WebServiceClient.obtenerListaTareas(token, courseid);
+        List<Table> listaCalificadores=WebServiceClient.obtenerCalificadores(token, courseid);
+        List<Resource> listaRecursos=WebServiceClient.obtenerRecursos(token, courseid);
+        List<CourseModule> listaModulosTareas=WebServiceClient.obtenerModulosTareas(token, listaTareas);
+        List<Post> listaPosts=WebServiceClient.obtenerListaPosts(token, courseid);
+        Map<Integer,Integer> mapaFechasLimite=WebServiceClient.generarMapaFechasLimite(listaTareas);
+        List<Assignment> tareasConNotas=WebServiceClient.obtenerTareasConNotas(token,mapaFechasLimite);
+        List<ResponseAnalysis> listaAnalisis=WebServiceClient.obtenerAnalisis(token, courseid);
+        List<Survey> listaSurveys=WebServiceClient.obtenerSurveys(token, courseid);
+        List<User> alumnosSinGrupo=WebServiceClient.obtenerAlumnosSinGrupo(WebServiceClient.obtenerUsuarios(token, courseid));
+        List<Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(curso, listaModulos);
+        List<Resource> recursosDesfasados=WebServiceClient.obtenerRecursosDesfasados(curso, listaRecursos);
+        boolean progresoActivado=isestaProgresoActivado(listaEstados);
+        boolean variedadFormatos=isHayVariedadFormatos(listaModulos);
+        boolean tienegrupos= isTieneGrupos(listaGrupos);
+        boolean tareasGrupales=isHayTareasGrupales(listaTareas);
+        boolean sonVisiblesCondiciones= isSonVisiblesCondiciones(curso);
+        boolean notaMaxConsistente=isEsNotaMaxConsistente(listaCalificadores);
+        boolean recursosActualizados=isEstanActualizadosRecursos(recursosDesfasados);
+        boolean fechasCorrectas=isSonFechasCorrectas(modulosMalFechados);
+        boolean muestraCriterios=isMuestraCriterios(listaModulosTareas);
+        boolean anidamientoAceptable=isAnidamientoCalificadorAceptable(listaCalificadores);
+        boolean alumnosEnGrupos=isAlumnosEnGrupos(listaUsuarios);
+        boolean respondeATiempo=isRespondeATiempo(listaUsuarios,listaPosts);
+        boolean hayRetroalimentacion=isHayRetroalimentacion(listaCalificadores);
+        boolean corregidoATiempo=isEstaCorregidoATiempo(tareasConNotas,mapaFechasLimite);
+        boolean ponderacionVisible=isCalificadorMuestraPonderacion(listaCalificadores);
+        boolean respondenFeedbacks=isRespondenFeedbacks(listaAnalisis,listaUsuarios);
+        boolean usaSurveys=isUsaSurveys(listaSurveys);
         int[] puntosComprobaciones = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         if(progresoActivado){contadorDiseno++;puntosComprobaciones[0]++;}
         if(variedadFormatos){contadorDiseno++;puntosComprobaciones[1]++;}
@@ -137,76 +148,78 @@ public class MoodleQAFacade {
                 generarListaMejoras(alumnosSinGrupo,modulosMalFechados,recursosDesfasados);
     }
 
-    public boolean isSonVisiblesCondiciones(String token, int courseid) {
-        return WebServiceClient.sonVisiblesCondiciones(token, courseid);
+    public boolean isSonVisiblesCondiciones(Course curso) {
+        return WebServiceClient.sonVisiblesCondiciones(curso);
     }
 
-    public boolean isTieneGrupos(String token, int courseid) {
-        return WebServiceClient.tieneGrupos(token, courseid);
+    public boolean isTieneGrupos(List<Group> listaGrupos) {
+        return WebServiceClient.tieneGrupos(listaGrupos);
     }
 
     public Course getCursoPorId(String token, int courseid) {
         return WebServiceClient.obtenerCursoPorId(token, courseid);
     }
 
-    public boolean isestaProgresoActivado(String token, int courseid) {
-        return WebServiceClient.estaProgresoActivado(token, courseid);
+
+
+    public boolean isestaProgresoActivado(StatusList listaEstados) {
+        return WebServiceClient.estaProgresoActivado(listaEstados);
     }
 
-    public boolean isUsaSurveys(String token, int courseid) {
-        return WebServiceClient.usaSurveys(token, courseid);
+    public boolean isUsaSurveys(List<Survey> listaEncuestas) {
+        return WebServiceClient.usaSurveys(listaEncuestas);
     }
 
-    public boolean isAlumnosEnGrupos(String token, int courseid) {
-        return WebServiceClient.alumnosEnGrupos(token, courseid);
+    public boolean isAlumnosEnGrupos(List<User> listaUsuarios) {
+        return WebServiceClient.alumnosEnGrupos(listaUsuarios);
     }
 
-    public boolean isEstaCorregidoATiempo(String token, int courseid) {
-        return WebServiceClient.estaCorregidoATiempo(token, courseid);
+    public boolean isEstaCorregidoATiempo(List<Assignment> tareasConNotas, Map<Integer, Integer> mapaFechasLimite) {
+        return WebServiceClient.estaCorregidoATiempo(tareasConNotas, mapaFechasLimite);
     }
 
-    public boolean isRespondeATiempo(String token, int courseid) {
-        return WebServiceClient.respondeATiempo(token, courseid);
+    public boolean isRespondeATiempo(List<User> listaUsuarios, List<Post> listaPostsCompleta) {
+        return WebServiceClient.respondeATiempo(listaUsuarios, listaPostsCompleta);
     }
 
-    public boolean isAnidamientoCalificadorAceptable(String token, int courseid) {
-        return WebServiceClient.anidamientoCalificadorAceptable(token, courseid);
+    public boolean isAnidamientoCalificadorAceptable(List<Table> listaCalificadores) {
+        return WebServiceClient.anidamientoCalificadorAceptable(listaCalificadores);
     }
 
-    public boolean isCalificadorMuestraPonderacion(String token, int courseid) {
-        return WebServiceClient.calificadorMuestraPonderacion(token, courseid);
+    public boolean isCalificadorMuestraPonderacion(List<Table> listaCalificadores) {
+        return WebServiceClient.calificadorMuestraPonderacion(listaCalificadores);
     }
 
-    public boolean isHayRetroalimentacion(String token, int courseid) {
-        return WebServiceClient.hayRetroalimentacion(token, courseid);
+    public boolean isHayRetroalimentacion(List<Table> listaCalificadores) {
+        return WebServiceClient.hayRetroalimentacion(listaCalificadores);
     }
 
-    public boolean isEsNotaMaxConsistente(String token, int courseid) {
-        return WebServiceClient.esNotaMaxConsistente(token, courseid);
+    public boolean isEsNotaMaxConsistente(List<Table> listaCalificadores) {
+        return WebServiceClient.esNotaMaxConsistente(listaCalificadores);
     }
 
-    public boolean isEstanActualizadosRecursos(String token, int courseid) {
-        return WebServiceClient.estanActualizadosRecursos(token, courseid);
+    public boolean isEstanActualizadosRecursos(List<Resource> listaRecursosDesfasados) {
+        return WebServiceClient.estanActualizadosRecursos(listaRecursosDesfasados);
     }
 
-    public boolean isSonFechasCorrectas(String token, int courseid) {
-        return WebServiceClient.sonFechasCorrectas(token, courseid);
+    public boolean isSonFechasCorrectas(List<Module> listaModulosMalFechados) {
+        return WebServiceClient.sonFechasCorrectas(listaModulosMalFechados);
     }
 
-    public boolean isRespondenFeedbacks(String token, int courseid) {
-        return WebServiceClient.respondenFeedbacks(token, courseid);
+    public boolean isRespondenFeedbacks(List<ResponseAnalysis> listaAnalisis, List<User> listaUsuarios) {
+        return WebServiceClient.respondenFeedbacks(listaAnalisis,listaUsuarios);
     }
 
-    public boolean isHayTareasGrupales(String token, int courseid) {
-        return WebServiceClient.hayTareasGrupales(token, courseid);
+    public boolean isHayTareasGrupales(List<Assignment> listaTareas) {
+        return WebServiceClient.hayTareasGrupales(listaTareas);
     }
 
-    public boolean isMuestraCriterios(String token, int courseid) {
-        return WebServiceClient.muestraCriterios(token, courseid);
+    public boolean isMuestraCriterios(List<CourseModule> listaModulosTareas) {
+        return WebServiceClient.muestraCriterios(listaModulosTareas);
     }
 
-    public boolean isHayVariedadFormatos(String token, int courseid) {
-        return WebServiceClient.hayVariedadFormatos(token, courseid);
+    public boolean isHayVariedadFormatos(List<Module> listamodulos) {
+        return WebServiceClient.hayVariedadFormatos(listamodulos);
     }
 
     public float porcentajeFraccion(float numerador, float denominador){
@@ -228,11 +241,8 @@ public class MoodleQAFacade {
         if (resultado<0.2){return "<td class=\"tg-pred\">"+campoAMedias;}
         if (resultado<0.4){return "<td class=\"tg-oran\">"+campoAMedias;}
         if (resultado<0.6){return "<td class=\"tg-yell\">"+campoAMedias;}
-        if (resultado<0.8){
-            return "<td class=\"tg-char\">"+campoAMedias;
-        }else{
-            return "<td class=\"tg-pgre\">"+campoAMedias;
-        }
+        if (resultado<0.8){return "<td class=\"tg-char\">"+campoAMedias;}
+        else{return "<td class=\"tg-pgre\">"+campoAMedias;}
     }
 
     public String generarMatrizRolPerspectiva(int[] puntosComprobaciones,int numeroCursos){
@@ -301,13 +311,6 @@ public class MoodleQAFacade {
 
     public String generarInformeGlobal(String token){
         List<Course> listaCursos= getListaCursos(token);
-        int counter=0;
-        for (Course curso: listaCursos) {
-            if(isTieneGrupos(token, curso.getId())){
-                counter++;
-            }
-        }
-        return "Cursos con grupos:"+String.valueOf(counter)+"/"+String.valueOf(listaCursos.size())+
-                "<meter value=\""+String.valueOf(counter)+"\" min=\"0\" max=\""+String.valueOf(listaCursos.size())+"\"></meter>";
+        return "Esta característica no está implementada";
     }
 }
