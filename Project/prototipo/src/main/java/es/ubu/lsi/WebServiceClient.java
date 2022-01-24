@@ -7,9 +7,38 @@ import org.springframework.web.client.RestTemplate;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 
 public class WebServiceClient {
+
+    public static FileReader reader;
+    public static Properties properties;
+    public static int UMBRAL_NUM_FORMATOS = 4;
+    public static int ANIDAMIENTO_EXCESIVO = 4;
+    public static int TIEMPO_RESPUESTA_FOROS = 172800;
+    public static double PORCENTAJE_MIN_COMENTARIOS = 0.8;
+    public static int TIEMPO_CORRECCION_TAREAS = 604800;
+    public static double PORCENTAJE_MIN_RESPUESTAS = 0.6;
+
+    static {
+        try {
+            reader = new FileReader("config");
+            properties=new Properties();
+            properties.load(reader);
+            UMBRAL_NUM_FORMATOS= Integer.parseInt(properties.getProperty("umbral_num_formatos"));
+            ANIDAMIENTO_EXCESIVO = Integer.parseInt(properties.getProperty("anidamiento_excesivo"));
+            TIEMPO_RESPUESTA_FOROS = Integer.parseInt(properties.getProperty("tiempo_respuesta_foros"));
+            PORCENTAJE_MIN_COMENTARIOS = Double.parseDouble(properties.getProperty("porcentaje_min_comentarios"));
+            TIEMPO_CORRECCION_TAREAS = Integer.parseInt(properties.getProperty("tiempo_correccion_tareas"));
+            PORCENTAJE_MIN_RESPUESTAS = Double.parseDouble(properties.getProperty("porcentaje_min_respuestas"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static String login(String username, String password){
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject("https://school.moodledemo.net/login/token.php?username="+username+"&password="+password+"&service=moodle_mobile_app", String.class).split("\"", 0)[3];
@@ -102,8 +131,8 @@ public class WebServiceClient {
                 List<Grade> notas = tarea.getGrades();
                 for (Grade nota : notas) {
                     if(Objects.equals(nota.getGrade(), "")){nota.setGrade("-1.00000");}
-                    if (nota.getTimemodified() - mapaFechasLimite.get(tarea.getId()) > 604800 ||
-                            (System.currentTimeMillis() / 1000L) - mapaFechasLimite.get(tarea.getId()) > 604800 && Float.parseFloat(nota.getGrade()) < 0) {
+                    if (nota.getTimemodified() - mapaFechasLimite.get(tarea.getId()) > TIEMPO_CORRECCION_TAREAS ||
+                            (System.currentTimeMillis() / 1000L) - mapaFechasLimite.get(tarea.getId()) > TIEMPO_CORRECCION_TAREAS && Float.parseFloat(nota.getGrade()) < 0) {
                         return false;
                     }
                 }
@@ -161,7 +190,7 @@ public class WebServiceClient {
         }
         for (Post respuestaProfe:listaRespuestasProfesores) {
             if(dudasAlumnosSinRespuesta.containsKey(respuestaProfe.getParentid())&&
-                    dudasAlumnosSinRespuesta.get(respuestaProfe.getParentid()).getTimecreated()-respuestaProfe.getTimecreated()<172800){
+                    dudasAlumnosSinRespuesta.get(respuestaProfe.getParentid()).getTimecreated()-respuestaProfe.getTimecreated()< TIEMPO_RESPUESTA_FOROS){
                 dudasAlumnosSinRespuesta.remove(respuestaProfe.getParentid());
             }
         }
@@ -249,7 +278,7 @@ public class WebServiceClient {
         if (listaCalificadores.size()==0){
             return false;
         }
-        return listaCalificadores.get(0).getMaxdepth()<4;
+        return listaCalificadores.get(0).getMaxdepth()< ANIDAMIENTO_EXCESIVO;
     }
 
     public static boolean calificadorMuestraPonderacion(List<Table> listaCalificadores){
@@ -280,7 +309,7 @@ public class WebServiceClient {
                 }
             }
         }
-        return (float)contadorRetroalimentacion/(float)contadorTuplasComentables>0.8;
+        return (float)contadorRetroalimentacion/(float)contadorTuplasComentables> PORCENTAJE_MIN_COMENTARIOS;
     }
 
     public static boolean esNotaMaxConsistente(List<Table> listaCalificadores){
@@ -412,7 +441,7 @@ public class WebServiceClient {
     public static boolean respondenFeedbacks(List<ResponseAnalysis> listaAnalisis, List<User> usuarios){
         int nAlumnos=numeroAlumnos(usuarios);
         for (ResponseAnalysis analisis:listaAnalisis) {
-            if ((float)(analisis.getTotalattempts()+analisis.getTotalanonattempts())/(float) nAlumnos<0.6){
+            if ((float)(analisis.getTotalattempts()+analisis.getTotalanonattempts())/(float) nAlumnos< PORCENTAJE_MIN_RESPUESTAS){
                 return false;
             }
         }
@@ -460,7 +489,7 @@ public class WebServiceClient {
                 formatosVistos.add(modulo.getModname());
             }
         }
-        return formatosVistos.size()>=4;
+        return formatosVistos.size()>= UMBRAL_NUM_FORMATOS;
     }
 
 
