@@ -13,6 +13,9 @@ import java.util.*;
 
 public class WebServiceClient {
 
+
+
+    public static String HOST = "https://school.moodledemo.net";
     public static FileReader reader;
     public static Properties properties;
     public static int UMBRAL_NUM_FORMATOS = 4;
@@ -21,6 +24,7 @@ public class WebServiceClient {
     public static double PORCENTAJE_MIN_COMENTARIOS = 0.8;
     public static int TIEMPO_CORRECCION_TAREAS = 604800;
     public static double PORCENTAJE_MIN_RESPUESTAS = 0.6;
+
 
     static {
         try {
@@ -38,15 +42,18 @@ public class WebServiceClient {
         }
     }
 
+    public static void setHOST(String HOST) {
+        WebServiceClient.HOST = HOST;
+    }
 
     public static String login(String username, String password){
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject("https://school.moodledemo.net/login/token.php?username="+username+"&password="+password+"&service=moodle_mobile_app", String.class).split("\"", 0)[3];
+        return restTemplate.getForObject(HOST + "/login/token.php?username=" +username+"&password="+password+"&service=moodle_mobile_app", String.class).split("\"", 0)[3];
     }
 
     public static List<User> obtenerUsuarios(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_enrol_get_enrolled_users&moodlewsrestformat=json&wstoken="+token+"&courseid="+courseid;
+        String url = HOST + "/webservice/rest/server.php?wsfunction=core_enrol_get_enrolled_users&moodlewsrestformat=json&wstoken=" +token+"&courseid="+courseid;
         //guardarComoJSON(new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, User[].class))),"Listausuarios"+courseid);
         return new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, User[].class)));
     }
@@ -75,14 +82,14 @@ public class WebServiceClient {
 
     public static List<Course> obtenerCursos(String token){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_enrolled_courses_by_timeline_classification&moodlewsrestformat=json&wstoken="+token+"&classification=inprogress";
+        String url = HOST + "/webservice/rest/server.php?wsfunction=core_course_get_enrolled_courses_by_timeline_classification&moodlewsrestformat=json&wstoken=" +token+"&classification=inprogress";
         //guardarComoJSON(restTemplate.getForObject(url,CourseList.class).getCourses(),"Listacursos");
         return restTemplate.getForObject(url,CourseList.class).getCourses();
     }
 
     public static Course obtenerCursoPorId(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&wstoken="+token+"&field=id&value="+courseid;
+        String url = HOST + "/webservice/rest/server.php?wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&wstoken=" +token+"&field=id&value="+courseid;
         return restTemplate.getForObject(url,CourseList.class).getCourses().get(0);
     }
 
@@ -92,7 +99,7 @@ public class WebServiceClient {
 
     public static List<Group> obtenerListaGrupos(String token, int courseid) {
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_group_get_course_groups&moodlewsrestformat=json&wstoken="+ token +"&courseid="+ courseid;
+        String url = HOST + "/webservice/rest/server.php?wsfunction=core_group_get_course_groups&moodlewsrestformat=json&wstoken=" + token +"&courseid="+ courseid;
         List<Group> listaGrupos= new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, Group[].class)));
         //guardarComoJSON(listaGrupos,"Listagrupos"+courseid);
         return listaGrupos;
@@ -113,7 +120,7 @@ public class WebServiceClient {
                 idProfesor=usuario.getId();
             }
         }
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_completion_get_activities_completion_status&moodlewsrestformat=json&wstoken="+ token +"&courseid="+ courseid +"&userid="+idProfesor;
+        String url = HOST + "/webservice/rest/server.php?wsfunction=core_completion_get_activities_completion_status&moodlewsrestformat=json&wstoken=" + token +"&courseid="+ courseid +"&userid="+idProfesor;
         StatusList listaEstados=restTemplate.getForObject(url,StatusList.class);
         return listaEstados;
     }
@@ -143,7 +150,7 @@ public class WebServiceClient {
 
     public static List<Assignment> obtenerTareasConNotas(String token, Map<Integer, Integer> mapaFechasLimite) {
         RestTemplate restTemplate = new RestTemplate();
-        StringBuilder url = new StringBuilder("https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_assign_get_grades&moodlewsrestformat=json&wstoken=" + token);
+        StringBuilder url = new StringBuilder(HOST + "/webservice/rest/server.php?wsfunction=mod_assign_get_grades&moodlewsrestformat=json&wstoken=" + token);
         int contador=0;
         for (Integer id: mapaFechasLimite.keySet()) {
             url.append("&assignmentids[").append(contador).append("]=").append(id);
@@ -165,7 +172,7 @@ public class WebServiceClient {
 
     public static List<Assignment> obtenerListaTareas(String token, int courseid) {
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&wstoken="+ token;
+        String url = HOST + "/webservice/rest/server.php?wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&wstoken=" + token;
         CourseList listaCursos= restTemplate.getForObject(url,CourseList.class);
         List<Assignment> listaTareas= new ArrayList<>();
         for (Course curso:listaCursos.getCourses()) {
@@ -218,7 +225,7 @@ public class WebServiceClient {
     public static List<Post> obtenerListaPosts(String token, Discussion debate) {
         RestTemplate restTemplate = new RestTemplate();
         PostList listaPostsDebate;
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_discussion_posts&moodlewsrestformat=json&wstoken="+ token +"&discussionid="+debate.getDiscussion();
+        String url= HOST + "/webservice/rest/server.php?wsfunction=mod_forum_get_discussion_posts&moodlewsrestformat=json&wstoken=" + token +"&discussionid="+debate.getDiscussion();
         listaPostsDebate=restTemplate.getForObject(url,PostList.class);
         return listaPostsDebate.getPosts();
     }
@@ -226,14 +233,14 @@ public class WebServiceClient {
     public static List<Discussion> obtenerListaDebates(String token, Forum foro) {
         RestTemplate restTemplate = new RestTemplate();
         DiscussionList listaDebates;
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_forum_discussions&moodlewsrestformat=json&wstoken="+ token +"&forumid="+foro.getId();
+        String url= HOST + "/webservice/rest/server.php?wsfunction=mod_forum_get_forum_discussions&moodlewsrestformat=json&wstoken=" + token +"&forumid="+foro.getId();
         listaDebates= restTemplate.getForObject(url,DiscussionList.class);
         return listaDebates.getDiscussions();
     }
 
     public static List<Forum> obtenerListaForos(String token, int courseid) {
         RestTemplate restTemplate = new RestTemplate();
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_forum_get_forums_by_courses&moodlewsrestformat=json&wstoken="+ token +"&courseids[0]="+courseid;
+        String url= HOST + "/webservice/rest/server.php?wsfunction=mod_forum_get_forums_by_courses&moodlewsrestformat=json&wstoken=" + token +"&courseids[0]="+courseid;
         Forum[] arrayForos= restTemplate.getForObject(url, Forum[].class);
         return new ArrayList<>(Arrays.asList(arrayForos));
     }
@@ -244,7 +251,7 @@ public class WebServiceClient {
 
     public static List<Survey> obtenerSurveys(String token, int courseid) {
         RestTemplate restTemplate = new RestTemplate();
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_survey_get_surveys_by_courses&moodlewsrestformat=json&wstoken="+ token +"&courseids[0]="+ courseid;
+        String url= HOST + "/webservice/rest/server.php?wsfunction=mod_survey_get_surveys_by_courses&moodlewsrestformat=json&wstoken=" + token +"&courseids[0]="+ courseid;
         SurveyList listaEncuestas = restTemplate.getForObject(url, SurveyList.class);
         //guardarComoJSON(listaEncuestas.getSurveys(),"Listasurveys"+courseid);
         return listaEncuestas.getSurveys();
@@ -268,7 +275,7 @@ public class WebServiceClient {
 
     public static List<Table> obtenerCalificadores(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=gradereport_user_get_grades_table&moodlewsrestformat=json&wstoken="+ token +"&courseid="+courseid;
+        String url= HOST + "/webservice/rest/server.php?wsfunction=gradereport_user_get_grades_table&moodlewsrestformat=json&wstoken=" + token +"&courseid="+courseid;
         TableList listaCalificadores = restTemplate.getForObject(url, TableList.class);
         //guardarComoJSON(listaCalificadores.getTables(),"Listacalificadores"+courseid);
         return listaCalificadores.getTables();
@@ -332,7 +339,7 @@ public class WebServiceClient {
 
     public static List<Resource> obtenerRecursos(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_resource_get_resources_by_courses&moodlewsrestformat=json&wstoken="+token+"&courseids[0]="+courseid;
+        String url = HOST + "/webservice/rest/server.php?wsfunction=mod_resource_get_resources_by_courses&moodlewsrestformat=json&wstoken=" +token+"&courseids[0]="+courseid;
         //guardarComoJSON(restTemplate.getForObject(url, ResourceList.class).getResources(),"Listarecursos"+courseid);
         return restTemplate.getForObject(url, ResourceList.class).getResources();
     }
@@ -356,7 +363,7 @@ public class WebServiceClient {
 
     public static List<Module> obtenerListaModulos(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_contents&moodlewsrestformat=json&wstoken="+token+"&courseid="+courseid;
+        String url = HOST + "/webservice/rest/server.php?wsfunction=core_course_get_contents&moodlewsrestformat=json&wstoken=" +token+"&courseid="+courseid;
         List<Section> listaSecciones= new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, Section[].class)));
         List<Module> listaModulos=new ArrayList<>();
         for (Section seccion:listaSecciones) {
@@ -416,7 +423,7 @@ public class WebServiceClient {
 
     public static List<Feedback> obtenerFeedbacks(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_feedback_get_feedbacks_by_courses&moodlewsrestformat=json&wstoken="+token+"&courseids[0]="+courseid;
+        String url= HOST + "/webservice/rest/server.php?wsfunction=mod_feedback_get_feedbacks_by_courses&moodlewsrestformat=json&wstoken=" +token+"&courseids[0]="+courseid;
         FeedbackList listaFeedbacks= restTemplate.getForObject(url, FeedbackList.class);
         return listaFeedbacks.getFeedbacks();
     }
@@ -426,7 +433,7 @@ public class WebServiceClient {
         List<Feedback> listaFeedbacks=obtenerFeedbacks(token, courseid);
         RestTemplate restTemplate = new RestTemplate();
         List<ResponseAnalysis> listaAnalisis= new ArrayList<>();
-        String url="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=mod_feedback_get_responses_analysis&moodlewsrestformat=json&wstoken="+token+"&feedbackid=";
+        String url= HOST + "/webservice/rest/server.php?wsfunction=mod_feedback_get_responses_analysis&moodlewsrestformat=json&wstoken=" +token+"&feedbackid=";
         for (Feedback feedback:listaFeedbacks) {
             listaAnalisis.add(restTemplate.getForObject(url+feedback.getId(),ResponseAnalysis.class));
         }
@@ -464,7 +471,7 @@ public class WebServiceClient {
         List<CourseModule> listaModulosTareas=new ArrayList<>();
         String url="";
         for (Assignment tarea:listaTareas) {
-            url ="https://school.moodledemo.net/webservice/rest/server.php?wsfunction=core_course_get_course_module&moodlewsrestformat=json&wstoken="+token+"&cmid="+tarea.getCmid();
+            url = HOST + "/webservice/rest/server.php?wsfunction=core_course_get_course_module&moodlewsrestformat=json&wstoken=" +token+"&cmid="+tarea.getCmid();
             listaModulosTareas.add(restTemplate.getForObject(url,CourseModuleWrapper.class).getCm());
         }
         //guardarComoJSON(listaModulosTareas,"Listamodulostareas"+listaTareas.get(0).getCourse());

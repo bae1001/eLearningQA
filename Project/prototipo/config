@@ -4,3 +4,4 @@ tiempo_respuesta_foros=172800
 porcentaje_min_comentarios=0.8
 tiempo_correccion_tareas=604800
 porcentaje_min_respuestas=0.6
+host=https://school.moodledemo.net

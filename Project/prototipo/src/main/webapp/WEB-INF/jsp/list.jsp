@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="es.ubu.lsi.MoodleQAFacade" %>
+<%@ page import="es.ubu.lsi.MoodleQAFacade,es.ubu.lsi.WebServiceClient"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,12 +12,12 @@
     <%String username=request.getParameter("username");
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
+      WebServiceClient.setHOST(request.getParameter("host"));
       MoodleQAFacade fachada= new MoodleQAFacade((String)session.getAttribute("username"),(String)session.getAttribute("password"));
       session.setAttribute("fachada", fachada);
-      session.setAttribute("token", fachada.conectarse((String)session.getAttribute("username"),(String)session.getAttribute("password")));
-      if((String)session.getAttribute("token")=="Invalid login, please try again"){response.sendRedirect("/");}
       String respuesta="";
       try{
+        session.setAttribute("token", fachada.conectarse((String)session.getAttribute("username"),(String)session.getAttribute("password")));
         respuesta=fachada.generarListaCursos((String)session.getAttribute("token"));
       }catch(Exception e){
         response.sendRedirect("");
