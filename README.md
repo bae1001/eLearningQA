@@ -17,6 +17,7 @@ teachers using Moodle.
 
 - Compatible with Moodle v3.8 onwards
 - Allows the user to choose which Moodle host to connect to when logging in
+- 17 checks on different aspects of a course
 - Generates reports showing the checks' results and additional information concerning the quality framework
 
 
