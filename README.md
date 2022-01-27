@@ -1,7 +1,7 @@
 # MoodleQA
 
-![](https://github.com/RobertoArastiBlanco/MoodleQA/actions/workflows/maven.yml/badge.svg)
-
+[![](https://github.com/RobertoArastiBlanco/MoodleQA/actions/workflows/maven.yml/badge.svg)](https://github.com/RobertoArastiBlanco/MoodleQA/actions/workflows/maven.yml)
+[![](https://img.shields.io/github/deployments/RobertoArastiBlanco/MoodleQA/moodleqa?label=Heroku%20deployment&style=plastic)](https://moodleqa.herokuapp.com)
 ## Description
 
 MoodleQA is a web app that uses Moodle's web service 
@@ -25,4 +25,9 @@ teachers using Moodle.
 ## Authors
 
 - [Roberto Arasti Blanco](https://www.github.com/RobertoArastiBlanco)
+
+## Mentors
+
+- [Carlos López Nozal](https://www.github.com/clopezno)
+- [Raúl Marticorena Sánchez](https://www.github.com/rmartico)
 
