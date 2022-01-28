@@ -22,7 +22,7 @@ class MoodleQAFacadeTest {
     public static String token;
     public static List<Course> listaCursos;
     public static List<StatusList> listasEstados=new ArrayList<>();
-    public static List<List<Module>> listasModulos=new ArrayList<>();
+    public static List<List<es.ubu.lsi.model.Module>> listasModulos=new ArrayList<>();
     private static List<List<Group>> listasGrupos=new ArrayList<>();
     private static List<List<Assignment>> listasTareas=new ArrayList<>();
     private static List<List<Table>> listasCalificadores=new ArrayList<>();
@@ -55,7 +55,7 @@ class MoodleQAFacadeTest {
             listaCursos=Arrays.asList(mapper.readValue(new File(ruta+"Listacursos"+extension), Course[].class));
             for (Integer id:ids) {
                 listasEstados.add(mapper.readValue(new File(ruta+"Listaestados"+id+extension), StatusList.class));
-                listasModulos.add(Arrays.asList(mapper.readValue(new File(ruta+"Listamodulos"+id+extension), Module[].class)));
+                listasModulos.add(Arrays.asList(mapper.readValue(new File(ruta+"Listamodulos"+id+extension), es.ubu.lsi.model.Module[].class)));
                 listasGrupos.add(Arrays.asList(mapper.readValue(new File(ruta+"Listagrupos"+id+extension), Group[].class)));
                 listasTareas.add(Arrays.asList(mapper.readValue(new File(ruta+"Listatareas"+id+extension), Assignment[].class)));
                 listasCalificadores.add(Arrays.asList(mapper.readValue(new File(ruta+"Listacalificadores"+id+extension), Table[].class)));

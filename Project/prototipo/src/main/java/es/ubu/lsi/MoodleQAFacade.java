@@ -66,7 +66,7 @@ public class MoodleQAFacade {
         Course curso= getCursoPorId(token, courseid);
         List<User> listaUsuarios= WebServiceClient.obtenerUsuarios(token, courseid);
         StatusList listaEstados=WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios);
-        List<Module> listaModulos=WebServiceClient.obtenerListaModulos(token, courseid);
+        List<es.ubu.lsi.model.Module> listaModulos=WebServiceClient.obtenerListaModulos(token, courseid);
         List<Group> listaGrupos=WebServiceClient.obtenerListaGrupos(token, courseid);
         List<Assignment> listaTareas=WebServiceClient.obtenerListaTareas(token, courseid);
         List<Table> listaCalificadores=WebServiceClient.obtenerCalificadores(token, courseid);
@@ -78,7 +78,7 @@ public class MoodleQAFacade {
         List<ResponseAnalysis> listaAnalisis=WebServiceClient.obtenerAnalisis(token, courseid);
         List<Survey> listaSurveys=WebServiceClient.obtenerSurveys(token, courseid);
         List<User> alumnosSinGrupo=WebServiceClient.obtenerAlumnosSinGrupo(WebServiceClient.obtenerUsuarios(token, courseid));
-        List<Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(curso, listaModulos);
+        List<es.ubu.lsi.model.Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(curso, listaModulos);
         List<Resource> recursosDesfasados=WebServiceClient.obtenerRecursosDesfasados(curso, listaRecursos);
         int[] puntosComprobaciones = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         if(isestaProgresoActivado(listaEstados)){puntosComprobaciones[0]++;}
@@ -185,7 +185,7 @@ public class MoodleQAFacade {
         return WebServiceClient.estanActualizadosRecursos(listaRecursosDesfasados);
     }
 
-    public boolean isSonFechasCorrectas(List<Module> listaModulosMalFechados) {
+    public boolean isSonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados) {
         return WebServiceClient.sonFechasCorrectas(listaModulosMalFechados);
     }
 
@@ -201,7 +201,7 @@ public class MoodleQAFacade {
         return WebServiceClient.muestraCriterios(listaModulosTareas);
     }
 
-    public boolean isHayVariedadFormatos(List<Module> listamodulos) {
+    public boolean isHayVariedadFormatos(List<es.ubu.lsi.model.Module> listamodulos) {
         return WebServiceClient.hayVariedadFormatos(listamodulos);
     }
 
@@ -274,7 +274,7 @@ public class MoodleQAFacade {
                 "</tr></table>";
     }
 
-    public String generarListaMejoras(List<User> alumnosSinGrupo, List<Module> modulosMalFechados, List<Resource> recursosDesfasados){
+    public String generarListaMejoras(List<User> alumnosSinGrupo, List<es.ubu.lsi.model.Module> modulosMalFechados, List<Resource> recursosDesfasados){
         StringBuilder listaAspectosAMejorar=new StringBuilder();
         if (alumnosSinGrupo.size()!=0){
             listaAspectosAMejorar.append("<p>Usuarios no asignados a un grupo:</p><ul>");
@@ -285,7 +285,7 @@ public class MoodleQAFacade {
         }
         if (modulosMalFechados.size()!=0){
             listaAspectosAMejorar.append("<p>Módulos con fechas incorrectas:</p><ul>");
-            for (Module modulo:modulosMalFechados) {
+            for (es.ubu.lsi.model.Module modulo:modulosMalFechados) {
                 listaAspectosAMejorar.append("<li>"+modulo.getName()+"</li>");
             }
             listaAspectosAMejorar.append("</ul>");

@@ -361,11 +361,11 @@ public class WebServiceClient {
         return listaRecursosDesfasados;
     }
 
-    public static List<Module> obtenerListaModulos(String token, int courseid){
+    public static List<es.ubu.lsi.model.Module> obtenerListaModulos(String token, int courseid){
         RestTemplate restTemplate = new RestTemplate();
         String url = HOST + "/webservice/rest/server.php?wsfunction=core_course_get_contents&moodlewsrestformat=json&wstoken=" +token+"&courseid="+courseid;
         List<Section> listaSecciones= new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, Section[].class)));
-        List<Module> listaModulos=new ArrayList<>();
+        List<es.ubu.lsi.model.Module> listaModulos=new ArrayList<>();
         for (Section seccion:listaSecciones) {
             listaModulos.addAll(seccion.getModules());
         }
@@ -373,18 +373,18 @@ public class WebServiceClient {
         return listaModulos;
     }
 
-    public static boolean sonFechasCorrectas(List<Module> listaModulosMalFechados){
+    public static boolean sonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados){
         return listaModulosMalFechados.size()==0;
     }
 
-    public static List<Module> obtenerModulosMalFechados(Course curso, List<Module> listaModulos) {
+    public static List<es.ubu.lsi.model.Module> obtenerModulosMalFechados(Course curso, List<es.ubu.lsi.model.Module> listaModulos) {
         int startdate=curso.getStartdate();
         int enddate=curso.getEnddate();
         List<Date> dates;
-        List<Module> listaModulosMalFechados=new ArrayList<>();
+        List<es.ubu.lsi.model.Module> listaModulosMalFechados=new ArrayList<>();
         int opendate=0;
         int duedate=0;
-        for (Module modulo:listaModulos) {
+        for (es.ubu.lsi.model.Module modulo:listaModulos) {
             if (modulo.getDates().size()>0){
                 if (modulo.getDates().size()==1){
                     duedate=modulo.getDates().get(0).getTimestamp();
@@ -489,9 +489,9 @@ public class WebServiceClient {
         return false;
     }
 
-    public static boolean hayVariedadFormatos(List<Module> listaModulos){
+    public static boolean hayVariedadFormatos(List<es.ubu.lsi.model.Module> listaModulos){
         List<String> formatosVistos=new ArrayList<>();
-        for (Module modulo:listaModulos) {
+        for (es.ubu.lsi.model.Module modulo:listaModulos) {
             if ("book,resource,folder,imscp,label,page,url".contains(modulo.getModname())&&!formatosVistos.contains(modulo.getModname())){
                 formatosVistos.add(modulo.getModname());
             }
