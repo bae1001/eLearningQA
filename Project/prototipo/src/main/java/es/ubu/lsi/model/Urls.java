@@ -16,7 +16,6 @@ public class Urls{
     private Object markasunread;
     private String discuss;
 
-    public Urls() {}
 
     public String getImage() {
         return image;

@@ -4,8 +4,6 @@ public class Date{
     private String label;
     private int timestamp;
 
-    public Date() {}
-
 
     public String getLabel() {
         return label;

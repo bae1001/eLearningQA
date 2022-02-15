@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <%String username=request.getParameter("username");
+    <%String fullname="";
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
       WebServiceClient.setHOST(request.getParameter("host"));
@@ -19,11 +19,13 @@
       try{
         session.setAttribute("token", fachada.conectarse((String)session.getAttribute("username"),(String)session.getAttribute("password")));
         respuesta=fachada.generarListaCursos((String)session.getAttribute("token"));
+        fullname=fachada.obtenerNombreCompleto((String)session.getAttribute("token"),(String)session.getAttribute("username"));
+        session.setAttribute("fullname", fullname);
       }catch(Exception e){
         response.sendRedirect("");
       }
       %>
-<h3>Estas registrado como <%=username%>.</h3>
+<h3>Estás registrado como <%=fullname%>.</h3>
 <p style="text-align: right"><button onclick="myFunction()">Desconectar</button></p>
 <p><a target="_blank" href="../informe">Generar informe global</a></p>
 <p><%=respuesta%></p>

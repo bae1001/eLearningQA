@@ -4,7 +4,6 @@ public class Preference{
     private String name;
     private String value;
 
-    public Preference() {}
 
     public String getName() {
         return name;

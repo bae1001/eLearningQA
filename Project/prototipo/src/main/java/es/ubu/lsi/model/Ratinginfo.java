@@ -11,7 +11,6 @@ public class Ratinginfo{
     private List<Object> scales;
     private List<Object> ratings;
 
-    public Ratinginfo() {}
 
     public int getContextid() {
         return contextid;

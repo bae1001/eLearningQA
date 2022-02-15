@@ -9,8 +9,6 @@ public class Contentsinfo{
     private List<String> mimetypes;
     private String repositorytype;
 
-    public Contentsinfo() {}
-
 
     public int getFilescount() {
         return filescount;

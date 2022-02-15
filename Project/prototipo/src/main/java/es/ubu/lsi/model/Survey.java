@@ -21,7 +21,6 @@ public class Survey{
     private int groupmode;
     private int groupingid;
 
-    public Survey() {}
 
 
     public int getId() {

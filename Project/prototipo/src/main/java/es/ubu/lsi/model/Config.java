@@ -6,7 +6,6 @@ public class Config{
     private String name;
     private String value;
 
-    public Config() {}
 
     public String getPlugin() {
         return plugin;

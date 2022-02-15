@@ -5,7 +5,6 @@ public class Html{
     private String taglist;
     private String authorsubheading;
 
-    public Html() {}
 
     public Object getRating() {
         return rating;

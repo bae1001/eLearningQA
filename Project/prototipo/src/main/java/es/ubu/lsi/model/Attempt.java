@@ -10,8 +10,6 @@ public class Attempt{
     private String fullname;
     private List<Response> responses;
 
-    public Attempt() {}
-
 
     public int getId() {
         return id;

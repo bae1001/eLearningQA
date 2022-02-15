@@ -21,7 +21,6 @@ public class Course {
     private Boolean hasprogress;
     private Boolean isfavourite;
     private Boolean hidden;
-    //private int timeaccess;
     private Boolean showshortname;
     private String coursecategory;
     private int timemodified;

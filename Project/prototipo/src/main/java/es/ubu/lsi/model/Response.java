@@ -6,8 +6,6 @@ public class Response{
     private String printval;
     private String rawval;
 
-    public Response() {}
-
 
     public int getId() {
         return id;

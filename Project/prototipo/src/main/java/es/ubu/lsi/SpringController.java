@@ -3,13 +3,11 @@ package es.ubu.lsi;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 
 @Controller
@@ -19,8 +17,7 @@ public class SpringController{
         return "login";
     }
 
-    //@PostMapping("/list")
-    @RequestMapping(value="/list", method = { RequestMethod.POST,RequestMethod.GET })
+    @PostMapping("/list")
     public String list() {
         return "list";
     }

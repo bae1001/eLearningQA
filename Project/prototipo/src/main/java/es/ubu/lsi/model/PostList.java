@@ -9,8 +9,6 @@ public class PostList{
     private Ratinginfo ratinginfo;
     private List<Object> warnings;
 
-    public PostList() {}
-
 
     public List<Post> getPosts() {
         return posts;

@@ -24,8 +24,6 @@ public class Feedback{
     private List<Introfile> introfiles;
     private List<Object> pageaftersubmitfiles;
 
-    public Feedback() {}
-
 
     public int getId() {
         return id;
@@ -75,19 +73,19 @@ public class Feedback{
         this.anonymous = anonymous;
     }
 
-    public boolean isEmail_notification() {
+    public boolean isEmailnotification() {
         return email_notification;
     }
 
-    public void setEmail_notification(boolean email_notification) {
+    public void setEmailnotification(boolean email_notification) {
         this.email_notification = email_notification;
     }
 
-    public boolean isMultiple_submit() {
+    public boolean isMultiplesubmit() {
         return multiple_submit;
     }
 
-    public void setMultiple_submit(boolean multiple_submit) {
+    public void setMultiplesubmit(boolean multiple_submit) {
         this.multiple_submit = multiple_submit;
     }
 
@@ -99,35 +97,35 @@ public class Feedback{
         this.autonumbering = autonumbering;
     }
 
-    public String getSite_after_submit() {
+    public String getSiteaftersubmit() {
         return site_after_submit;
     }
 
-    public void setSite_after_submit(String site_after_submit) {
+    public void setSiteaftersubmit(String site_after_submit) {
         this.site_after_submit = site_after_submit;
     }
 
-    public String getPage_after_submit() {
+    public String getPageaftersubmit() {
         return page_after_submit;
     }
 
-    public void setPage_after_submit(String page_after_submit) {
+    public void setPageaftersubmit(String page_after_submit) {
         this.page_after_submit = page_after_submit;
     }
 
-    public int getPage_after_submitformat() {
+    public int getPageaftersubmitformat() {
         return page_after_submitformat;
     }
 
-    public void setPage_after_submitformat(int page_after_submitformat) {
+    public void setPageaftersubmitformat(int page_after_submitformat) {
         this.page_after_submitformat = page_after_submitformat;
     }
 
-    public boolean isPublish_stats() {
+    public boolean isPublishstats() {
         return publish_stats;
     }
 
-    public void setPublish_stats(boolean publish_stats) {
+    public void setPublishstats(boolean publish_stats) {
         this.publish_stats = publish_stats;
     }
 

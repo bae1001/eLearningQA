@@ -37,7 +37,6 @@ public class Forum{
     private int lockdiscussionafter;
     private boolean istracked;
 
-    public Forum() {}
 
     public int getId() {
         return id;
@@ -143,19 +142,19 @@ public class Forum{
         this.scale = scale;
     }
 
-    public int getGrade_forum() {
+    public int getGradeforum() {
         return grade_forum;
     }
 
-    public void setGrade_forum(int grade_forum) {
+    public void setGradeforum(int grade_forum) {
         this.grade_forum = grade_forum;
     }
 
-    public int getGrade_forum_notify() {
+    public int getGradeforumnotify() {
         return grade_forum_notify;
     }
 
-    public void setGrade_forum_notify(int grade_forum_notify) {
+    public void setGradeforumnotify(int grade_forum_notify) {
         this.grade_forum_notify = grade_forum_notify;
     }
 

@@ -7,8 +7,6 @@ public class NonRespondentList{
     private int total;
     private List<Object> warnings;
 
-    public NonRespondentList() {}
-
 
     public List<User> getUsers() {
         return users;

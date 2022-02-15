@@ -34,7 +34,6 @@ public class Discussion{
     private boolean canlock;
     private boolean canfavourite;
 
-    public Discussion() {}
 
     public int getId() {
         return id;

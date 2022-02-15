@@ -11,8 +11,6 @@ public class Group {
     private Urls urls;
 
 
-    public Group() {}
-
     public int getId() {
         return id;
     }

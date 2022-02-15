@@ -6,7 +6,6 @@ public class DiscussionList{
     private List<Discussion> discussions;
     private List<Object> warnings;
 
-    public DiscussionList() {}
 
     public List<Discussion> getDiscussions() {
         return discussions;

@@ -24,8 +24,6 @@ public class Resource{
     private int groupmode;
     private int groupingid;
 
-    public Resource() {}
-
 
     public int getId() {
         return id;

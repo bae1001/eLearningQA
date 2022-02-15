@@ -6,7 +6,6 @@ public class StatusList {
     private List<Status> statuses;
     private List<Object> warnings;
 
-    public StatusList() {}
 
     public List<Status> getStatuses() {
         return statuses;
@@ -24,13 +23,7 @@ public class StatusList {
         this.warnings = warnings;
     }
 
-    /*
-    public boolean isHasCompletion(){
-        if(statuses.size()==0){return true;}
-        return statuses.get(0).isHascompletion();
-    }
 
-     */
 
 
 

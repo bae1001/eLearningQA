@@ -11,7 +11,6 @@ public class Capabilities{
     private boolean controlreadstatus;
     private boolean canreplyprivately;
 
-    public Capabilities() {}
 
     public boolean isView() {
         return view;

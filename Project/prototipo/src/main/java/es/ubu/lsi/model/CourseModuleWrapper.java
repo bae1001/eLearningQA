@@ -6,8 +6,6 @@ public class CourseModuleWrapper{
     private CourseModule cm;
     private List<Object> warnings;
 
-    public CourseModuleWrapper() {}
-
 
     public CourseModule getCm() {
         return cm;

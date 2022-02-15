@@ -9,8 +9,6 @@ public class ResponseAnalysis{
     private int totalanonattempts;
     private List<Object> warnings;
 
-    public ResponseAnalysis() {}
-
 
     public List<Attempt> getAttempts() {
         return attempts;

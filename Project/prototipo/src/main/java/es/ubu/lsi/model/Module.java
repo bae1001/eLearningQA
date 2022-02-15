@@ -27,8 +27,6 @@ public class Module{
     private Contentsinfo contentsinfo;
     private String description;
 
-    public Module() {}
-
 
     public int getId() {
         return id;

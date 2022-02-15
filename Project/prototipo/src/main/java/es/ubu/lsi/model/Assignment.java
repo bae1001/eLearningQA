@@ -40,7 +40,6 @@ public class Assignment{
     private int submissionstatementformat;
     private List<Grade> grades;
 
-    public Assignment() {}
 
     public int getId() {
         return id;

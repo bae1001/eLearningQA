@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
@@ -15,28 +14,26 @@ public class WebServiceClient {
 
 
 
-    public static String HOST = "https://school.moodledemo.net";
-    public static FileReader reader;
-    public static Properties properties;
-    public static int UMBRAL_NUM_FORMATOS = 4;
-    public static int ANIDAMIENTO_EXCESIVO = 4;
-    public static int TIEMPO_RESPUESTA_FOROS = 172800;
-    public static double PORCENTAJE_MIN_COMENTARIOS = 0.8;
-    public static int TIEMPO_CORRECCION_TAREAS = 604800;
-    public static double PORCENTAJE_MIN_RESPUESTAS = 0.6;
+    private static String HOST = "https://school.moodledemo.net";
+    private static int UMBRAL_NUM_FORMATOS = 4;
+    private static int ANIDAMIENTO_EXCESIVO = 4;
+    private static int TIEMPO_RESPUESTA_FOROS = 172800;
+    private static double PORCENTAJE_MIN_COMENTARIOS = 0.8;
+    private static int TIEMPO_CORRECCION_TAREAS = 604800;
+    private static double PORCENTAJE_MIN_RESPUESTAS = 0.6;
 
 
     static {
         try {
-            reader = new FileReader("config");
-            properties=new Properties();
+            FileReader reader = new FileReader("config");
+            Properties properties = new Properties();
             properties.load(reader);
-            UMBRAL_NUM_FORMATOS= Integer.parseInt(properties.getProperty("umbral_num_formatos"));
-            ANIDAMIENTO_EXCESIVO = Integer.parseInt(properties.getProperty("anidamiento_excesivo"));
-            TIEMPO_RESPUESTA_FOROS = Integer.parseInt(properties.getProperty("tiempo_respuesta_foros"));
-            PORCENTAJE_MIN_COMENTARIOS = Double.parseDouble(properties.getProperty("porcentaje_min_comentarios"));
-            TIEMPO_CORRECCION_TAREAS = Integer.parseInt(properties.getProperty("tiempo_correccion_tareas"));
-            PORCENTAJE_MIN_RESPUESTAS = Double.parseDouble(properties.getProperty("porcentaje_min_respuestas"));
+            UMBRAL_NUM_FORMATOS= Integer.parseInt(properties.getProperty("format_num_threshold"));
+            ANIDAMIENTO_EXCESIVO = Integer.parseInt(properties.getProperty("excessive_nesting"));
+            TIEMPO_RESPUESTA_FOROS = Integer.parseInt(properties.getProperty("forum_response_time"));
+            PORCENTAJE_MIN_COMENTARIOS = Double.parseDouble(properties.getProperty("min_comment_percentage"));
+            TIEMPO_CORRECCION_TAREAS = Integer.parseInt(properties.getProperty("assignment_grading_time"));
+            PORCENTAJE_MIN_RESPUESTAS = Double.parseDouble(properties.getProperty("min_feedback_answer_percentage"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,6 +53,12 @@ public class WebServiceClient {
         String url = HOST + "/webservice/rest/server.php?wsfunction=core_enrol_get_enrolled_users&moodlewsrestformat=json&wstoken=" +token+"&courseid="+courseid;
         //guardarComoJSON(new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, User[].class))),"Listausuarios"+courseid);
         return new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, User[].class)));
+    }
+
+    public static String obtenerNombreCompleto(String token, String username){
+        RestTemplate restTemplate = new RestTemplate();
+        String url = HOST + "/webservice/rest/server.php?wsfunction=core_user_get_users_by_field&moodlewsrestformat=json&wstoken="+token+"&field=username&values[0]="+username;
+        return restTemplate.getForObject(url, User[].class)[0].getFullname();
     }
 
     public static boolean esProfesor(List<User> usuarios, int userid){
@@ -94,7 +97,7 @@ public class WebServiceClient {
     }
 
     public static boolean tieneGrupos(List<Group> listaGrupos){
-        return listaGrupos.size()!=0;
+        return !listaGrupos.isEmpty();
     }
 
     public static List<Group> obtenerListaGrupos(String token, int courseid) {
@@ -127,12 +130,12 @@ public class WebServiceClient {
 
     public static boolean estaProgresoActivado(StatusList listaEstados) {
         List<Status> estados=listaEstados.getStatuses();
-        if(estados==null||estados.size()==0){return true;}
+        if(estados==null||estados.isEmpty()){return true;}
         return estados.get(0).isHascompletion();
     }
 
     public static boolean estaCorregidoATiempo(List<Assignment> tareasConNotas, Map<Integer, Integer> mapaFechasLimite){
-        if(mapaFechasLimite.size()==0){return true;}
+        if(mapaFechasLimite.isEmpty()){return true;}
         if (tareasConNotas!=null) {
             for (Assignment tarea : tareasConNotas) {
                 List<Grade> notas = tarea.getGrades();
@@ -201,7 +204,7 @@ public class WebServiceClient {
                 dudasAlumnosSinRespuesta.remove(respuestaProfe.getParentid());
             }
         }
-        return dudasAlumnosSinRespuesta.size()==0;
+        return dudasAlumnosSinRespuesta.isEmpty();
     }
 
     public static List<Post> obtenerListaPosts(String token, int courseid) {
@@ -246,7 +249,7 @@ public class WebServiceClient {
     }
 
     public static boolean usaSurveys(List<Survey> listaEncuestas){
-        return listaEncuestas.size()!=0;
+        return !listaEncuestas.isEmpty();
     }
 
     public static List<Survey> obtenerSurveys(String token, int courseid) {
@@ -259,13 +262,13 @@ public class WebServiceClient {
 
     public static boolean alumnosEnGrupos(List<User> listaUsuarios){
         List<User> listaUsuariosHuerfanos = obtenerAlumnosSinGrupo(listaUsuarios);
-        return listaUsuariosHuerfanos.size()==0;
+        return listaUsuariosHuerfanos.isEmpty();
     }
 
     public static List<User> obtenerAlumnosSinGrupo(List<User> listaUsuarios) {
         List<User> listaUsuariosHuerfanos=new ArrayList<>();
         for (User usuario:listaUsuarios) {
-            if (usuario.getGroups().size()==0&&esAlumno(listaUsuarios,usuario.getId())){
+            if (usuario.getGroups().isEmpty()&&esAlumno(listaUsuarios,usuario.getId())){
                 listaUsuariosHuerfanos.add(usuario);
             }
         }
@@ -282,14 +285,14 @@ public class WebServiceClient {
     }
 
     public static boolean anidamientoCalificadorAceptable(List<Table> listaCalificadores){
-        if (listaCalificadores.size()==0){
+        if (listaCalificadores.isEmpty()){
             return false;
         }
         return listaCalificadores.get(0).getMaxdepth()< ANIDAMIENTO_EXCESIVO;
     }
 
     public static boolean calificadorMuestraPonderacion(List<Table> listaCalificadores){
-        if (listaCalificadores.size()==0){
+        if (listaCalificadores.isEmpty()){
             return false;
         }
         for (Tabledata tabledata:listaCalificadores.get(0).getTabledata()) {
@@ -303,7 +306,7 @@ public class WebServiceClient {
     public static boolean hayRetroalimentacion(List<Table> listaCalificadores){
         int contadorRetroalimentacion=0;
         int contadorTuplasComentables=0;
-        if (listaCalificadores.size()==0){
+        if (listaCalificadores.isEmpty()){
             return false;
         }
         for (Table calificador:listaCalificadores) {
@@ -316,17 +319,18 @@ public class WebServiceClient {
                 }
             }
         }
+        if(contadorTuplasComentables==0){return true;}
         return (float)contadorRetroalimentacion/(float)contadorTuplasComentables> PORCENTAJE_MIN_COMENTARIOS;
     }
 
     public static boolean esNotaMaxConsistente(List<Table> listaCalificadores){
         String rango="";
-        if (listaCalificadores.size()==0){
+        if (listaCalificadores.isEmpty()){
             return false;
         }
         for (Tabledata tabledata:listaCalificadores.get(0).getTabledata()) {
             if (tabledata.getRange()!=null){
-                if (rango==""){
+                if (rango.equals("")){
                     rango=tabledata.getRange().getContent();
                 }
                 if (!rango.equals(tabledata.getRange().getContent())){
@@ -345,7 +349,7 @@ public class WebServiceClient {
     }
 
     public static boolean estanActualizadosRecursos(List<Resource> listaRecursosDesfasados){
-        return listaRecursosDesfasados.size()==0;
+        return listaRecursosDesfasados.isEmpty();
     }
 
     public static List<Resource> obtenerRecursosDesfasados(Course curso, List<Resource> listaRecursos) {
@@ -374,7 +378,7 @@ public class WebServiceClient {
     }
 
     public static boolean sonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados){
-        return listaModulosMalFechados.size()==0;
+        return listaModulosMalFechados.isEmpty();
     }
 
     public static List<es.ubu.lsi.model.Module> obtenerModulosMalFechados(Course curso, List<es.ubu.lsi.model.Module> listaModulos) {
@@ -447,6 +451,7 @@ public class WebServiceClient {
 
     public static boolean respondenFeedbacks(List<ResponseAnalysis> listaAnalisis, List<User> usuarios){
         int nAlumnos=numeroAlumnos(usuarios);
+        if(nAlumnos==0){return true;}
         for (ResponseAnalysis analisis:listaAnalisis) {
             if ((float)(analisis.getTotalattempts()+analisis.getTotalanonattempts())/(float) nAlumnos< PORCENTAJE_MIN_RESPUESTAS){
                 return false;

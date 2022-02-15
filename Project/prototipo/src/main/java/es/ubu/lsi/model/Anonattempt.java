@@ -8,8 +8,6 @@ public class Anonattempt{
     private int number;
     private List<Response> responses;
 
-    public Anonattempt() {}
-
 
     public int getId() {
         return id;

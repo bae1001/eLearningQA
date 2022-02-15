@@ -7,7 +7,6 @@ public class CourseList {
     private int nextoffset;
     private List<Object> warnings;
 
-    public CourseList() {}
 
     public List<Course> getCourses() {
         return courses;

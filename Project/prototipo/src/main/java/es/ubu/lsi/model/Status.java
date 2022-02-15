@@ -17,7 +17,6 @@ public class Status {
     private boolean uservisible;
     private List<Detail> details;
 
-    public Status() {}
 
     public int getCmid() {
         return cmid;

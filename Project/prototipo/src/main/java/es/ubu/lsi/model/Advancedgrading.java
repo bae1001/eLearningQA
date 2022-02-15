@@ -4,8 +4,6 @@ public class Advancedgrading{
     private String area;
     private String method;
 
-    public Advancedgrading() {}
-
 
     public String getArea() {
         return area;

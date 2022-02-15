@@ -13,8 +13,6 @@ public class Section{
     private boolean uservisible;
     private List<Module> modules;
 
-    public Section() {}
-
 
     public int getId() {
         return id;

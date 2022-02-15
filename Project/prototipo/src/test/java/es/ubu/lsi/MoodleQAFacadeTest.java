@@ -2,10 +2,7 @@ package es.ubu.lsi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.ubu.lsi.model.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -279,8 +276,8 @@ class MoodleQAFacadeTest {
 
     @org.junit.jupiter.api.Test
     void generarCampoAbsolutoTest() {
-        assertEquals(fachada.generarCampoAbsoluto(true),"<td class=\"tg-pgre\">Sí</td>");
-        assertEquals(fachada.generarCampoAbsoluto(false),"<td class=\"tg-pred\">No</td>");
+        assertEquals("<td class=\"tg-pgre\">Sí</td>", fachada.generarCampoAbsoluto(true));
+        assertEquals("<td class=\"tg-pred\">No</td>", fachada.generarCampoAbsoluto(false));
     }
 
     @org.junit.jupiter.api.Test

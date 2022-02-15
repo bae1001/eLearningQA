@@ -6,7 +6,6 @@ public class Role {
     private String shortname;
     private int sortorder;
 
-    public Role() {}
 
     public int getRoleid() {
         return roleid;

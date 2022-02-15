@@ -4,7 +4,6 @@ public class Detail {
     private String rulename;
     private Rulevalue rulevalue;
 
-    public Detail() {}
 
     public String getRulename() {
         return rulename;

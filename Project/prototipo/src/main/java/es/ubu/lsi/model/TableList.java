@@ -6,8 +6,6 @@ public class TableList{
     private List<Table> tables;
     private List<Object> warnings;
 
-    public TableList() {}
-
 
     public List<Table> getTables() {
         return tables;

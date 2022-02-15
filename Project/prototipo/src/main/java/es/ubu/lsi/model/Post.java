@@ -26,7 +26,6 @@ public class Post{
     private List<Tag> tags;
     private Html html;
 
-    public Post() {}
 
     public int getId() {
         return id;

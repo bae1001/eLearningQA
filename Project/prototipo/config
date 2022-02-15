@@ -1,7 +1,7 @@
-umbral_num_formatos=4
-anidamiento_excesivo=4
-tiempo_respuesta_foros=172800
-porcentaje_min_comentarios=0.8
-tiempo_correccion_tareas=604800
-porcentaje_min_respuestas=0.6
+format_num_threshold=4
+excessive_nesting=4
+forum_response_time=172800
+min_comment_percentage=0.8
+assignment_grading_time=604800
+min_feedback_answer_percentage=0.6
 host=https://school.moodledemo.net

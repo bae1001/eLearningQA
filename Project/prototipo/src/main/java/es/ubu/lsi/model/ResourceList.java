@@ -6,8 +6,6 @@ public class ResourceList {
     private List<Resource> resources;
     private List<Object> warnings;
 
-    public ResourceList() {}
-
 
     public List<Resource> getResources() {
         return resources;

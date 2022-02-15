@@ -10,8 +10,6 @@ public class Tabledata{
     private GradeTableField feedback;
     private GradeTableField contributiontocoursetotal;
 
-    public Tabledata() {}
-
 
     public Itemname getItemname() {
         return itemname;

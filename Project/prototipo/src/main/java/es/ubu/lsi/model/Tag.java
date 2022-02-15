@@ -15,7 +15,6 @@ public class Tag{
     private int itemid;
     private int ordering;
 
-    public Tag() {}
 
     public int getId() {
         return id;

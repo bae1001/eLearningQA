@@ -1,24 +1,19 @@
 package es.ubu.lsi;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.ubu.lsi.model.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class MoodleQAFacade {
-    public static int checksDiseno=6;
-    public static int checksImplementacion=5;
-    public static int checksRealizacion=4;
-    public static int checksEvaluacion=2;
-    public static int checksTotal=checksDiseno+checksImplementacion+checksRealizacion+checksEvaluacion;
-    public static String[] camposInformeFases;
+    private static final int checksDiseno=6;
+    private static final int checksImplementacion=5;
+    private static final int checksRealizacion=4;
+    private static final int checksEvaluacion=2;
+    private static final int checksTotal=checksDiseno+checksImplementacion+checksRealizacion+checksEvaluacion;
+    protected static String[] camposInformeFases;
 
     public MoodleQAFacade(String username, String password) {
         String sep= File.separator;
@@ -40,7 +35,7 @@ public class MoodleQAFacade {
         List<Course> listaCursos= getListaCursos(token);
         String listaEnTabla="<table border=\"1\"><tr><th>Lista de cursos</th></tr>";
         for (Course curso: listaCursos) {
-            listaEnTabla+="<tr><td><a target=\"_blank\" href=\"../informe?courseid="+String.valueOf(curso.getId())+"\">"+curso.getFullname()+"<a></td></tr>";
+            listaEnTabla+="<tr><td><a target=\"_blank\" href=\"../informe?courseid="+curso.getId()+"\">"+curso.getFullname()+"<a></td></tr>";
         }
         listaEnTabla+="</table>";
         return listaEnTabla;
@@ -48,6 +43,10 @@ public class MoodleQAFacade {
 
     public List<Course> getListaCursos(String token) {
         return WebServiceClient.obtenerCursos(token);
+    }
+
+    public String obtenerNombreCompleto(String token, String username) {
+        return WebServiceClient.obtenerNombreCompleto(token, username);
     }
 
     public String generarInformeEspecifico(String token, int courseid) {
@@ -207,7 +206,7 @@ public class MoodleQAFacade {
 
     public float porcentajeFraccion(float numerador, float denominador){
         return numerador/denominador*100;
-    };
+    }
 
     public String generarCampoAbsoluto(boolean resultado){
         if (resultado){

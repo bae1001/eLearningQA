@@ -9,7 +9,6 @@ public class Introfile{
     private String mimetype;
     private boolean isexternalfile;
 
-    public Introfile() {}
 
     public String getFilename() {
         return filename;

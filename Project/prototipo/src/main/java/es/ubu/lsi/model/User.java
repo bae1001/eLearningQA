@@ -28,7 +28,6 @@ public class User {
     private List<Course> enrolledcourses;
     private boolean started;
 
-    public User() {}
 
     public int getId() {
         return id;

@@ -19,8 +19,6 @@ public class Content{
     private String content;
     private List<Tag> tags;
 
-    public Content() {}
-
 
     public String getType() {
         return type;

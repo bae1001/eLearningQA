@@ -7,8 +7,6 @@ public class Leader{
     private String myclass;
     private int rowspan;
 
-    public Leader() {}
-
 
     public String getMyclass() {
         return myclass;

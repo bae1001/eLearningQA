@@ -9,8 +9,6 @@ public class Table{
     private int maxdepth;
     private List<Tabledata> tabledata;
 
-    public Table() {}
-
 
     public int getCourseid() {
         return courseid;

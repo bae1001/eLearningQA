@@ -31,8 +31,6 @@ public class CourseModule{
     private int gradecat;
     private List<Advancedgrading> advancedgrading;
 
-    public CourseModule() {}
-
 
     public int getId() {
         return id;

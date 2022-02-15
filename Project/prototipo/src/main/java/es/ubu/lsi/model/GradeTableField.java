@@ -8,8 +8,6 @@ public class GradeTableField{
     private String content;
     private String headers;
 
-    public GradeTableField() {}
-
 
     public String getMyclass() {
         return myclass;

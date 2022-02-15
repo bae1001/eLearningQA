@@ -9,7 +9,6 @@ public class Grade{
     private int grader;
     private String grade;
 
-    public Grade() {}
 
     public int getId() {
         return id;

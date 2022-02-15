@@ -9,7 +9,6 @@ public class Author{
     private List<Group> groups;
     private Urls urls;
 
-    public Author() {}
 
     public int getId() {
         return id;

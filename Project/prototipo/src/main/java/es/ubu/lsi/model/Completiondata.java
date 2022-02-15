@@ -13,8 +13,6 @@ public class Completiondata{
     private boolean uservisible;
     private List<Detail> details;
 
-    public Completiondata() {}
-
 
     public int getState() {
         return state;

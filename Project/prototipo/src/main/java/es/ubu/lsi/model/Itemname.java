@@ -10,8 +10,6 @@ public class Itemname{
     private String celltype;
     private String id;
 
-    public Itemname() {}
-
 
     public String getMyclass() {
         return myclass;

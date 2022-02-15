@@ -9,7 +9,6 @@ public class Introattachment{
     private String mimetype;
     private boolean isexternalfile;
 
-    public Introattachment() {}
 
     public String getFilename() {
         return filename;

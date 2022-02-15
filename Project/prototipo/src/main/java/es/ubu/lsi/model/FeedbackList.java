@@ -6,8 +6,6 @@ public class FeedbackList{
     private List<Feedback> feedbacks;
     private List<Object> warnings;
 
-    public FeedbackList() {}
-
 
     public List<Feedback> getFeedbacks() {
         return feedbacks;

@@ -6,7 +6,6 @@ public class AssignmentList {
     private List<Assignment> assignments;
     private List<Object> warnings;
 
-    public AssignmentList() {}
 
     public List<Assignment> getAssignments() {
         return assignments;

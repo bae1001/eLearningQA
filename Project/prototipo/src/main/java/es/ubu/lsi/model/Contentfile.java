@@ -9,8 +9,6 @@ public class Contentfile{
     private String mimetype;
     private boolean isexternalfile;
 
-    public Contentfile() {}
-
 
     public String getFilename() {
         return filename;

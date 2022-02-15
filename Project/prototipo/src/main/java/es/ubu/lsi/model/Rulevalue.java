@@ -4,7 +4,6 @@ public class Rulevalue {
     private int status;
     private String description;
 
-    public Rulevalue() {}
 
     public int getStatus() {
         return status;
