@@ -12,7 +12,7 @@
     <%String fullname="";
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
-      WebServiceClient.setHOST(request.getParameter("host"));
+      WebServiceClient.setHost(request.getParameter("host"));
       MoodleQAFacade fachada= new MoodleQAFacade((String)session.getAttribute("username"),(String)session.getAttribute("password"));
       session.setAttribute("fachada", fachada);
       String respuesta="";

@@ -2,14 +2,8 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Forum{
-    private int id;
-    private int course;
+public class Forum extends SuperClass{
     private String type;
-    private String name;
-    private String intro;
-    private int introformat;
-    private List<Object> introfiles;
     private int duedate;
     private int cutoffdate;
     private int assessed;
@@ -37,61 +31,12 @@ public class Forum{
     private int lockdiscussionafter;
     private boolean istracked;
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCourse() {
-        return course;
-    }
-
-    public void setCourse(int course) {
-        this.course = course;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIntro() {
-        return intro;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
-    }
-
-    public int getIntroformat() {
-        return introformat;
-    }
-
-    public void setIntroformat(int introformat) {
-        this.introformat = introformat;
-    }
-
-    public List<Object> getIntrofiles() {
-        return introfiles;
-    }
-
-    public void setIntrofiles(List<Object> introfiles) {
-        this.introfiles = introfiles;
     }
 
     public int getDuedate() {
@@ -204,14 +149,6 @@ public class Forum{
 
     public void setRssarticles(int rssarticles) {
         this.rssarticles = rssarticles;
-    }
-
-    public int getTimemodified() {
-        return timemodified;
-    }
-
-    public void setTimemodified(int timemodified) {
-        this.timemodified = timemodified;
     }
 
     public int getWarnafter() {

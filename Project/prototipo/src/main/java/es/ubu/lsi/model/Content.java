@@ -2,12 +2,8 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Content{
+public class Content extends SuperClass{
     private String type;
-    private String filename;
-    private String filepath;
-    private int filesize;
-    private String fileurl;
     private int timecreated;
     private int timemodified;
     private int sortorder;
@@ -28,52 +24,12 @@ public class Content{
         this.type = type;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
-    }
-
-    public int getFilesize() {
-        return filesize;
-    }
-
-    public void setFilesize(int filesize) {
-        this.filesize = filesize;
-    }
-
-    public String getFileurl() {
-        return fileurl;
-    }
-
-    public void setFileurl(String fileurl) {
-        this.fileurl = fileurl;
-    }
-
     public int getTimecreated() {
         return timecreated;
     }
 
     public void setTimecreated(int timecreated) {
         this.timecreated = timecreated;
-    }
-
-    public int getTimemodified() {
-        return timemodified;
-    }
-
-    public void setTimemodified(int timemodified) {
-        this.timemodified = timemodified;
     }
 
     public int getSortorder() {

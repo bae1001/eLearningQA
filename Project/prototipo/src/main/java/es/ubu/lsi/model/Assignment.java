@@ -2,11 +2,8 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Assignment{
-    private int id;
+public class Assignment extends SuperClass {
     private int cmid;
-    private int course;
-    private String name;
     private int nosubmissions;
     private int submissiondrafts;
     private int sendnotifications;
@@ -15,7 +12,6 @@ public class Assignment{
     private int duedate;
     private int allowsubmissionsfromdate;
     private int grade;
-    private int timemodified;
     private int completionsubmit;
     private int cutoffdate;
     private int gradingduedate;
@@ -32,26 +28,11 @@ public class Assignment{
     private int requiresubmissionstatement;
     private int preventsubmissionnotingroup;
     private List<Config> configs;
-    private String intro;
-    private int introformat;
-    private List<Introfile> introfiles;
     private List<Introattachment> introattachments;
     private String submissionstatement;
     private int submissionstatementformat;
     private List<Grade> grades;
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setAssignmentid(int id) {
-        this.id = id;
-    }
 
     public int getCmid() {
         return cmid;
@@ -59,22 +40,6 @@ public class Assignment{
 
     public void setCmid(int cmid) {
         this.cmid = cmid;
-    }
-
-    public int getCourse() {
-        return course;
-    }
-
-    public void setCourse(int course) {
-        this.course = course;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getNosubmissions() {
@@ -139,14 +104,6 @@ public class Assignment{
 
     public void setGrade(int grade) {
         this.grade = grade;
-    }
-
-    public int getTimemodified() {
-        return timemodified;
-    }
-
-    public void setTimemodified(int timemodified) {
-        this.timemodified = timemodified;
     }
 
     public int getCompletionsubmit() {
@@ -275,30 +232,6 @@ public class Assignment{
 
     public void setConfigs(List<Config> configs) {
         this.configs = configs;
-    }
-
-    public String getIntro() {
-        return intro;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
-    }
-
-    public int getIntroformat() {
-        return introformat;
-    }
-
-    public void setIntroformat(int introformat) {
-        this.introformat = introformat;
-    }
-
-    public List<Introfile> getIntrofiles() {
-        return introfiles;
-    }
-
-    public void setIntrofiles(List<Introfile> introfiles) {
-        this.introfiles = introfiles;
     }
 
     public List<Introattachment> getIntroattachments() {

@@ -2,12 +2,7 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Feedback{
-    private int id;
-    private int course;
-    private String name;
-    private String intro;
-    private int introformat;
+public class Feedback extends SuperClass{
     private int anonymous;
     private boolean email_notification;
     private boolean multiple_submit;
@@ -18,52 +13,9 @@ public class Feedback{
     private boolean publish_stats;
     private int timeopen;
     private int timeclose;
-    private int timemodified;
     private boolean completionsubmit;
-    private int coursemodule;
-    private List<Introfile> introfiles;
     private List<Object> pageaftersubmitfiles;
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCourse() {
-        return course;
-    }
-
-    public void setCourse(int course) {
-        this.course = course;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIntro() {
-        return intro;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
-    }
-
-    public int getIntroformat() {
-        return introformat;
-    }
-
-    public void setIntroformat(int introformat) {
-        this.introformat = introformat;
-    }
 
     public int getAnonymous() {
         return anonymous;
@@ -145,36 +97,12 @@ public class Feedback{
         this.timeclose = timeclose;
     }
 
-    public int getTimemodified() {
-        return timemodified;
-    }
-
-    public void setTimemodified(int timemodified) {
-        this.timemodified = timemodified;
-    }
-
     public boolean isCompletionsubmit() {
         return completionsubmit;
     }
 
     public void setCompletionsubmit(boolean completionsubmit) {
         this.completionsubmit = completionsubmit;
-    }
-
-    public int getCoursemodule() {
-        return coursemodule;
-    }
-
-    public void setCoursemodule(int coursemodule) {
-        this.coursemodule = coursemodule;
-    }
-
-    public List<Introfile> getIntrofiles() {
-        return introfiles;
-    }
-
-    public void setIntrofiles(List<Introfile> introfiles) {
-        this.introfiles = introfiles;
     }
 
     public List<Object> getPageaftersubmitfiles() {
