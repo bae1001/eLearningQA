@@ -45,7 +45,9 @@ public class WebServiceClient {
 
     public static String login(String username, String password){
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(host + "/login/token.php?username=" +username+"&password="+password+"&service=moodle_mobile_app", String.class).split("\"", 0)[3];
+        String token=restTemplate.getForObject(host + "/login/token.php?username=" +username+"&password="+password+"&service=moodle_mobile_app", String.class).split("\"", 0)[3];
+        if (token==null){return "";}
+        return token;
     }
 
     public static List<User> obtenerUsuarios(String token, int courseid){
@@ -453,6 +455,7 @@ public class WebServiceClient {
         RestTemplate restTemplate = new RestTemplate();
         String url= host + "/webservice/rest/server.php?wsfunction=mod_feedback_get_feedbacks_by_courses&moodlewsrestformat=json&wstoken=" +token+"&courseids[0]="+courseid;
         FeedbackList listaFeedbacks= restTemplate.getForObject(url, FeedbackList.class);
+        if (listaFeedbacks==null){return new ArrayList<>();}
         return listaFeedbacks.getFeedbacks();
     }
 

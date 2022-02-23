@@ -6,6 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <title>MoodleQA-Lista de cursos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
@@ -25,15 +28,41 @@
         response.sendRedirect("");
       }
       %>
-<h3>Estás registrado como <%=fullname%>.</h3>
-<p style="text-align: right"><button onclick="myFunction()">Desconectar</button></p>
-<p><a target="_blank" href="../informe">Generar informe global</a></p>
-<p><%=respuesta%></p>
+<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) MoodleQA</div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>
+            <div class="d-flex justify-content-center" style="background-image: url('atardecer.jpg');
+    height: 100vh;">
 
+          <div class="card w-100 m-3 p-3" style="overflow:auto">
+                    <input style="max-width:300px" type="text" id="myInput" onkeyup="filter()" placeholder="Busca un curso.." title="Buscador cursos">
+                    <%=respuesta%>
+          </div>
+    </div>
+    <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
+      <p>(Logo completo)</p>
 
+      <a target="_blank" href="../manual">Manual de usuario</a>
+      <a>Acerca de</a>
+      <a>Contacto</a>
+    </footer>
+    <script>
+function filter() {
+    var input, filter, table, td, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementsByTagName("table")[0];
+    td = table.getElementsByTagName("td");
+    for (i = 0; i < td.length; i++) {
+        a = td[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            td[i].style.display = "";
+        } else {
+            td[i].style.display = "none";
+        }
+    }
+}
 
-<script>
-function myFunction() {
+function logOut() {
   window.location.replace("./logout");
 }
 </script>

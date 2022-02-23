@@ -47,4 +47,14 @@ public class SpringController{
                 .getResourceAsStream("images/cabecera.jpg");
         return IOUtils.toByteArray(in);
     }
+
+    @GetMapping(
+            value = "/atardecer.jpg",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody byte[] atardecer() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/atardecer.jpg");
+        return IOUtils.toByteArray(in);
+    }
 }

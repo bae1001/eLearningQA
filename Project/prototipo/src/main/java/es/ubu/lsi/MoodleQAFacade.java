@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MoodleQAFacade {
-    private static final int checksDiseno=6;
-    private static final int checksImplementacion=5;
-    private static final int checksRealizacion=4;
-    private static final int checksEvaluacion=2;
-    private static final int checksTotal=checksDiseno+checksImplementacion+checksRealizacion+checksEvaluacion;
+    private static final int CHECKS_DISENO =6;
+    private static final int CHECKS_IMPLEMENTACION =5;
+    private static final int CHECKS_REALIZACION =4;
+    private static final int CHECKS_EVALUACION =2;
+    private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION + CHECKS_EVALUACION;
     protected static String[] camposInformeFases;
 
     public MoodleQAFacade(String username, String password) {
@@ -33,9 +33,9 @@ public class MoodleQAFacade {
 
     public String generarListaCursos(String token){
         List<Course> listaCursos= getListaCursos(token);
-        String listaEnTabla="<table border=\"1\"><tr><th>Lista de cursos</th></tr>";
+        String listaEnTabla="<table>";
         for (Course curso: listaCursos) {
-            listaEnTabla+="<tr><td><a target=\"_blank\" href=\"../informe?courseid="+curso.getId()+"\">"+curso.getFullname()+"<a></td></tr>";
+            listaEnTabla+="<tr><td><a target=\"_blank\" href=\"../informe?courseid="+curso.getId()+"\">"+curso.getFullname()+"</a></td></tr>";
         }
         listaEnTabla+="</table>";
         return listaEnTabla;
@@ -106,26 +106,26 @@ public class MoodleQAFacade {
         int contadorRealizacion=puntos[11]+puntos[12]+puntos[13]+puntos[14];
         int contadorEvaluacion=puntos[15]+puntos[16];
         int contadorTotal=contadorDiseno+contadorImplementacion+contadorRealizacion+contadorEvaluacion;
-        return camposInformeFases[0]+generarCampoRelativo(contadorTotal, checksTotal) +
-                camposInformeFases[1]+generarCampoRelativo(contadorDiseno, checksDiseno) +
+        return camposInformeFases[0]+generarCampoRelativo(contadorTotal, CHECKS_TOTAL) +
+                camposInformeFases[1]+generarCampoRelativo(contadorDiseno, CHECKS_DISENO) +
                 camposInformeFases[2]+generarCampoAbsoluto(puntos[0]) +
                 camposInformeFases[3]+generarCampoAbsoluto(puntos[1]) +
                 camposInformeFases[4]+generarCampoAbsoluto(puntos[2]) +
                 camposInformeFases[5]+generarCampoAbsoluto(puntos[3]) +
                 camposInformeFases[6]+generarCampoAbsoluto(puntos[4]) +
                 camposInformeFases[7]+generarCampoAbsoluto(puntos[5]) +
-                camposInformeFases[8]+generarCampoRelativo(contadorImplementacion, checksImplementacion) +
+                camposInformeFases[8]+generarCampoRelativo(contadorImplementacion, CHECKS_IMPLEMENTACION) +
                 camposInformeFases[9]+generarCampoAbsoluto(puntos[6]) +
                 camposInformeFases[10]+generarCampoAbsoluto(puntos[7]) +
                 camposInformeFases[11]+generarCampoAbsoluto(puntos[8]) +
                 camposInformeFases[12]+generarCampoAbsoluto(puntos[9]) +
                 camposInformeFases[13]+generarCampoAbsoluto(puntos[10]) +
-                camposInformeFases[14]+generarCampoRelativo(contadorRealizacion, checksRealizacion) +
+                camposInformeFases[14]+generarCampoRelativo(contadorRealizacion, CHECKS_REALIZACION) +
                 camposInformeFases[15]+generarCampoAbsoluto(puntos[11]) +
                 camposInformeFases[16]+generarCampoAbsoluto(puntos[12]) +
                 camposInformeFases[17]+generarCampoAbsoluto(puntos[13]) +
                 camposInformeFases[18]+generarCampoAbsoluto(puntos[14]) +
-                camposInformeFases[19]+generarCampoRelativo(contadorEvaluacion, checksEvaluacion) +
+                camposInformeFases[19]+generarCampoRelativo(contadorEvaluacion, CHECKS_EVALUACION) +
                 camposInformeFases[20]+generarCampoAbsoluto(puntos[15]) +
                 camposInformeFases[21]+generarCampoAbsoluto(puntos[16])+camposInformeFases[22];
     }
