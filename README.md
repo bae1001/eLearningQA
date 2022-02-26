@@ -1,10 +1,10 @@
-# MoodleQA
+# eLearningQA
 
 [![](https://github.com/RobertoArastiBlanco/MoodleQA/actions/workflows/maven.yml/badge.svg)](https://github.com/RobertoArastiBlanco/MoodleQA/actions/workflows/maven.yml)
-[![](https://img.shields.io/github/deployments/RobertoArastiBlanco/MoodleQA/moodleqa?label=Heroku%20deployment&style=plastic)](https://moodleqa.herokuapp.com)
+[![](https://img.shields.io/github/deployments/RobertoArastiBlanco/eLearningQA/elearningqa?label=Heroku%20deployment&style=plastic)](https://elearningqa.herokuapp.com)
 ## Description
 
-MoodleQA is a web app that uses Moodle's web service 
+eLearningQA is a web app that uses Moodle's web service 
 API to retrieve information and runs a set of checks
 while applying an e-learning quality framework to
 assess the quality of instructional design on 
