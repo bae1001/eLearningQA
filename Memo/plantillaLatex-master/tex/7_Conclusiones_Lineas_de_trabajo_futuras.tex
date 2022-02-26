@@ -8,4 +8,6 @@
 	\item
 	De las cinco consultas definidas referentes a los cuestionarios Moodle, no hay ninguna implementada en la aplicación, y esto se debe a que al menos cuatro de ellas no están soportadas por la API de servicios web de Moodle.
 	Una posible solución a estas comprobaciones es el uso de técnicas de web scraping, pero teniendo en cuenta que las páginas que contengan la información deseada pueden variar en función del servidor que aloje la plataforma, no es una solución trivial.
+	\item
+	Por el momento la aplicación solo integra cursos Moodle, pero sería conveniente que la aplicación permitiera analizar cursos online de otros LMS como Blackboard o Edmodo. Sin embargo, realizar los cambios para esto supondría adaptarse a las APIs de servicios correspondientes suponiendo que sean lo suficientemente parecidas, y en caso de no poder acceder a la información necesaria mediante servicios web, habría que implementar otras formas de acceder a la información necesaria.
 \end{itemize}

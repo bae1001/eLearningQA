@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="es.ubu.lsi.MoodleQAFacade,es.ubu.lsi.WebServiceClient"%>
+<%@ page import="es.ubu.lsi.ELearningQAFacade,es.ubu.lsi.WebServiceClient"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MoodleQA-Lista de cursos</title>
+    <title>eLearningQA-Lista de cursos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -16,7 +16,7 @@
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
       WebServiceClient.setHost(request.getParameter("host"));
-      MoodleQAFacade fachada= new MoodleQAFacade((String)session.getAttribute("username"),(String)session.getAttribute("password"));
+      ELearningQAFacade fachada= new ELearningQAFacade((String)session.getAttribute("username"),(String)session.getAttribute("password"));
       session.setAttribute("fachada", fachada);
       String respuesta="";
       try{
@@ -28,7 +28,7 @@
         response.sendRedirect("");
       }
       %>
-<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) MoodleQA</div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>
+<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) eLearningQA</div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>
             <div class="d-flex justify-content-center" style="background-image: url('atardecer.jpg');
     height: 100vh;">
 

@@ -13,9 +13,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MoodleQAFacadeTest {
+class ELearningQAFacadeTest {
 
-    public static MoodleQAFacade fachada;
+    public static ELearningQAFacade fachada;
     public static String token;
     public static List<Course> listaCursos;
     public static List<StatusList> listasEstados=new ArrayList<>();
@@ -42,7 +42,7 @@ class MoodleQAFacadeTest {
 
     @BeforeAll
     public static void BeforeClass() {
-        fachada=new MoodleQAFacade("teacher","moodle");
+        fachada=new ELearningQAFacade("teacher","moodle");
         token=fachada.conectarse("teacher","moodle");
         String sep= File.separator;
         String ruta="."+sep+"src"+sep+"main"+sep+"resources"+sep+"json"+sep;

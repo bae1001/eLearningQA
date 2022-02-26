@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-public class MoodleQAFacade {
+public class ELearningQAFacade {
     private static final int CHECKS_DISENO =6;
     private static final int CHECKS_IMPLEMENTACION =5;
     private static final int CHECKS_REALIZACION =4;
@@ -15,7 +15,7 @@ public class MoodleQAFacade {
     private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION + CHECKS_EVALUACION;
     protected static String[] camposInformeFases;
 
-    public MoodleQAFacade(String username, String password) {
+    public ELearningQAFacade(String username, String password) {
         String sep= File.separator;
         String ruta="."+sep+"src"+sep+"main"+sep+"resources"+sep+"json"+sep+"informe"+sep;
         String extension=".json";

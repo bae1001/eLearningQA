@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="es.ubu.lsi.MoodleQAFacade,es.ubu.lsi.WebServiceClient"%>
+<%@ page import="es.ubu.lsi.ELearningQAFacade,es.ubu.lsi.WebServiceClient"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MoodleQA-Manual</title>
+    <title>eLearningQA-Manual</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) MoodleQA</div><div class="col text-end"></div></header>
+<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) eLearningQA</div><div class="col text-end"></div></header>
             <div class="d-flex justify-content-center" style="background-image: url('atardecer.jpg');">
 
           <div class="card w-100 m-3 p-3">
@@ -30,7 +30,7 @@
 
                     <h3>Acciones del usuario:</h3>
                     <ul>
-                    <li><strong>Login:</strong> para acceder a la aplicación son necesarias las credenciales de acceso a una cuenta de la plataforma Moodle a la que accede la aplicación (en el caso del prototipo es Mount &nbsp;Orange School). Debe introducir su usuario y contraseña en los campos &quot;Username&quot; y &quot;Password&quot;. Si quiere vaciar los campos pulse el botón &quot;Borrar&quot;. Para acceder a la página principal, pulse el botón &quot;Entrar&quot; tras haber introducido sus credenciales.</li>
+                    <li><strong>Login:</strong> para acceder a la aplicación son necesarias las credenciales de acceso a una cuenta de la plataforma a la que accede la aplicación (en el caso del prototipo es Mount &nbsp;Orange School). Debe introducir su usuario y contraseña en los campos &quot;Username&quot; y &quot;Password&quot;. Si quiere vaciar los campos pulse el botón &quot;Borrar&quot;. Para acceder a la página principal, pulse el botón &quot;Entrar&quot; tras haber introducido sus credenciales.</li>
                     <li><strong>Desconectar:</strong> desde la página principal, si desea finalizar su sesión, pulse el botón &quot;Desconectar&quot;. Esto invalidará sus credenciales y le impedirá acceder a la aplicación hasta que se registre de nuevo con unas credenciales válidas.</li>
                     <li><strong>Generar informe específico:</strong> la página principal muestra una tabla con todos los cursos en los que se encuentra matriculado el usuario registrado en formato de enlace. Al clicar un enlace, se generará un informe en una pestaña aparte del navegador que mostrará los resultados del análisis que ha realizado la aplicación sobre el curso correspondiente.</li><li><strong>Generar informe global:</strong> en la página principal hay un enlace llamado &quot;Generar informe global&quot;. Al hacer clic sobre este, se generará un informe en una pestaña aparte del navegador que mostrará un resumen de los análisis de todos los cursos en los que se encuentra matriculado el profesor.</li>
                     </ul>

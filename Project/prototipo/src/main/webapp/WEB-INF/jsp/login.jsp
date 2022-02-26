@@ -4,14 +4,14 @@
 <%@ page import="java.io.FileReader,java.util.Properties"%>
 <html lang="en">
 <head>
-  <title>MoodleQA-Login</title>
+  <title>eLearningQA-Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-  <header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) MoodleQA</div><div class="col text-end">No estás registrado</div></header>
+  <header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) eLearningQA</div><div class="col text-end">No estás registrado</div></header>
             <div class="d-flex justify-content-center" style="background-image: url('atardecer.jpg');height: 100vh;">
             <%
                 FileReader reader = new FileReader("config");
@@ -21,7 +21,7 @@
                 %>
 
           <div class="card w-25 p-3 align-self-center" style="min-width: 300px">
-                    <h2 class="text-primary">MoodleQA - Login</h2>
+                    <h2 class="text-primary">eLearningQA - Login</h2>
                     <form action="list" method="post">
                         <div class="form-floating mb-3 mt-3">
                             <input type="text" class="form-control" id="user" placeholder="Enter username" name="username">

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>MoodleQA-Logout</title>
+<title>eLearningQA-Logout</title>
 <meta charset="UTF-8">
 </head>
 <body>

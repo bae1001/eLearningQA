@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="es.ubu.lsi.MoodleQAFacade" %>
+<%@ page import="es.ubu.lsi.ELearningQAFacade" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MoodleQA-Informe</title>
+    <title>eLearningQA-Informe</title>
     <style type="text/css">
     .tg  {border-collapse:collapse;border-spacing:0;}
     .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -21,7 +21,7 @@
 </head>
 <body>
     <%String informe="";
-      try{MoodleQAFacade fachada=(MoodleQAFacade)session.getAttribute("fachada");
+      try{ELearningQAFacade fachada=(ELearningQAFacade)session.getAttribute("fachada");
       String courseid= request.getParameter("courseid");
       if(courseid==null){
         informe=fachada.generarInformeGlobal((String)session.getAttribute("token"));
