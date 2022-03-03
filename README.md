@@ -2,13 +2,14 @@
 
 [![](https://github.com/RobertoArastiBlanco/MoodleQA/actions/workflows/maven.yml/badge.svg)](https://github.com/RobertoArastiBlanco/MoodleQA/actions/workflows/maven.yml)
 [![](https://img.shields.io/github/deployments/RobertoArastiBlanco/eLearningQA/elearningqa?label=Heroku%20deployment&style=plastic)](https://elearningqa.herokuapp.com)
+[![](https://sonarcloud.io/api/project_badges/measure?project=RobertoArastiBlanco_MoodleQA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=RobertoArastiBlanco_MoodleQA)
 ## Description
 
 eLearningQA is a web app that uses Moodle's web service 
 API to retrieve information and runs a set of checks
 while applying an e-learning quality framework to
 assess the quality of instructional design on 
-Moodle courses(I am not a Moodle Partner). 
+Moodle courses (I am not a Moodle Partner). 
 This app is intended to be used by 
 teachers using Moodle.
 
