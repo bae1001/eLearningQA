@@ -8,7 +8,7 @@ eLearningQA is a web app that uses Moodle's web service
 API to retrieve information and runs a set of checks
 while applying an e-learning quality framework to
 assess the quality of instructional design on 
-Moodle courses. 
+Moodle courses(I am not a Moodle Partner). 
 This app is intended to be used by 
 teachers using Moodle.
 
