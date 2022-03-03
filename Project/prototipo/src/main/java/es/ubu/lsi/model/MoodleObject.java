@@ -2,7 +2,7 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class SuperClass {
+public class MoodleObject {
     private String intro;
     private int introformat;
     private List<Introfile> introfiles;
@@ -28,6 +28,7 @@ public class SuperClass {
     private String fileurl;
     private String mimetype;
     private boolean isexternalfile;
+    private String content;
 
     public int getId() {
         return id;
@@ -38,7 +39,7 @@ public class SuperClass {
     }
 
     public void setAssignmentid(int id) {
-        this.id = id;
+        setId(id);
     }
 
     public int getCoursemodule() {
@@ -231,5 +232,13 @@ public class SuperClass {
 
     public void setIsexternalfile(boolean isexternalfile) {
         this.isexternalfile = isexternalfile;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

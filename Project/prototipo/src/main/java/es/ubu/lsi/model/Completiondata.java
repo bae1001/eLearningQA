@@ -1,8 +1,6 @@
 package es.ubu.lsi.model;
 
-import java.util.List;
-
-public class Completiondata extends SuperClass{
+public class Completiondata extends MoodleObject {
     private int state;
     private int timecompleted;
 

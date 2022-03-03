@@ -1,5 +1,7 @@
 package es.ubu.lsi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Section{
@@ -8,6 +10,7 @@ public class Section{
     private int visible;
     private String summary;
     private int summaryformat;
+    @JsonProperty("section")
     private int section;
     private int hiddenbynumsections;
     private boolean uservisible;

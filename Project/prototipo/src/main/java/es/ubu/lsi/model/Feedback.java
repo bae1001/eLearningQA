@@ -2,15 +2,15 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Feedback extends SuperClass{
+public class Feedback extends MoodleObject {
     private int anonymous;
-    private boolean email_notification;
-    private boolean multiple_submit;
+    private boolean emailNotification;
+    private boolean multipleSubmit;
     private boolean autonumbering;
-    private String site_after_submit;
-    private String page_after_submit;
-    private int page_after_submitformat;
-    private boolean publish_stats;
+    private String siteAfterSubmit;
+    private String pageAfterSubmit;
+    private int pageAfterSubmitformat;
+    private boolean publishStats;
     private int timeopen;
     private int timeclose;
     private boolean completionsubmit;
@@ -26,19 +26,19 @@ public class Feedback extends SuperClass{
     }
 
     public boolean isEmailnotification() {
-        return email_notification;
+        return emailNotification;
     }
 
-    public void setEmailnotification(boolean email_notification) {
-        this.email_notification = email_notification;
+    public void setEmailnotification(boolean emailNotification) {
+        this.emailNotification = emailNotification;
     }
 
     public boolean isMultiplesubmit() {
-        return multiple_submit;
+        return multipleSubmit;
     }
 
-    public void setMultiplesubmit(boolean multiple_submit) {
-        this.multiple_submit = multiple_submit;
+    public void setMultiplesubmit(boolean multipleSubmit) {
+        this.multipleSubmit = multipleSubmit;
     }
 
     public boolean isAutonumbering() {
@@ -50,35 +50,35 @@ public class Feedback extends SuperClass{
     }
 
     public String getSiteaftersubmit() {
-        return site_after_submit;
+        return siteAfterSubmit;
     }
 
-    public void setSiteaftersubmit(String site_after_submit) {
-        this.site_after_submit = site_after_submit;
+    public void setSiteaftersubmit(String siteAfterSubmit) {
+        this.siteAfterSubmit = siteAfterSubmit;
     }
 
     public String getPageaftersubmit() {
-        return page_after_submit;
+        return pageAfterSubmit;
     }
 
-    public void setPageaftersubmit(String page_after_submit) {
-        this.page_after_submit = page_after_submit;
+    public void setPageaftersubmit(String pageAfterSubmit) {
+        this.pageAfterSubmit = pageAfterSubmit;
     }
 
     public int getPageaftersubmitformat() {
-        return page_after_submitformat;
+        return pageAfterSubmitformat;
     }
 
-    public void setPageaftersubmitformat(int page_after_submitformat) {
-        this.page_after_submitformat = page_after_submitformat;
+    public void setPageaftersubmitformat(int pageAfterSubmitformat) {
+        this.pageAfterSubmitformat = pageAfterSubmitformat;
     }
 
     public boolean isPublishstats() {
-        return publish_stats;
+        return publishStats;
     }
 
-    public void setPublishstats(boolean publish_stats) {
-        this.publish_stats = publish_stats;
+    public void setPublishstats(boolean publishStats) {
+        this.publishStats = publishStats;
     }
 
     public int getTimeopen() {

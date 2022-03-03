@@ -1,8 +1,6 @@
 package es.ubu.lsi.model;
 
-import java.util.List;
-
-public class Forum extends SuperClass{
+public class Forum extends MoodleObject {
     private String type;
     private int duedate;
     private int cutoffdate;
@@ -10,15 +8,14 @@ public class Forum extends SuperClass{
     private int assesstimestart;
     private int assesstimefinish;
     private int scale;
-    private int grade_forum;
-    private int grade_forum_notify;
+    private int gradeForum;
+    private int gradeForumNotify;
     private int maxbytes;
     private int maxattachments;
     private int forcesubscribe;
     private int trackingtype;
     private int rsstype;
     private int rssarticles;
-    private int timemodified;
     private int warnafter;
     private int blockafter;
     private int blockperiod;
@@ -88,19 +85,19 @@ public class Forum extends SuperClass{
     }
 
     public int getGradeforum() {
-        return grade_forum;
+        return gradeForum;
     }
 
-    public void setGradeforum(int grade_forum) {
-        this.grade_forum = grade_forum;
+    public void setGradeforum(int gradeForum) {
+        this.gradeForum = gradeForum;
     }
 
     public int getGradeforumnotify() {
-        return grade_forum_notify;
+        return gradeForumNotify;
     }
 
-    public void setGradeforumnotify(int grade_forum_notify) {
-        this.grade_forum_notify = grade_forum_notify;
+    public void setGradeforumnotify(int gradeForumNotify) {
+        this.gradeForumNotify = gradeForumNotify;
     }
 
     public int getMaxbytes() {

@@ -1,4 +1,4 @@
 package es.ubu.lsi.model;
 
-public class Contentfile extends SuperClass{
+public class Contentfile extends MoodleObject {
 }

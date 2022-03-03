@@ -26,8 +26,6 @@ public class Course {
     private int timemodified;
     private List<Assignment> assignments;
 
-    public Course(){}
-
     public int getId() {
         return id;
     }
@@ -171,14 +169,6 @@ public class Course {
     public void setHidden(Boolean hidden) {
         this.hidden = hidden;
     }
-
-    /*public int getTimeaccess() {
-        return timeaccess;
-    }
-
-    public void setTimeaccess(int timeaccess) {
-        this.timeaccess = timeaccess;
-    }*/
 
     public Boolean getShowshortname() {
         return showshortname;

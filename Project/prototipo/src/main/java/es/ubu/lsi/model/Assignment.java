@@ -2,7 +2,7 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Assignment extends SuperClass {
+public class Assignment extends MoodleObject {
     private int cmid;
     private int nosubmissions;
     private int submissiondrafts;

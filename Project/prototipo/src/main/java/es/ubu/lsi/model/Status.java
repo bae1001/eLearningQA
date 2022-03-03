@@ -1,8 +1,6 @@
 package es.ubu.lsi.model;
 
-import java.util.List;
-
-public class Status extends SuperClass{
+public class Status extends MoodleObject {
     private int cmid;
     private String modname;
     private int instance;

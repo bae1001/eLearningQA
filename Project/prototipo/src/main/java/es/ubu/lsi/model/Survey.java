@@ -1,8 +1,6 @@
 package es.ubu.lsi.model;
 
-import java.util.List;
-
-public class Survey extends SuperClass{
+public class Survey extends MoodleObject {
     private int template;
     private int days;
     private String questions;

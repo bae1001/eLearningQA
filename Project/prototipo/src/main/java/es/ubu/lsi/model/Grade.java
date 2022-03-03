@@ -1,5 +1,7 @@
 package es.ubu.lsi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Grade{
     private int id;
     private int userid;
@@ -7,7 +9,8 @@ public class Grade{
     private int timecreated;
     private int timemodified;
     private int grader;
-    private String grade;
+    @JsonProperty("grade")
+    private String gradeValue;
 
 
     public int getId() {
@@ -58,11 +61,11 @@ public class Grade{
         this.grader = grader;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getGradeValue() {
+        return gradeValue;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setGradeValue(String gradeValue) {
+        this.gradeValue = gradeValue;
     }
 }

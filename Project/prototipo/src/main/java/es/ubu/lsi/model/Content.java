@@ -2,17 +2,13 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Content extends SuperClass{
+public class Content extends MoodleObject {
     private String type;
     private int timecreated;
-    private int timemodified;
     private int sortorder;
-    private String mimetype;
-    private boolean isexternalfile;
     private int userid;
     private String author;
     private String license;
-    private String content;
     private List<Tag> tags;
 
 
@@ -40,22 +36,6 @@ public class Content extends SuperClass{
         this.sortorder = sortorder;
     }
 
-    public String getMimetype() {
-        return mimetype;
-    }
-
-    public void setMimetype(String mimetype) {
-        this.mimetype = mimetype;
-    }
-
-    public boolean isIsexternalfile() {
-        return isexternalfile;
-    }
-
-    public void setIsexternalfile(boolean isexternalfile) {
-        this.isexternalfile = isexternalfile;
-    }
-
     public int getUserid() {
         return userid;
     }
@@ -78,14 +58,6 @@ public class Content extends SuperClass{
 
     public void setLicense(String license) {
         this.license = license;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public List<Tag> getTags() {

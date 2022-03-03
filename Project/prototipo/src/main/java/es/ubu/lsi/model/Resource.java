@@ -2,7 +2,7 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class Resource extends SuperClass{
+public class Resource extends MoodleObject {
     private List<Contentfile> contentfiles;
     private int tobemigrated;
     private int legacyfiles;

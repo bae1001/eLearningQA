@@ -8,7 +8,7 @@
     <title>eLearningQA-Lista de cursos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
@@ -16,7 +16,7 @@
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
       WebServiceClient.setHost(request.getParameter("host"));
-      ELearningQAFacade fachada= new ELearningQAFacade((String)session.getAttribute("username"),(String)session.getAttribute("password"));
+      ELearningQAFacade fachada= new ELearningQAFacade();
       session.setAttribute("fachada", fachada);
       String respuesta="";
       try{

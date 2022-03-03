@@ -1,5 +1,7 @@
 package es.ubu.lsi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Discussion{
     private int id;
     private String name;
@@ -8,7 +10,8 @@ public class Discussion{
     private int usermodified;
     private int timestart;
     private int timeend;
-    private int discussion;
+    @JsonProperty("discussion")
+    private int discussionNumber;
     private int parent;
     private int userid;
     private int created;
@@ -91,12 +94,12 @@ public class Discussion{
         this.timeend = timeend;
     }
 
-    public int getDiscussion() {
-        return discussion;
+    public int getDiscussionNumber() {
+        return discussionNumber;
     }
 
-    public void setDiscussion(int discussion) {
-        this.discussion = discussion;
+    public void setDiscussionNumber(int discussionNumber) {
+        this.discussionNumber = discussionNumber;
     }
 
     public int getParent() {

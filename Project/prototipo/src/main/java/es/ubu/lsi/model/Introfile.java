@@ -1,4 +1,4 @@
 package es.ubu.lsi.model;
 
-public class Introfile extends SuperClass{
+public class Introfile extends MoodleObject {
 }

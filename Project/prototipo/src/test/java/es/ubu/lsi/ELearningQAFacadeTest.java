@@ -2,6 +2,8 @@ package es.ubu.lsi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.ubu.lsi.model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
@@ -42,7 +44,7 @@ class ELearningQAFacadeTest {
 
     @BeforeAll
     public static void BeforeClass() {
-        fachada=new ELearningQAFacade("teacher","moodle");
+        fachada=new ELearningQAFacade();
         token=fachada.conectarse("teacher","moodle");
         String sep= File.separator;
         String ruta="."+sep+"src"+sep+"main"+sep+"resources"+sep+"json"+sep;
@@ -65,7 +67,8 @@ class ELearningQAFacadeTest {
                 listasSurveys.add(Arrays.asList(mapper.readValue(new File(ruta+"Listasurveys"+id+extension), Survey[].class)));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger LOGGER = LogManager.getLogger();
+            LOGGER.error("exception", e);
         }
     }
 

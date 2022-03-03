@@ -2,6 +2,8 @@ package es.ubu.lsi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.ubu.lsi.model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.List;
@@ -15,7 +17,7 @@ public class ELearningQAFacade {
     private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION + CHECKS_EVALUACION;
     protected static String[] camposInformeFases;
 
-    public ELearningQAFacade(String username, String password) {
+    static {
         String sep= File.separator;
         String ruta="."+sep+"src"+sep+"main"+sep+"resources"+sep+"json"+sep+"informe"+sep;
         String extension=".json";
@@ -23,8 +25,13 @@ public class ELearningQAFacade {
         try {
             camposInformeFases= mapper.readValue(new File(ruta+"CamposInformeFases"+extension), String[].class);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger LOGGER = LogManager.getLogger();
+            LOGGER.error("exception", e);
         }
+    }
+
+    public ELearningQAFacade() {
+
     }
 
     public String conectarse(String username, String password){
@@ -33,12 +40,12 @@ public class ELearningQAFacade {
 
     public String generarListaCursos(String token){
         List<Course> listaCursos= getListaCursos(token);
-        String listaEnTabla="<table>";
+        StringBuilder listaEnTabla= new StringBuilder("<table>");
         for (Course curso: listaCursos) {
-            listaEnTabla+="<tr><td><a target=\"_blank\" href=\"../informe?courseid="+curso.getId()+"\">"+curso.getFullname()+"</a></td></tr>";
+            listaEnTabla.append("<tr><td><a target=\"_blank\" href=\"../informe?courseid=").append(curso.getId()).append("\">").append(curso.getFullname()).append("</a></td></tr>");
         }
-        listaEnTabla+="</table>";
-        return listaEnTabla;
+        listaEnTabla.append("</table>");
+        return listaEnTabla.toString();
     }
 
     public List<Course> getListaCursos(String token) {
@@ -56,9 +63,7 @@ public class ELearningQAFacade {
                 "<h3>Matriz de roles y responsabilidades</h3>" +
                 generarMatrizRolPerspectiva(puntosComprobaciones, 1) +
                 "<h3>Informe de fases</h3>" +
-                generarInformeFasesEspecifico(puntosComprobaciones)/* +
-                "<h3>Aspectos a mejorar</h3>" +
-                generarListaMejoras(alumnosSinGrupo, modulosMalFechados, recursosDesfasados)*/;
+                generarInformeFasesEspecifico(puntosComprobaciones);
     }
 
     private int[] realizarComprobaciones(String token, int courseid) {
@@ -76,7 +81,6 @@ public class ELearningQAFacade {
         List<Assignment> tareasConNotas=WebServiceClient.obtenerTareasConNotas(token,mapaFechasLimite);
         List<ResponseAnalysis> listaAnalisis=WebServiceClient.obtenerAnalisis(token, courseid);
         List<Survey> listaSurveys=WebServiceClient.obtenerSurveys(token, courseid);
-        List<User> alumnosSinGrupo=WebServiceClient.obtenerAlumnosSinGrupo(WebServiceClient.obtenerUsuarios(token, courseid));
         List<es.ubu.lsi.model.Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(curso, listaModulos);
         List<Resource> recursosDesfasados=WebServiceClient.obtenerRecursosDesfasados(curso, listaRecursos);
         int[] puntosComprobaciones = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -108,26 +112,21 @@ public class ELearningQAFacade {
         int contadorTotal=contadorDiseno+contadorImplementacion+contadorRealizacion+contadorEvaluacion;
         return camposInformeFases[0]+generarCampoRelativo(contadorTotal, CHECKS_TOTAL) +
                 camposInformeFases[1]+generarCampoRelativo(contadorDiseno, CHECKS_DISENO) +
-                camposInformeFases[2]+generarCampoAbsoluto(puntos[0]) +
-                camposInformeFases[3]+generarCampoAbsoluto(puntos[1]) +
-                camposInformeFases[4]+generarCampoAbsoluto(puntos[2]) +
-                camposInformeFases[5]+generarCampoAbsoluto(puntos[3]) +
-                camposInformeFases[6]+generarCampoAbsoluto(puntos[4]) +
-                camposInformeFases[7]+generarCampoAbsoluto(puntos[5]) +
+                generarFilas(2, 0, 6, puntos)+
                 camposInformeFases[8]+generarCampoRelativo(contadorImplementacion, CHECKS_IMPLEMENTACION) +
-                camposInformeFases[9]+generarCampoAbsoluto(puntos[6]) +
-                camposInformeFases[10]+generarCampoAbsoluto(puntos[7]) +
-                camposInformeFases[11]+generarCampoAbsoluto(puntos[8]) +
-                camposInformeFases[12]+generarCampoAbsoluto(puntos[9]) +
-                camposInformeFases[13]+generarCampoAbsoluto(puntos[10]) +
+                generarFilas(9, 6, 5, puntos)+
                 camposInformeFases[14]+generarCampoRelativo(contadorRealizacion, CHECKS_REALIZACION) +
-                camposInformeFases[15]+generarCampoAbsoluto(puntos[11]) +
-                camposInformeFases[16]+generarCampoAbsoluto(puntos[12]) +
-                camposInformeFases[17]+generarCampoAbsoluto(puntos[13]) +
-                camposInformeFases[18]+generarCampoAbsoluto(puntos[14]) +
+                generarFilas(15, 11, 4, puntos)+
                 camposInformeFases[19]+generarCampoRelativo(contadorEvaluacion, CHECKS_EVALUACION) +
-                camposInformeFases[20]+generarCampoAbsoluto(puntos[15]) +
-                camposInformeFases[21]+generarCampoAbsoluto(puntos[16])+camposInformeFases[22];
+                generarFilas(20, 15, 2, puntos)+camposInformeFases[22];
+    }
+
+    private String generarFilas(int origen1, int origen2, int cantidad, int[] puntos){
+        StringBuilder filas= new StringBuilder();
+        for (int i = 0;i<cantidad;i++){
+            filas.append(camposInformeFases[origen1 + i]).append(generarCampoAbsoluto(puntos[origen2 + i]));
+        }
+        return filas.toString();
     }
 
     public boolean isSonVisiblesCondiciones(Course curso) {
@@ -273,34 +272,8 @@ public class ELearningQAFacade {
                 "</tr></table>";
     }
 
-    public String generarListaMejoras(List<User> alumnosSinGrupo, List<es.ubu.lsi.model.Module> modulosMalFechados, List<Resource> recursosDesfasados){
-        StringBuilder listaAspectosAMejorar=new StringBuilder();
-        if (alumnosSinGrupo.size()!=0){
-            listaAspectosAMejorar.append("<p>Usuarios no asignados a un grupo:</p><ul>");
-            for (User alumno:alumnosSinGrupo) {
-                listaAspectosAMejorar.append("<li>"+alumno.getFullname()+"</li>");
-            }
-            listaAspectosAMejorar.append("</ul>");
-        }
-        if (modulosMalFechados.size()!=0){
-            listaAspectosAMejorar.append("<p>Módulos con fechas incorrectas:</p><ul>");
-            for (es.ubu.lsi.model.Module modulo:modulosMalFechados) {
-                listaAspectosAMejorar.append("<li>"+modulo.getName()+"</li>");
-            }
-            listaAspectosAMejorar.append("</ul>");
-        }
-        if (recursosDesfasados.size()!=0){
-            listaAspectosAMejorar.append("</ul><p>Recursos sin actualizar:</p><ul>");
-            for (Resource recurso:recursosDesfasados) {
-                listaAspectosAMejorar.append("<li>"+recurso.getName()+"</li>");
-            }
-            listaAspectosAMejorar.append("</ul>");
-        }
-        return listaAspectosAMejorar.toString();
-    }
 
-    public String generarInformeGlobal(String token){
-        List<Course> listaCursos= getListaCursos(token);
+    public String generarInformeGlobal(){
         return "Esta característica no está implementada";
     }
 }
