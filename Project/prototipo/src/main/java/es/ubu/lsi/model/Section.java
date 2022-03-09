@@ -11,7 +11,7 @@ public class Section{
     private String summary;
     private int summaryformat;
     @JsonProperty("section")
-    private int section;
+    private int sectionNumber;
     private int hiddenbynumsections;
     private boolean uservisible;
     private List<Module> modules;
@@ -57,12 +57,12 @@ public class Section{
         this.summaryformat = summaryformat;
     }
 
-    public int getSection() {
-        return section;
+    public int getSectionNumber() {
+        return sectionNumber;
     }
 
-    public void setSection(int section) {
-        this.section = section;
+    public void setSectionNumber(int sectionNumber) {
+        this.sectionNumber = sectionNumber;
     }
 
     public int getHiddenbynumsections() {

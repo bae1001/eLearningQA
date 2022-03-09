@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ELearningQAFacade {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final int CHECKS_DISENO =6;
     private static final int CHECKS_IMPLEMENTACION =5;
     private static final int CHECKS_REALIZACION =4;
@@ -25,13 +26,12 @@ public class ELearningQAFacade {
         try {
             camposInformeFases= mapper.readValue(new File(ruta+"CamposInformeFases"+extension), String[].class);
         } catch (Exception e) {
-            Logger LOGGER = LogManager.getLogger();
             LOGGER.error("exception", e);
         }
     }
 
     public ELearningQAFacade() {
-
+        //El constructor está vacío pero en un futuro podría necesitar atributos
     }
 
     public String conectarse(String username, String password){

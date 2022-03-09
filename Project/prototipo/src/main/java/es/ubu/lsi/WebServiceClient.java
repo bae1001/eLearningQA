@@ -1,6 +1,5 @@
 package es.ubu.lsi;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import es.ubu.lsi.model.*;
 import es.ubu.lsi.model.Date;
 import org.apache.logging.log4j.LogManager;
@@ -8,13 +7,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
 
-import java.io.File;
 import java.io.FileReader;
 import java.util.*;
 
 public class WebServiceClient {
 
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String COURSEID = "&courseid=";
     private static final String COURSEIDS_0 = "&courseids[0]=";
     private static String host = "https://school.moodledemo.net";
@@ -38,7 +37,6 @@ public class WebServiceClient {
             tiempoCorreccionTareas = Integer.parseInt(properties.getProperty("assignment_grading_time"));
             porcentajeMinRespuestas = Double.parseDouble(properties.getProperty("min_feedback_answer_percentage"));
         } catch (Exception e) {
-            Logger LOGGER = LogManager.getLogger();
             LOGGER.error("exception", e);
         }
     }
@@ -150,12 +148,12 @@ public class WebServiceClient {
 
     public static boolean estaProgresoActivado(StatusList listaEstados) {
         List<Status> estados=listaEstados.getStatuses();
-        if(estados==null||estados.isEmpty()){return true;}
+        if(estados==null||estados.isEmpty()){return false;}
         return estados.get(0).isHascompletion();
     }
 
     public static boolean estaCorregidoATiempo(List<Assignment> tareasConNotas, Map<Integer, Integer> mapaFechasLimite){
-        if(mapaFechasLimite.isEmpty()){return true;}
+        if(mapaFechasLimite.isEmpty()){return false;}
         for (Assignment tarea : tareasConNotas) {
             List<Grade> notas = tarea.getGrades();
             for (Grade nota : notas) {
@@ -339,7 +337,7 @@ public class WebServiceClient {
                 }
             }
         }
-        if(contadorTuplasComentables==0){return true;}
+        if(contadorTuplasComentables==0){return false;}
         return (float)contadorRetroalimentacion/(float)contadorTuplasComentables> porcentajeMinComentarios;
     }
 
@@ -475,7 +473,7 @@ public class WebServiceClient {
 
     public static boolean respondenFeedbacks(List<ResponseAnalysis> listaAnalisis, List<User> usuarios){
         int nAlumnos=numeroAlumnos(usuarios);
-        if(nAlumnos==0){return true;}
+        if(nAlumnos==0){return false;}
         for (ResponseAnalysis analisis:listaAnalisis) {
             if ((float)(analisis.getTotalattempts()+analisis.getTotalanonattempts())/(float) nAlumnos< porcentajeMinRespuestas){
                 return false;

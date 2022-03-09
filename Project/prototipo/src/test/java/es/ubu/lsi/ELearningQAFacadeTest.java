@@ -142,8 +142,8 @@ class ELearningQAFacadeTest {
         assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(0),WebServiceClient.generarMapaFechasLimite(listasTareas.get(0))));
         assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(1),WebServiceClient.generarMapaFechasLimite(listasTareas.get(1))));
         assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(2),WebServiceClient.generarMapaFechasLimite(listasTareas.get(2))));
-        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(3),WebServiceClient.generarMapaFechasLimite(listasTareas.get(3))));
-        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(4),WebServiceClient.generarMapaFechasLimite(listasTareas.get(4))));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(3),WebServiceClient.generarMapaFechasLimite(listasTareas.get(3))));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(4),WebServiceClient.generarMapaFechasLimite(listasTareas.get(4))));
         assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(5),WebServiceClient.generarMapaFechasLimite(listasTareas.get(5))));
     }
 

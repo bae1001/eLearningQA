@@ -75,7 +75,7 @@
         <div class="btn-group col" role="group">
           <button class="tablink btn btn-primary active" style="box-shadow: none;" onclick="openTab(event, 'Fases')">Informe de fases</button>
           <button class="tablink btn btn-primary" style="box-shadow: none;" onclick="openTab(event, 'Matriz')">Matriz Rol-Responsabilidad</button>
-        </div><div class="col text-end"></div></header>
+        </div><div class="col m-3 text-end"><%=nombreCurso%></div></header>
                   <div class="d-flex justify-content-center" style="height:85vh;background-image: url('atardecer.jpg');">
                     <div id="Fases" class="tabcontent w-100 p-0" style="display:flex">
                 <div class="card m-2 me-0 p-1" style="width: 60%;overflow:auto;">
