@@ -66,7 +66,7 @@ public class ELearningQAFacade {
                 generarInformeFasesEspecifico(puntosComprobaciones);
     }
 
-    private int[] realizarComprobaciones(String token, int courseid) {
+    public int[] realizarComprobaciones(String token, int courseid) {
         Course curso= getCursoPorId(token, courseid);
         List<User> listaUsuarios= WebServiceClient.obtenerUsuarios(token, courseid);
         StatusList listaEstados=WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios);
@@ -104,7 +104,7 @@ public class ELearningQAFacade {
         return puntosComprobaciones;
     }
 
-    private String generarInformeFasesEspecifico(int[] puntos) {
+    public String generarInformeFasesEspecifico(int[] puntos) {
         int contadorDiseno=puntos[0]+puntos[1]+puntos[2]+puntos[3]+puntos[4]+puntos[5];
         int contadorImplementacion=puntos[6]+puntos[7]+puntos[8]+puntos[9]+puntos[10];
         int contadorRealizacion=puntos[11]+puntos[12]+puntos[13]+puntos[14];
