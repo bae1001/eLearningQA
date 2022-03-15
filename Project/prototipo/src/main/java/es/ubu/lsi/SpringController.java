@@ -57,4 +57,44 @@ public class SpringController{
                 .getResourceAsStream("images/atardecer.jpg");
         return IOUtils.toByteArray(in);
     }
+
+    @GetMapping(
+            value = "/Logo.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] logo() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/Logo.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/FullLogo.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] fullLogo() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/FullLogo.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/Cross.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] cross() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/Cross.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/Check.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] check() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/Check.png");
+        return IOUtils.toByteArray(in);
+    }
 }

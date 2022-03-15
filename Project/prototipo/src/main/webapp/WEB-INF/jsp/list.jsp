@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>eLearningQA-Lista de cursos</title>
+    <link rel="icon" type="image/x-icon" href="Logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
      <script src="/js/bootstrap.bundle.min.js"></script>
@@ -28,7 +29,7 @@
         response.sendRedirect("");
       }
       %>
-<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col">(Logo sin texto) eLearningQA</div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>
+<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col"><img src="FullLogo.png" width="200" height="32"></div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>
             <div class="d-flex justify-content-center" style="background-image: url('atardecer.jpg');
     height: 100vh;">
 
@@ -38,7 +39,7 @@
           </div>
     </div>
     <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
-      <p>(Logo completo)</p>
+      <p><img src="FullLogo.png" width="200" height="32"></p>
 
       <a target="_blank" href="../manual">Manual de usuario</a>
       <a>Acerca de</a>

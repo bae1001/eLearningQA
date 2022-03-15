@@ -217,9 +217,9 @@ public class ELearningQAFacade {
 
     public String generarCampoAbsoluto(int puntos){
         if (puntos==0){
-            return "<td class=\"tg-pred\">No</td>";
+            return "<td class=\"tg-pred\"><img src=\"Cross.png\" width=\"16\" height=\"16\"></td>";
         }else{
-            return "<td class=\"tg-pgre\">Sí</td>";
+            return "<td class=\"tg-pgre\"><img src=\"Check.png\" width=\"16\" height=\"16\"></td>";
         }
     }
 

@@ -4,8 +4,31 @@
 <%@ page import="es.ubu.lsi.ELearningQAFacade, es.ubu.lsi.model.Course, org.apache.logging.log4j.LogManager, org.apache.logging.log4j.Logger" %>
 <html lang="en">
 <head>
+    <%String informe="";
+          String matriz="";
+          String fases="";
+          String nombreCurso="";
+          String token=(String)session.getAttribute("token");
+          try{ELearningQAFacade fachada=(ELearningQAFacade)session.getAttribute("fachada");
+          String courseid= request.getParameter("courseid");
+          if(courseid==null){
+            informe=fachada.generarInformeGlobal();
+          }else{
+            Course curso= fachada.getCursoPorId(token, Integer.parseInt(courseid));
+            int[] puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid));
+            nombreCurso=curso.getFullname();
+            matriz=fachada.generarMatrizRolPerspectiva(puntosComprobaciones, 1);
+            fases=fachada.generarInformeFasesEspecifico(puntosComprobaciones);
+          }
+          }catch(Exception e){
+            Logger LOGGER = LogManager.getLogger();
+            LOGGER.error("exception", e);
+            response.sendRedirect("");
+          }
+          %>
     <meta charset="UTF-8">
-    <title>eLearningQA-Informe</title>
+    <title><%=nombreCurso%>-Informe</title>
+    <link rel="icon" type="image/x-icon" href="Logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="/js/bootstrap.bundle.min.js"></script>
@@ -17,11 +40,11 @@
     .tg .tg-ltgr{background-color:#EFEFEF;text-align:right;vertical-align:middle}
     .tg tr.active{-webkit-filter: brightness(90%);border-style:solid;border-width:2px;}
     .tg tr:hover{-webkit-filter: brightness(80%);}
-    .tg .tg-pgre{background-color:#00FF00;text-align:center;vertical-align:middle}
-    .tg .tg-char{background-color:#7FFF00;text-align:center;vertical-align:middle}
-    .tg .tg-yell{background-color:#FFFF00;text-align:center;vertical-align:middle}
-    .tg .tg-oran{background-color:#FF7F00;text-align:center;vertical-align:middle}
-    .tg .tg-pred{background-color:#FF0000;text-align:center;vertical-align:middle}
+    .tg .tg-pgre{background-color:#198754;text-align:center;vertical-align:middle}
+    .tg .tg-char{background-color:#66cc00;text-align:center;vertical-align:middle}
+    .tg .tg-yell{background-color:#ffc107;text-align:center;vertical-align:middle}
+    .tg .tg-oran{background-color:#fd7e14;text-align:center;vertical-align:middle}
+    .tg .tg-pred{background-color:#dc3545;text-align:center;vertical-align:middle}
     tr:nth-child(even) {
       background-color: #efefef;
     }
@@ -45,37 +68,16 @@
     </style>
 </head>
 <body>
-    <%String informe="";
-      String matriz="";
-      String fases="";
-      String nombreCurso="";
-      String token=(String)session.getAttribute("token");
-      try{ELearningQAFacade fachada=(ELearningQAFacade)session.getAttribute("fachada");
-      String courseid= request.getParameter("courseid");
-      if(courseid==null){
-        informe=fachada.generarInformeGlobal();
-      }else{
-        Course curso= fachada.getCursoPorId(token, Integer.parseInt(courseid));
-        int[] puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid));
-        nombreCurso=curso.getFullname();
-        matriz=fachada.generarMatrizRolPerspectiva(puntosComprobaciones, 1);
-        fases=fachada.generarInformeFasesEspecifico(puntosComprobaciones);
-      }
-      }catch(Exception e){
-        Logger LOGGER = LogManager.getLogger();
-        LOGGER.error("exception", e);
-        response.sendRedirect("");
-      }
-      %>
+
 
       <header class="bg-dark text-white row" style="--bs-gutter-x:0;">
-        <div class="col m-3">
-          (Logo sin texto) eLearningQA
+        <div class="col m-3 text-center">
+          <img src="FullLogo.png" width="200" height="32">
         </div>
         <div class="btn-group col" role="group">
           <button class="tablink btn btn-primary active" style="box-shadow: none;" onclick="openTab(event, 'Fases')">Informe de fases</button>
           <button class="tablink btn btn-primary" style="box-shadow: none;" onclick="openTab(event, 'Matriz')">Matriz Rol-Responsabilidad</button>
-        </div><div class="col m-3 text-end"><%=nombreCurso%></div></header>
+        </div><div class="col m-3 text-center"><%=nombreCurso%></div></header>
                   <div class="d-flex justify-content-center" style="height:85vh;background-image: url('atardecer.jpg');">
                     <div id="Fases" class="tabcontent w-100 p-0" style="display:flex">
                 <div class="card m-2 me-0 p-1" style="width: 60%;overflow:auto;">
@@ -134,7 +136,7 @@
             </div></div>
       </div>
           <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
-            <p>(Logo completo)</p>
+            <p><img src="FullLogo.png" width="200" height="32"></p>
 
             <a target="_blank" href="../manual">Manual de usuario</a>
             <a>Acerca de</a>
