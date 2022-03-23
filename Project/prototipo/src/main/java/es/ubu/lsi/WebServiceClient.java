@@ -461,7 +461,7 @@ public class WebServiceClient {
         if(listaModulosMalFechados.isEmpty()){
             return true;
         }else{
-            for (Module modulo:listaModulosMalFechados) {
+            for (es.ubu.lsi.model.Module modulo:listaModulosMalFechados) {
                 detalles.append(modulo.getName()).append("<br>");
             }
             registro.guardarAlertaDesplegable("implementation correctdates", "Hay módulos con fechas incorrectas", "Módulos mal fechados", detalles.toString());

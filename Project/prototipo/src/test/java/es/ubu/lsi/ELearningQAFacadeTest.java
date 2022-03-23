@@ -79,8 +79,7 @@ class ELearningQAFacadeTest {
         for (Course curso:listaCursos) {
             listaIds.add(curso.getId());
         }
-        System.out.println(listaIds);
-        //assertTrue(listaIds.contains(idCurso1));
+        assertTrue(listaIds.contains(idCurso1));
         assertTrue(listaIds.contains(idCurso2));
         assertTrue(listaIds.contains(idCurso3));
         assertTrue(listaIds.contains(idCurso4));
