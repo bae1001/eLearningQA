@@ -100,14 +100,14 @@ public class ELearningQAFacade {
         int contadorRealizacion=puntos[11]+puntos[12]+puntos[13]+puntos[14];
         int contadorEvaluacion=puntos[15]+puntos[16];
         int contadorTotal=contadorDiseno+contadorImplementacion+contadorRealizacion+contadorEvaluacion;
-        return camposInformeFases[0]+generarCampoRelativo(contadorTotal/nroCursos, CHECKS_TOTAL) +
-                camposInformeFases[1]+generarCampoRelativo(contadorDiseno/nroCursos, CHECKS_DISENO) +
+        return camposInformeFases[0]+generarCampoRelativo((float)contadorTotal/nroCursos, CHECKS_TOTAL) +
+                camposInformeFases[1]+generarCampoRelativo((float)contadorDiseno/nroCursos, CHECKS_DISENO) +
                 generarFilas(new int[]{2, 0}, 6, puntos, nroCursos)+
-                camposInformeFases[8]+generarCampoRelativo(contadorImplementacion/nroCursos, CHECKS_IMPLEMENTACION) +
+                camposInformeFases[8]+generarCampoRelativo((float)contadorImplementacion/nroCursos, CHECKS_IMPLEMENTACION) +
                 generarFilas(new int[]{9, 6}, 5, puntos, nroCursos)+
-                camposInformeFases[14]+generarCampoRelativo(contadorRealizacion/nroCursos, CHECKS_REALIZACION) +
+                camposInformeFases[14]+generarCampoRelativo((float)contadorRealizacion/nroCursos, CHECKS_REALIZACION) +
                 generarFilas(new int[]{15, 11}, 4, puntos, nroCursos)+
-                camposInformeFases[19]+generarCampoRelativo(contadorEvaluacion/nroCursos, CHECKS_EVALUACION) +
+                camposInformeFases[19]+generarCampoRelativo((float)contadorEvaluacion/nroCursos, CHECKS_EVALUACION) +
                 generarFilas(new int[]{20, 15}, 2, puntos, nroCursos)+camposInformeFases[22];
     }
 
@@ -125,13 +125,6 @@ public class ELearningQAFacade {
         return filas.toString();
     }
 
-    private String generarFilasRelativas(int origen1, int origen2, int cantidad, int[] puntos){
-        StringBuilder filas= new StringBuilder();
-        for (int i = 0;i<cantidad;i++){
-            filas.append(camposInformeFases[origen1 + i]).append(generarCampoAbsoluto(puntos[origen2 + i]));
-        }
-        return filas.toString();
-    }
 
     public boolean isSonVisiblesCondiciones(Course curso, AlertLog registro) {
         return WebServiceClient.sonVisiblesCondiciones(curso, registro);
@@ -277,8 +270,4 @@ public class ELearningQAFacade {
                 "</tr></table>";
     }
 
-
-    public String generarInformeGlobal(){
-        return "Esta característica no está implementada";
-    }
 }

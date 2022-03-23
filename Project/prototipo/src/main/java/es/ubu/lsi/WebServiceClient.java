@@ -359,8 +359,9 @@ public class WebServiceClient {
     public static boolean hayRetroalimentacion(List<Table> listaCalificadores, AlertLog registro){
         int contadorRetroalimentacion=0;
         int contadorTuplasComentables=0;
+        final String category = "realization assignmentfeedback";
         if (listaCalificadores.isEmpty()){
-            registro.guardarAlerta("realization assignmentfeedback","No hay calificadores que comprobar");
+            registro.guardarAlerta(category,"No hay calificadores que comprobar");
             return false;
         }
         for (Table calificador:listaCalificadores) {
@@ -374,13 +375,13 @@ public class WebServiceClient {
             }
         }
         if(contadorTuplasComentables==0){
-            registro.guardarAlerta("realization assignmentfeedback","No hay actividades que comentar");
+            registro.guardarAlerta(category,"No hay actividades que comentar");
             return false;
         }
         if((float)contadorRetroalimentacion/(float)contadorTuplasComentables> porcentajeMinComentarios){
             return true;
         }else{
-            registro.guardarAlerta("realization assignmentfeedback","No se hacen suficientes comentarios a las entregas de los alumnos");
+            registro.guardarAlerta(category,"No se hacen suficientes comentarios a las entregas de los alumnos");
             return false;
         }
     }
