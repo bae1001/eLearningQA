@@ -3,7 +3,7 @@ package es.ubu.lsi.model;
 import java.util.List;
 
 public class Ratinginfo{
-    private int contextid;
+    private long contextid;
     private String component;
     private String ratingarea;
     private Object canviewall;
@@ -12,11 +12,11 @@ public class Ratinginfo{
     private List<Object> ratings;
 
 
-    public int getContextid() {
+    public long getContextid() {
         return contextid;
     }
 
-    public void setContextid(int contextid) {
+    public void setContextid(long contextid) {
         this.contextid = contextid;
     }
 

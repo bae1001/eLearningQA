@@ -1,23 +1,23 @@
 package es.ubu.lsi.model;
 
 public class Completiondata extends MoodleObject {
-    private int state;
-    private int timecompleted;
+    private long state;
+    private long timecompleted;
 
 
-    public int getState() {
+    public long getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(long state) {
         this.state = state;
     }
 
-    public int getTimecompleted() {
+    public long getTimecompleted() {
         return timecompleted;
     }
 
-    public void setTimecompleted(int timecompleted) {
+    public void setTimecompleted(long timecompleted) {
         this.timecompleted = timecompleted;
     }
 

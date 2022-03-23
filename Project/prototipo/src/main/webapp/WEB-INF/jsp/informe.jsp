@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="es.ubu.lsi.ELearningQAFacade, es.ubu.lsi.model.Course, org.apache.logging.log4j.LogManager, org.apache.logging.log4j.Logger" %>
+<%@ page import="java.util.List, es.ubu.lsi.ELearningQAFacade, es.ubu.lsi.AlertLog, es.ubu.lsi.model.Course, org.apache.logging.log4j.LogManager, org.apache.logging.log4j.Logger" %>
 <html lang="en">
 <head>
     <%String informe="";
@@ -9,16 +9,31 @@
           String fases="";
           String nombreCurso="";
           String token=(String)session.getAttribute("token");
+          AlertLog alertas= new AlertLog();
+          int[] puntosComprobaciones;
+          int[] puntosCurso;
           try{ELearningQAFacade fachada=(ELearningQAFacade)session.getAttribute("fachada");
           String courseid= request.getParameter("courseid");
           if(courseid==null){
-            informe=fachada.generarInformeGlobal();
+            puntosComprobaciones=new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+            List<Course> listaCursos=fachada.getListaCursos(token);
+            for(Course curso:listaCursos){
+              alertas.guardarTitulo(curso.getFullname());
+              puntosCurso = fachada.realizarComprobaciones(token, curso.getId(), alertas);
+              for(int i=0;i<puntosComprobaciones.length;i++){
+                puntosComprobaciones[i]+=puntosCurso[i];
+              }
+            }
+
+            nombreCurso="Informe general de cursos";
+            matriz=fachada.generarMatrizRolPerspectiva(puntosComprobaciones, listaCursos.size());
+            fases=fachada.generarInformeFases(puntosComprobaciones,listaCursos.size());
           }else{
             Course curso= fachada.getCursoPorId(token, Integer.parseInt(courseid));
-            int[] puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid));
+            puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid), alertas);
             nombreCurso=curso.getFullname();
             matriz=fachada.generarMatrizRolPerspectiva(puntosComprobaciones, 1);
-            fases=fachada.generarInformeFasesEspecifico(puntosComprobaciones);
+            fases=fachada.generarInformeFases(puntosComprobaciones,1);
           }
           }catch(Exception e){
             Logger LOGGER = LogManager.getLogger();
@@ -72,11 +87,11 @@
 
       <header class="bg-dark text-white row" style="--bs-gutter-x:0;">
         <div class="col m-3 text-center">
-          <img src="FullLogo.png" width="200" height="32">
+          <img src="FullLogo.png" width="200" height="32" alt="eLearningQA">
         </div>
         <div class="btn-group col" role="group">
           <button class="tablink btn btn-primary active" style="box-shadow: none;" onclick="openTab(event, 'Fases')">Informe de fases</button>
-          <button class="tablink btn btn-primary" style="box-shadow: none;" onclick="openTab(event, 'Matriz')">Matriz Rol-Responsabilidad</button>
+          <button class="tablink btn btn-primary" style="box-shadow: none;" onclick="openTab(event, 'Matriz')">Evolución del rendimiento</button>
         </div><div class="col m-3 text-center"><%=nombreCurso%></div></header>
                   <div class="d-flex justify-content-center" style="height:85vh;background-image: url('atardecer.jpg');">
                     <div id="Fases" class="tabcontent w-100 p-0" style="display:flex">
@@ -84,50 +99,8 @@
                     <%=fases%>
                 </div>
                               <div class="card m-2 ms-0 p-1" style="width: 40%;overflow:auto;">
-                                <div class="alert alert-danger infoline overall design groupactivities">
-                                  (Error de muestra WIP) El curso no contiene actividades grupales.
-                                </div>
-                                <div class="alert alert-danger infoline overall design consistentmaxgrade">
-                                  (Error de muestra WIP) Las calificaciones máximas de las actividades y categorías son inconsistentes.
-                                </div>
-                                <div class="alert alert-danger infoline overall implementation rubrics">
-                                  (Error de muestra WIP) No hay métodos avanzados de calificación en ninguna de las actividades.
-                                </div>
-                                <div class="alert alert-danger p-0 infoline overall implementation studentsingroups"><div class="accordion-item">
-                                  <button class="accordion-button alert-danger collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c1" aria-expanded="true">
-                                    (Error de muestra WIP) Hay alumnos sin grupo en el curso.
-                                  </button><div id="c1" class="accordion-collapse collapse alert-danger"  >
-                                  <div class="accordion-body">
-                                    <strong>Alumnos sin grupo</strong></br>
-                                    Frances Banks, Mark Ellis, Brian Franklin, Barbara Gardner, Joshua Knight, George Lopez, Anthony Ramirez, Donna Taylor, Gary Vasquez, Brenda Vasquez.
-                                  </div>
-                                  </div>
-                                </div></div>
-                                <div class="alert alert-danger infoline overall realization assignmentfeedback">
-                                              (Error de muestra WIP) No se hacen suficientes comentarios en las actividades.
-                                            </div>
-                                            <div class="alert alert-danger p-0 infoline overall realization assignmentsgraded"><div class="accordion-item">
-                                              <button class="accordion-button alert-danger collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2" aria-expanded="true">
-                                                (Error de muestra WIP) Algunas entregas de los alumnos no están corregidas.
-                                              </button><div id="c2" class="accordion-collapse collapse alert-danger"  >
-                                              <div class="accordion-body">
-                                                <strong>Entregas sin corregir</strong></br>
-                                                La entrega en Assignment 1 (Text or Audio) por Brian Franklin.</br>
-                                                La entrega en Assignment 2 (Upload) por Brian Franklin.</br>
-                                                La entrega en Assignment 2 (Upload) por Frances Banks.
-                                              </div>
-                                              </div>
-                                            </div></div>
-                                            <div class="alert alert-danger p-0 infoline overall assessment mostrespond"><div class="accordion-item">
-                                              <button class="accordion-button alert-danger collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3" aria-expanded="true">
-                                                (Error de muestra WIP) La mayoría de alumnos no ha respondido algunas encuestas.
-                                              </button><div id="c3" class="accordion-collapse collapse alert-danger"  >
-                                              <div class="accordion-body">
-                                                <strong>Encuestas poco respondidas</strong></br>
-                                                Your views on this course
-                                              </div>
-                                              </div>
-                                            </div></div>
+                                <%=alertas%>
+
                 </div>
         </div>
         <div id="Matriz" class="tabcontent w-100 p-0" style="display:none">
@@ -136,7 +109,7 @@
             </div></div>
       </div>
           <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
-            <p><img src="FullLogo.png" width="200" height="32"></p>
+            <p><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></p>
 
             <a target="_blank" href="../manual">Manual de usuario</a>
             <a>Acerca de</a>

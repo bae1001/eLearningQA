@@ -3,14 +3,14 @@ package es.ubu.lsi.model;
 import java.util.List;
 
 public class Course {
-    private int id;
+    private long id;
     private String fullname;
     private String shortname;
     private String idnumber;
     private String summary;
     private int summaryformat;
-    private int startdate;
-    private int enddate;
+    private long startdate;
+    private long enddate;
     private Boolean visible;
     private Boolean showactivitydates;
     private Boolean showcompletionconditions;
@@ -23,14 +23,14 @@ public class Course {
     private Boolean hidden;
     private Boolean showshortname;
     private String coursecategory;
-    private int timemodified;
+    private long timemodified;
     private List<Assignment> assignments;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -74,19 +74,19 @@ public class Course {
         this.summaryformat = summaryformat;
     }
 
-    public int getStartdate() {
+    public long getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(int startdate) {
+    public void setStartdate(long startdate) {
         this.startdate = startdate;
     }
 
-    public int getEnddate() {
+    public long getEnddate() {
         return enddate;
     }
 
-    public void setEnddate(int enddate) {
+    public void setEnddate(long enddate) {
         this.enddate = enddate;
     }
 
@@ -186,11 +186,11 @@ public class Course {
         this.coursecategory = coursecategory;
     }
 
-    public int getTimemodified() {
+    public long getTimemodified() {
         return timemodified;
     }
 
-    public void setTimemodified(int timemodified) {
+    public void setTimemodified(long timemodified) {
         this.timemodified = timemodified;
     }
 

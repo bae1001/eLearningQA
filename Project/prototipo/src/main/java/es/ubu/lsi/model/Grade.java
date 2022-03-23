@@ -3,29 +3,29 @@ package es.ubu.lsi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Grade{
-    private int id;
-    private int userid;
+    private long id;
+    private long userid;
     private int attemptnumber;
-    private int timecreated;
-    private int timemodified;
-    private int grader;
+    private long timecreated;
+    private long timemodified;
+    private long grader;
     @JsonProperty("grade")
     private String gradeValue;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getUserid() {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 
@@ -37,27 +37,27 @@ public class Grade{
         this.attemptnumber = attemptnumber;
     }
 
-    public int getTimecreated() {
+    public long getTimecreated() {
         return timecreated;
     }
 
-    public void setTimecreated(int timecreated) {
+    public void setTimecreated(long timecreated) {
         this.timecreated = timecreated;
     }
 
-    public int getTimemodified() {
+    public long getTimemodified() {
         return timemodified;
     }
 
-    public void setTimemodified(int timemodified) {
+    public void setTimemodified(long timemodified) {
         this.timemodified = timemodified;
     }
 
-    public int getGrader() {
+    public long getGrader() {
         return grader;
     }
 
-    public void setGrader(int grader) {
+    public void setGrader(long grader) {
         this.grader = grader;
     }
 

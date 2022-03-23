@@ -12,7 +12,7 @@
      <script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col"><img src="FullLogo.png" width="200" height="32"></div><div class="col text-end"></div></header>
+<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col"><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></div><div class="col text-end"></div></header>
             <div class="d-flex justify-content-center" style="background-image: url('atardecer.jpg');">
 
           <div class="card w-100 m-3 p-3">
@@ -68,7 +68,7 @@
           </div>
     </div>
     <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
-      <p><img src="FullLogo.png" width="200" height="32"></p>
+      <p><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></p>
 
       <a target="_blank" href="../manual">Manual de usuario</a>
       <a>Acerca de</a>

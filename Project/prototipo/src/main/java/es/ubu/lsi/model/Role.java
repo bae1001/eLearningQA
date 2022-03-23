@@ -1,17 +1,17 @@
 package es.ubu.lsi.model;
 
 public class Role {
-    private int roleid;
+    private long roleid;
     private String name;
     private String shortname;
     private int sortorder;
 
 
-    public int getRoleid() {
+    public long getRoleid() {
         return roleid;
     }
 
-    public void setRoleid(int roleid) {
+    public void setRoleid(long roleid) {
         this.roleid = roleid;
     }
 

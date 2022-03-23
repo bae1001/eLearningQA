@@ -3,43 +3,43 @@ package es.ubu.lsi.model;
 import java.util.List;
 
 public class Attempt{
-    private int id;
-    private int courseid;
-    private int userid;
-    private int timemodified;
+    private long id;
+    private long courseid;
+    private long userid;
+    private long timemodified;
     private String fullname;
     private List<Response> responses;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getCourseid() {
+    public long getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(int courseid) {
+    public void setCourseid(long courseid) {
         this.courseid = courseid;
     }
 
-    public int getUserid() {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 
-    public int getTimemodified() {
+    public long getTimemodified() {
         return timemodified;
     }
 
-    public void setTimemodified(int timemodified) {
+    public void setTimemodified(long timemodified) {
         this.timemodified = timemodified;
     }
 

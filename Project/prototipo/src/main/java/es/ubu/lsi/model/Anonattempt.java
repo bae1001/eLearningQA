@@ -3,25 +3,25 @@ package es.ubu.lsi.model;
 import java.util.List;
 
 public class Anonattempt{
-    private int id;
-    private int courseid;
+    private long id;
+    private long courseid;
     private int number;
     private List<Response> responses;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getCourseid() {
+    public long getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(int courseid) {
+    public void setCourseid(long courseid) {
         this.courseid = courseid;
     }
 

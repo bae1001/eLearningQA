@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Content extends MoodleObject {
     private String type;
-    private int timecreated;
+    private long timecreated;
     private int sortorder;
-    private int userid;
+    private long userid;
     private String author;
     private String license;
     private List<Tag> tags;
@@ -20,11 +20,11 @@ public class Content extends MoodleObject {
         this.type = type;
     }
 
-    public int getTimecreated() {
+    public long getTimecreated() {
         return timecreated;
     }
 
-    public void setTimecreated(int timecreated) {
+    public void setTimecreated(long timecreated) {
         this.timecreated = timecreated;
     }
 
@@ -36,11 +36,11 @@ public class Content extends MoodleObject {
         this.sortorder = sortorder;
     }
 
-    public int getUserid() {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 

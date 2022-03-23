@@ -56,17 +56,7 @@ public class ELearningQAFacade {
         return WebServiceClient.obtenerNombreCompleto(token, username);
     }
 
-    public String generarInformeEspecifico(String token, int courseid) {
-        Course curso= getCursoPorId(token, courseid);
-        int[] puntosComprobaciones = realizarComprobaciones(token, courseid);
-        return "<h2>Informe: " + curso.getFullname() + "</h2>" +
-                "<h3>Matriz de roles y responsabilidades</h3>" +
-                generarMatrizRolPerspectiva(puntosComprobaciones, 1) +
-                "<h3>Informe de fases</h3>" +
-                generarInformeFasesEspecifico(puntosComprobaciones);
-    }
-
-    public int[] realizarComprobaciones(String token, int courseid) {
+    public int[] realizarComprobaciones(String token, long courseid, AlertLog registro) {
         Course curso= getCursoPorId(token, courseid);
         List<User> listaUsuarios= WebServiceClient.obtenerUsuarios(token, courseid);
         StatusList listaEstados=WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios);
@@ -77,51 +67,65 @@ public class ELearningQAFacade {
         List<Resource> listaRecursos=WebServiceClient.obtenerRecursos(token, courseid);
         List<CourseModule> listaModulosTareas=WebServiceClient.obtenerModulosTareas(token, listaTareas);
         List<Post> listaPosts=WebServiceClient.obtenerListaPosts(token, courseid);
-        Map<Integer,Integer> mapaFechasLimite=WebServiceClient.generarMapaFechasLimite(listaTareas);
+        Map<Integer, Long> mapaFechasLimite=WebServiceClient.generarMapaFechasLimite(listaTareas);
         List<Assignment> tareasConNotas=WebServiceClient.obtenerTareasConNotas(token,mapaFechasLimite);
         List<ResponseAnalysis> listaAnalisis=WebServiceClient.obtenerAnalisis(token, courseid);
         List<Survey> listaSurveys=WebServiceClient.obtenerSurveys(token, courseid);
         List<es.ubu.lsi.model.Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(curso, listaModulos);
         List<Resource> recursosDesfasados=WebServiceClient.obtenerRecursosDesfasados(curso, listaRecursos);
         int[] puntosComprobaciones = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        if(isestaProgresoActivado(listaEstados)){puntosComprobaciones[0]++;}
-        if(isHayVariedadFormatos(listaModulos)){puntosComprobaciones[1]++;}
-        if(isTieneGrupos(listaGrupos)){puntosComprobaciones[2]++;}
-        if(isHayTareasGrupales(listaTareas)){puntosComprobaciones[3]++;}
-        if(isSonVisiblesCondiciones(curso)){puntosComprobaciones[4]++;}
-        if(isEsNotaMaxConsistente(listaCalificadores)){puntosComprobaciones[5]++;}
-        if(isEstanActualizadosRecursos(recursosDesfasados)){puntosComprobaciones[6]++;}
-        if(isSonFechasCorrectas(modulosMalFechados)){puntosComprobaciones[7]++;}
-        if(isMuestraCriterios(listaModulosTareas)){puntosComprobaciones[8]++;}
-        if(isAnidamientoCalificadorAceptable(listaCalificadores)){puntosComprobaciones[9]++;}
-        if(isAlumnosEnGrupos(listaUsuarios)){puntosComprobaciones[10]++;}
-        if(isRespondeATiempo(listaUsuarios,listaPosts)){puntosComprobaciones[11]++;}
-        if(isHayRetroalimentacion(listaCalificadores)){puntosComprobaciones[12]++;}
-        if(isEstaCorregidoATiempo(tareasConNotas,mapaFechasLimite)){puntosComprobaciones[13]++;}
-        if(isCalificadorMuestraPonderacion(listaCalificadores)){puntosComprobaciones[14]++;}
-        if(isRespondenFeedbacks(listaAnalisis,listaUsuarios)){puntosComprobaciones[15]++;}
-        if(isUsaSurveys(listaSurveys)){puntosComprobaciones[16]++;}
+        if(isestaProgresoActivado(listaEstados, registro)){puntosComprobaciones[0]++;}
+        if(isHayVariedadFormatos(listaModulos, registro)){puntosComprobaciones[1]++;}
+        if(isTieneGrupos(listaGrupos, registro)){puntosComprobaciones[2]++;}
+        if(isHayTareasGrupales(listaTareas, registro)){puntosComprobaciones[3]++;}
+        if(isSonVisiblesCondiciones(curso, registro)){puntosComprobaciones[4]++;}
+        if(isEsNotaMaxConsistente(listaCalificadores, registro)){puntosComprobaciones[5]++;}
+        if(isEstanActualizadosRecursos(recursosDesfasados, registro)){puntosComprobaciones[6]++;}
+        if(isSonFechasCorrectas(modulosMalFechados, registro)){puntosComprobaciones[7]++;}
+        if(isMuestraCriterios(listaModulosTareas, registro)){puntosComprobaciones[8]++;}
+        if(isAnidamientoCalificadorAceptable(listaCalificadores, registro)){puntosComprobaciones[9]++;}
+        if(isAlumnosEnGrupos(listaUsuarios, registro)){puntosComprobaciones[10]++;}
+        if(isRespondeATiempo(listaUsuarios,listaPosts, registro)){puntosComprobaciones[11]++;}
+        if(isHayRetroalimentacion(listaCalificadores, registro)){puntosComprobaciones[12]++;}
+        if(isEstaCorregidoATiempo(tareasConNotas,mapaFechasLimite, registro)){puntosComprobaciones[13]++;}
+        if(isCalificadorMuestraPonderacion(listaCalificadores, registro)){puntosComprobaciones[14]++;}
+        if(isRespondenFeedbacks(listaAnalisis,listaUsuarios, registro)){puntosComprobaciones[15]++;}
+        if(isUsaSurveys(listaSurveys, registro)){puntosComprobaciones[16]++;}
         return puntosComprobaciones;
     }
 
-    public String generarInformeFasesEspecifico(int[] puntos) {
+    public String generarInformeFases(int[] puntos, int nroCursos) {
         int contadorDiseno=puntos[0]+puntos[1]+puntos[2]+puntos[3]+puntos[4]+puntos[5];
         int contadorImplementacion=puntos[6]+puntos[7]+puntos[8]+puntos[9]+puntos[10];
         int contadorRealizacion=puntos[11]+puntos[12]+puntos[13]+puntos[14];
         int contadorEvaluacion=puntos[15]+puntos[16];
         int contadorTotal=contadorDiseno+contadorImplementacion+contadorRealizacion+contadorEvaluacion;
-        return camposInformeFases[0]+generarCampoRelativo(contadorTotal, CHECKS_TOTAL) +
-                camposInformeFases[1]+generarCampoRelativo(contadorDiseno, CHECKS_DISENO) +
-                generarFilas(2, 0, 6, puntos)+
-                camposInformeFases[8]+generarCampoRelativo(contadorImplementacion, CHECKS_IMPLEMENTACION) +
-                generarFilas(9, 6, 5, puntos)+
-                camposInformeFases[14]+generarCampoRelativo(contadorRealizacion, CHECKS_REALIZACION) +
-                generarFilas(15, 11, 4, puntos)+
-                camposInformeFases[19]+generarCampoRelativo(contadorEvaluacion, CHECKS_EVALUACION) +
-                generarFilas(20, 15, 2, puntos)+camposInformeFases[22];
+        return camposInformeFases[0]+generarCampoRelativo(contadorTotal/nroCursos, CHECKS_TOTAL) +
+                camposInformeFases[1]+generarCampoRelativo(contadorDiseno/nroCursos, CHECKS_DISENO) +
+                generarFilas(new int[]{2, 0}, 6, puntos, nroCursos)+
+                camposInformeFases[8]+generarCampoRelativo(contadorImplementacion/nroCursos, CHECKS_IMPLEMENTACION) +
+                generarFilas(new int[]{9, 6}, 5, puntos, nroCursos)+
+                camposInformeFases[14]+generarCampoRelativo(contadorRealizacion/nroCursos, CHECKS_REALIZACION) +
+                generarFilas(new int[]{15, 11}, 4, puntos, nroCursos)+
+                camposInformeFases[19]+generarCampoRelativo(contadorEvaluacion/nroCursos, CHECKS_EVALUACION) +
+                generarFilas(new int[]{20, 15}, 2, puntos, nroCursos)+camposInformeFases[22];
     }
 
-    private String generarFilas(int origen1, int origen2, int cantidad, int[] puntos){
+    private String generarFilas(int[] posiciones, int cantidad, int[] puntos, int nroCursos){
+        StringBuilder filas= new StringBuilder();
+        if(nroCursos==1){
+            for (int i = 0; i < cantidad; i++) {
+                filas.append(camposInformeFases[posiciones[0] + i]).append(generarCampoAbsoluto(puntos[posiciones[1] + i]));
+            }
+        }else{
+            for (int i = 0; i < cantidad; i++) {
+                filas.append(camposInformeFases[posiciones[0] + i]).append(generarCampoRelativo(puntos[posiciones[1] + i],nroCursos));
+            }
+        }
+        return filas.toString();
+    }
+
+    private String generarFilasRelativas(int origen1, int origen2, int cantidad, int[] puntos){
         StringBuilder filas= new StringBuilder();
         for (int i = 0;i<cantidad;i++){
             filas.append(camposInformeFases[origen1 + i]).append(generarCampoAbsoluto(puntos[origen2 + i]));
@@ -129,78 +133,78 @@ public class ELearningQAFacade {
         return filas.toString();
     }
 
-    public boolean isSonVisiblesCondiciones(Course curso) {
-        return WebServiceClient.sonVisiblesCondiciones(curso);
+    public boolean isSonVisiblesCondiciones(Course curso, AlertLog registro) {
+        return WebServiceClient.sonVisiblesCondiciones(curso, registro);
     }
 
-    public boolean isTieneGrupos(List<Group> listaGrupos) {
-        return WebServiceClient.tieneGrupos(listaGrupos);
+    public boolean isTieneGrupos(List<Group> listaGrupos, AlertLog registro) {
+        return WebServiceClient.tieneGrupos(listaGrupos, registro);
     }
 
-    public Course getCursoPorId(String token, int courseid) {
+    public Course getCursoPorId(String token, long courseid) {
         return WebServiceClient.obtenerCursoPorId(token, courseid);
     }
 
 
 
-    public boolean isestaProgresoActivado(StatusList listaEstados) {
-        return WebServiceClient.estaProgresoActivado(listaEstados);
+    public boolean isestaProgresoActivado(StatusList listaEstados, AlertLog registro) {
+        return WebServiceClient.estaProgresoActivado(listaEstados, registro);
     }
 
-    public boolean isUsaSurveys(List<Survey> listaEncuestas) {
-        return WebServiceClient.usaSurveys(listaEncuestas);
+    public boolean isUsaSurveys(List<Survey> listaEncuestas, AlertLog registro) {
+        return WebServiceClient.usaSurveys(listaEncuestas, registro);
     }
 
-    public boolean isAlumnosEnGrupos(List<User> listaUsuarios) {
-        return WebServiceClient.alumnosEnGrupos(listaUsuarios);
+    public boolean isAlumnosEnGrupos(List<User> listaUsuarios, AlertLog registro) {
+        return WebServiceClient.alumnosEnGrupos(listaUsuarios, registro);
     }
 
-    public boolean isEstaCorregidoATiempo(List<Assignment> tareasConNotas, Map<Integer, Integer> mapaFechasLimite) {
-        return WebServiceClient.estaCorregidoATiempo(tareasConNotas, mapaFechasLimite);
+    public boolean isEstaCorregidoATiempo(List<Assignment> tareasConNotas, Map<Integer, Long> mapaFechasLimite, AlertLog registro) {
+        return WebServiceClient.estaCorregidoATiempo(tareasConNotas, mapaFechasLimite, registro);
     }
 
-    public boolean isRespondeATiempo(List<User> listaUsuarios, List<Post> listaPostsCompleta) {
-        return WebServiceClient.respondeATiempo(listaUsuarios, listaPostsCompleta);
+    public boolean isRespondeATiempo(List<User> listaUsuarios, List<Post> listaPostsCompleta, AlertLog registro) {
+        return WebServiceClient.respondeATiempo(listaUsuarios, listaPostsCompleta, registro);
     }
 
-    public boolean isAnidamientoCalificadorAceptable(List<Table> listaCalificadores) {
-        return WebServiceClient.anidamientoCalificadorAceptable(listaCalificadores);
+    public boolean isAnidamientoCalificadorAceptable(List<Table> listaCalificadores, AlertLog registro) {
+        return WebServiceClient.anidamientoCalificadorAceptable(listaCalificadores, registro);
     }
 
-    public boolean isCalificadorMuestraPonderacion(List<Table> listaCalificadores) {
-        return WebServiceClient.calificadorMuestraPonderacion(listaCalificadores);
+    public boolean isCalificadorMuestraPonderacion(List<Table> listaCalificadores, AlertLog registro) {
+        return WebServiceClient.calificadorMuestraPonderacion(listaCalificadores, registro);
     }
 
-    public boolean isHayRetroalimentacion(List<Table> listaCalificadores) {
-        return WebServiceClient.hayRetroalimentacion(listaCalificadores);
+    public boolean isHayRetroalimentacion(List<Table> listaCalificadores, AlertLog registro) {
+        return WebServiceClient.hayRetroalimentacion(listaCalificadores, registro);
     }
 
-    public boolean isEsNotaMaxConsistente(List<Table> listaCalificadores) {
-        return WebServiceClient.esNotaMaxConsistente(listaCalificadores);
+    public boolean isEsNotaMaxConsistente(List<Table> listaCalificadores, AlertLog registro) {
+        return WebServiceClient.esNotaMaxConsistente(listaCalificadores, registro);
     }
 
-    public boolean isEstanActualizadosRecursos(List<Resource> listaRecursosDesfasados) {
-        return WebServiceClient.estanActualizadosRecursos(listaRecursosDesfasados);
+    public boolean isEstanActualizadosRecursos(List<Resource> listaRecursosDesfasados, AlertLog registro) {
+        return WebServiceClient.estanActualizadosRecursos(listaRecursosDesfasados, registro);
     }
 
-    public boolean isSonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados) {
-        return WebServiceClient.sonFechasCorrectas(listaModulosMalFechados);
+    public boolean isSonFechasCorrectas(List<Module> listaModulosMalFechados, AlertLog registro) {
+        return WebServiceClient.sonFechasCorrectas(listaModulosMalFechados, registro);
     }
 
-    public boolean isRespondenFeedbacks(List<ResponseAnalysis> listaAnalisis, List<User> listaUsuarios) {
-        return WebServiceClient.respondenFeedbacks(listaAnalisis,listaUsuarios);
+    public boolean isRespondenFeedbacks(List<ResponseAnalysis> listaAnalisis, List<User> listaUsuarios, AlertLog registro) {
+        return WebServiceClient.respondenFeedbacks(listaAnalisis,listaUsuarios, registro);
     }
 
-    public boolean isHayTareasGrupales(List<Assignment> listaTareas) {
-        return WebServiceClient.hayTareasGrupales(listaTareas);
+    public boolean isHayTareasGrupales(List<Assignment> listaTareas, AlertLog registro) {
+        return WebServiceClient.hayTareasGrupales(listaTareas, registro);
     }
 
-    public boolean isMuestraCriterios(List<CourseModule> listaModulosTareas) {
-        return WebServiceClient.muestraCriterios(listaModulosTareas);
+    public boolean isMuestraCriterios(List<CourseModule> listaModulosTareas, AlertLog registro) {
+        return WebServiceClient.muestraCriterios(listaModulosTareas, registro);
     }
 
-    public boolean isHayVariedadFormatos(List<es.ubu.lsi.model.Module> listamodulos) {
-        return WebServiceClient.hayVariedadFormatos(listamodulos);
+    public boolean isHayVariedadFormatos(List<Module> listamodulos, AlertLog registro) {
+        return WebServiceClient.hayVariedadFormatos(listamodulos, registro);
     }
 
     public float porcentajeFraccion(float numerador, float denominador){
@@ -217,9 +221,10 @@ public class ELearningQAFacade {
 
     public String generarCampoAbsoluto(int puntos){
         if (puntos==0){
-            return "<td class=\"tg-pred\"><img src=\"Cross.png\" width=\"16\" height=\"16\"></td>";
+            return "<td class=\"tg-pred\"><img src=\"Cross.png\" width=\"16\" height=\"16\" alt=\"No\"></td>";
         }else{
-            return "<td class=\"tg-pgre\"><img src=\"Check.png\" width=\"16\" height=\"16\"></td>";
+            return "<td class=\"tg-pgre\"><img src=\"Check.png\" width=\"16\" height=\"16\" alt=\"Sí." +
+                    "\"></td>";
         }
     }
 

@@ -2,11 +2,11 @@ package es.ubu.lsi.model;
 
 public class Forum extends MoodleObject {
     private String type;
-    private int duedate;
-    private int cutoffdate;
-    private int assessed;
-    private int assesstimestart;
-    private int assesstimefinish;
+    private long duedate;
+    private long cutoffdate;
+    private long assessed;
+    private long assesstimestart;
+    private long assesstimefinish;
     private int scale;
     private int gradeForum;
     private int gradeForumNotify;
@@ -22,7 +22,7 @@ public class Forum extends MoodleObject {
     private int completiondiscussions;
     private int completionreplies;
     private int completionposts;
-    private int cmid;
+    private long cmid;
     private int numdiscussions;
     private boolean cancreatediscussions;
     private int lockdiscussionafter;
@@ -36,43 +36,43 @@ public class Forum extends MoodleObject {
         this.type = type;
     }
 
-    public int getDuedate() {
+    public long getDuedate() {
         return duedate;
     }
 
-    public void setDuedate(int duedate) {
+    public void setDuedate(long duedate) {
         this.duedate = duedate;
     }
 
-    public int getCutoffdate() {
+    public long getCutoffdate() {
         return cutoffdate;
     }
 
-    public void setCutoffdate(int cutoffdate) {
+    public void setCutoffdate(long cutoffdate) {
         this.cutoffdate = cutoffdate;
     }
 
-    public int getAssessed() {
+    public long getAssessed() {
         return assessed;
     }
 
-    public void setAssessed(int assessed) {
+    public void setAssessed(long assessed) {
         this.assessed = assessed;
     }
 
-    public int getAssesstimestart() {
+    public long getAssesstimestart() {
         return assesstimestart;
     }
 
-    public void setAssesstimestart(int assesstimestart) {
+    public void setAssesstimestart(long assesstimestart) {
         this.assesstimestart = assesstimestart;
     }
 
-    public int getAssesstimefinish() {
+    public long getAssesstimefinish() {
         return assesstimefinish;
     }
 
-    public void setAssesstimefinish(int assesstimefinish) {
+    public void setAssesstimefinish(long assesstimefinish) {
         this.assesstimefinish = assesstimefinish;
     }
 
@@ -196,11 +196,11 @@ public class Forum extends MoodleObject {
         this.completionposts = completionposts;
     }
 
-    public int getCmid() {
+    public long getCmid() {
         return cmid;
     }
 
-    public void setCmid(int cmid) {
+    public void setCmid(long cmid) {
         this.cmid = cmid;
     }
 

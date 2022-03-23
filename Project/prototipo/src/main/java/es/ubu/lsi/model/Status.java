@@ -1,19 +1,19 @@
 package es.ubu.lsi.model;
 
 public class Status extends MoodleObject {
-    private int cmid;
+    private long cmid;
     private String modname;
     private int instance;
     private int state;
-    private int timecompleted;
+    private long timecompleted;
     private int tracking;
 
 
-    public int getCmid() {
+    public long getCmid() {
         return cmid;
     }
 
-    public void setCmid(int cmid) {
+    public void setCmid(long cmid) {
         this.cmid = cmid;
     }
 
@@ -41,11 +41,11 @@ public class Status extends MoodleObject {
         this.state = state;
     }
 
-    public int getTimecompleted() {
+    public long getTimecompleted() {
         return timecompleted;
     }
 
-    public void setTimecompleted(int timecompleted) {
+    public void setTimecompleted(long timecompleted) {
         this.timecompleted = timecompleted;
     }
 

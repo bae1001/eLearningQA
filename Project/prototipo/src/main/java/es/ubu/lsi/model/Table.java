@@ -3,26 +3,26 @@ package es.ubu.lsi.model;
 import java.util.List;
 
 public class Table{
-    private int courseid;
-    private int userid;
+    private long courseid;
+    private long userid;
     private String userfullname;
     private int maxdepth;
     private List<Tabledata> tabledata;
 
 
-    public int getCourseid() {
+    public long getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(int courseid) {
+    public void setCourseid(long courseid) {
         this.courseid = courseid;
     }
 
-    public int getUserid() {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 

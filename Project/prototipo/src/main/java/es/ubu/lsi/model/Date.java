@@ -2,7 +2,7 @@ package es.ubu.lsi.model;
 
 public class Date{
     private String label;
-    private int timestamp;
+    private long timestamp;
 
 
     public String getLabel() {
@@ -13,11 +13,11 @@ public class Date{
         this.label = label;
     }
 
-    public int getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 }

@@ -3,18 +3,18 @@ package es.ubu.lsi.model;
 import java.util.List;
 
 public class Assignment extends MoodleObject {
-    private int cmid;
+    private long cmid;
     private int nosubmissions;
     private int submissiondrafts;
     private int sendnotifications;
     private int sendlatenotifications;
     private int sendstudentnotifications;
-    private int duedate;
-    private int allowsubmissionsfromdate;
+    private long duedate;
+    private long allowsubmissionsfromdate;
     private int grade;
     private int completionsubmit;
-    private int cutoffdate;
-    private int gradingduedate;
+    private long cutoffdate;
+    private long gradingduedate;
     private int teamsubmission;
     private int requireallteammemberssubmit;
     private int teamsubmissiongroupingid;
@@ -34,11 +34,11 @@ public class Assignment extends MoodleObject {
     private List<Grade> grades;
 
 
-    public int getCmid() {
+    public long getCmid() {
         return cmid;
     }
 
-    public void setCmid(int cmid) {
+    public void setCmid(long cmid) {
         this.cmid = cmid;
     }
 
@@ -82,19 +82,19 @@ public class Assignment extends MoodleObject {
         this.sendstudentnotifications = sendstudentnotifications;
     }
 
-    public int getDuedate() {
+    public long getDuedate() {
         return duedate;
     }
 
-    public void setDuedate(int duedate) {
+    public void setDuedate(long duedate) {
         this.duedate = duedate;
     }
 
-    public int getAllowsubmissionsfromdate() {
+    public long getAllowsubmissionsfromdate() {
         return allowsubmissionsfromdate;
     }
 
-    public void setAllowsubmissionsfromdate(int allowsubmissionsfromdate) {
+    public void setAllowsubmissionsfromdate(long allowsubmissionsfromdate) {
         this.allowsubmissionsfromdate = allowsubmissionsfromdate;
     }
 
@@ -114,19 +114,19 @@ public class Assignment extends MoodleObject {
         this.completionsubmit = completionsubmit;
     }
 
-    public int getCutoffdate() {
+    public long getCutoffdate() {
         return cutoffdate;
     }
 
-    public void setCutoffdate(int cutoffdate) {
+    public void setCutoffdate(long cutoffdate) {
         this.cutoffdate = cutoffdate;
     }
 
-    public int getGradingduedate() {
+    public long getGradingduedate() {
         return gradingduedate;
     }
 
-    public void setGradingduedate(int gradingduedate) {
+    public void setGradingduedate(long gradingduedate) {
         this.gradingduedate = gradingduedate;
     }
 

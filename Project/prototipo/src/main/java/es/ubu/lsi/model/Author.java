@@ -3,18 +3,18 @@ package es.ubu.lsi.model;
 import java.util.List;
 
 public class Author{
-    private int id;
+    private long id;
     private String fullname;
     private boolean isdeleted;
     private List<Group> groups;
     private Urls urls;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

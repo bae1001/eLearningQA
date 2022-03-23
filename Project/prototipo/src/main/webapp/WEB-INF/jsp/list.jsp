@@ -29,17 +29,18 @@
         response.sendRedirect("");
       }
       %>
-<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col"><img src="FullLogo.png" width="200" height="32"></div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>
+<header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col"><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>
             <div class="d-flex justify-content-center" style="background-image: url('atardecer.jpg');
     height: 100vh;">
 
           <div class="card w-100 m-3 p-3" style="overflow:auto">
+                    <a target="_blank" href="../informe">Informe general</a>
                     <input style="max-width:300px" type="text" id="myInput" onkeyup="filter()" placeholder="Busca un curso.." title="Buscador cursos">
                     <%=respuesta%>
           </div>
     </div>
     <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
-      <p><img src="FullLogo.png" width="200" height="32"></p>
+      <p><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></p>
 
       <a target="_blank" href="../manual">Manual de usuario</a>
       <a>Acerca de</a>

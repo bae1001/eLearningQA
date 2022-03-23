@@ -32,13 +32,14 @@ class ELearningQAFacadeTest {
     private static List<List<Assignment>> listasTareasConNotas=new ArrayList<>();
     private static List<List<ResponseAnalysis>> listasAnalisis=new ArrayList<>();
     private static List<List<Survey>> listasSurveys=new ArrayList<>();
-    static int idCurso1=66;
-    static int idCurso2=56;
-    static int idCurso3=59;
-    static int idCurso4=27;
-    static int idCurso5=41;
-    static int idCurso6=68;
-    static List<Integer> ids= Arrays.asList(new Integer[]{idCurso1, idCurso2,idCurso3,idCurso4,idCurso5,idCurso6});
+    private static AlertLog registro=new AlertLog();
+    static long idCurso1=66;
+    static long idCurso2=56;
+    static long idCurso3=59;
+    static long idCurso4=27;
+    static long idCurso5=41;
+    static long idCurso6=68;
+    static List<Long> ids= Arrays.asList(new Long[]{idCurso1, idCurso2,idCurso3,idCurso4,idCurso5,idCurso6});
 
 
 
@@ -52,7 +53,7 @@ class ELearningQAFacadeTest {
         ObjectMapper mapper=new ObjectMapper();
         try {
             listaCursos=Arrays.asList(mapper.readValue(new File(ruta+"Listacursos"+extension), Course[].class));
-            for (Integer id:ids) {
+            for (Long id:ids) {
                 listasEstados.add(mapper.readValue(new File(ruta+"Listaestados"+id+extension), StatusList.class));
                 listasModulos.add(Arrays.asList(mapper.readValue(new File(ruta+"Listamodulos"+id+extension), es.ubu.lsi.model.Module[].class)));
                 listasGrupos.add(Arrays.asList(mapper.readValue(new File(ruta+"Listagrupos"+id+extension), Group[].class)));
@@ -74,11 +75,12 @@ class ELearningQAFacadeTest {
 
     @org.junit.jupiter.api.Test
     void getListaCursosTest() {
-        List<Integer> listaIds = new ArrayList<Integer>();
+        List<Long> listaIds = new ArrayList<>();
         for (Course curso:listaCursos) {
             listaIds.add(curso.getId());
         }
-        assertTrue(listaIds.contains(idCurso1));
+        System.out.println(listaIds);
+        //assertTrue(listaIds.contains(idCurso1));
         assertTrue(listaIds.contains(idCurso2));
         assertTrue(listaIds.contains(idCurso3));
         assertTrue(listaIds.contains(idCurso4));
@@ -89,22 +91,22 @@ class ELearningQAFacadeTest {
 
     @org.junit.jupiter.api.Test
     void isSonVisiblesCondicionesTest() {
-        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(0)));
-        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(4)));
-        assertFalse(fachada.isSonVisiblesCondiciones(listaCursos.get(3)));
-        assertFalse(fachada.isSonVisiblesCondiciones(listaCursos.get(8)));
-        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(9)));
-        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(2)));
+        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(0), registro));
+        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(4), registro));
+        assertFalse(fachada.isSonVisiblesCondiciones(listaCursos.get(3), registro));
+        assertFalse(fachada.isSonVisiblesCondiciones(listaCursos.get(8), registro));
+        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(9), registro));
+        assertTrue(fachada.isSonVisiblesCondiciones(listaCursos.get(2), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isTieneGruposTest() {
-        assertTrue(fachada.isTieneGrupos(listasGrupos.get(0)));
-        assertFalse(fachada.isTieneGrupos(listasGrupos.get(1)));
-        assertTrue(fachada.isTieneGrupos(listasGrupos.get(2)));
-        assertFalse(fachada.isTieneGrupos(listasGrupos.get(3)));
-        assertTrue(fachada.isTieneGrupos(listasGrupos.get(4)));
-        assertTrue(fachada.isTieneGrupos(listasGrupos.get(5)));
+        assertTrue(fachada.isTieneGrupos(listasGrupos.get(0), registro));
+        assertFalse(fachada.isTieneGrupos(listasGrupos.get(1), registro));
+        assertTrue(fachada.isTieneGrupos(listasGrupos.get(2), registro));
+        assertFalse(fachada.isTieneGrupos(listasGrupos.get(3), registro));
+        assertTrue(fachada.isTieneGrupos(listasGrupos.get(4), registro));
+        assertTrue(fachada.isTieneGrupos(listasGrupos.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
@@ -128,153 +130,153 @@ class ELearningQAFacadeTest {
 
     @org.junit.jupiter.api.Test
     void isEstaProgresoActivadoTest() {
-        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(0)));
-        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(1)));
-        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(2)));
-        assertFalse(fachada.isestaProgresoActivado(listasEstados.get(3)));
-        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(4)));
-        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(5)));
+        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(0), registro));
+        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(1), registro));
+        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(2), registro));
+        assertFalse(fachada.isestaProgresoActivado(listasEstados.get(3), registro));
+        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(4), registro));
+        assertTrue(fachada.isestaProgresoActivado(listasEstados.get(5), registro));
     }
 
 
     @org.junit.jupiter.api.Test
     void isEstaCorregidoATiempoTest() {
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(0),WebServiceClient.generarMapaFechasLimite(listasTareas.get(0))));
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(1),WebServiceClient.generarMapaFechasLimite(listasTareas.get(1))));
-        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(2),WebServiceClient.generarMapaFechasLimite(listasTareas.get(2))));
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(3),WebServiceClient.generarMapaFechasLimite(listasTareas.get(3))));
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(4),WebServiceClient.generarMapaFechasLimite(listasTareas.get(4))));
-        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(5),WebServiceClient.generarMapaFechasLimite(listasTareas.get(5))));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(0),WebServiceClient.generarMapaFechasLimite(listasTareas.get(0)), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(1),WebServiceClient.generarMapaFechasLimite(listasTareas.get(1)), registro));
+        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(2),WebServiceClient.generarMapaFechasLimite(listasTareas.get(2)), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(3),WebServiceClient.generarMapaFechasLimite(listasTareas.get(3)), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(4),WebServiceClient.generarMapaFechasLimite(listasTareas.get(4)), registro));
+        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(5),WebServiceClient.generarMapaFechasLimite(listasTareas.get(5)), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isRespondeATiempoTest() {
-        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(0),listasPosts.get(0)));
-        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(1),listasPosts.get(1)));
-        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(2),listasPosts.get(2)));
-        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(3),listasPosts.get(3)));
-        assertFalse(fachada.isRespondeATiempo(listasUsuarios.get(4),listasPosts.get(4)));
-        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(5),listasPosts.get(5)));
+        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(0),listasPosts.get(0), registro));
+        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(1),listasPosts.get(1), registro));
+        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(2),listasPosts.get(2), registro));
+        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(3),listasPosts.get(3), registro));
+        assertFalse(fachada.isRespondeATiempo(listasUsuarios.get(4),listasPosts.get(4), registro));
+        assertTrue(fachada.isRespondeATiempo(listasUsuarios.get(5),listasPosts.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isUsaSurveysTest() {
-        assertTrue(fachada.isUsaSurveys(listasSurveys.get(0)));
-        assertFalse(fachada.isUsaSurveys(listasSurveys.get(1)));
-        assertFalse(fachada.isUsaSurveys(listasSurveys.get(2)));
-        assertFalse(fachada.isUsaSurveys(listasSurveys.get(3)));
-        assertFalse(fachada.isUsaSurveys(listasSurveys.get(4)));
-        assertTrue(fachada.isUsaSurveys(listasSurveys.get(5)));
+        assertTrue(fachada.isUsaSurveys(listasSurveys.get(0), registro));
+        assertFalse(fachada.isUsaSurveys(listasSurveys.get(1), registro));
+        assertFalse(fachada.isUsaSurveys(listasSurveys.get(2), registro));
+        assertFalse(fachada.isUsaSurveys(listasSurveys.get(3), registro));
+        assertFalse(fachada.isUsaSurveys(listasSurveys.get(4), registro));
+        assertTrue(fachada.isUsaSurveys(listasSurveys.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isAlumnosEnGruposTest() {
-        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(0)));
-        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(1)));
-        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(2)));
-        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(3)));
-        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(4)));
-        assertTrue(fachada.isAlumnosEnGrupos(listasUsuarios.get(5)));
+        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(0), registro));
+        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(1), registro));
+        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(2), registro));
+        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(3), registro));
+        assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(4), registro));
+        assertTrue(fachada.isAlumnosEnGrupos(listasUsuarios.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isAnidamientoCalificadorAceptableTest() {
-        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(0)));
-        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(1)));
-        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(2)));
-        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(3)));
-        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(4)));
-        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(5)));
+        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(0), registro));
+        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(1), registro));
+        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(2), registro));
+        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(3), registro));
+        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(4), registro));
+        assertTrue(fachada.isAnidamientoCalificadorAceptable(listasCalificadores.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isCalificadorMuestraPonderacionTest() {
-        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(0)));
-        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(1)));
-        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(2)));
-        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(3)));
-        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(4)));
-        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(5)));
+        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(0), registro));
+        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(1), registro));
+        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(2), registro));
+        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(3), registro));
+        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(4), registro));
+        assertTrue(fachada.isCalificadorMuestraPonderacion(listasCalificadores.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isHayRetroalimentacionTest() {
-        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(0)));
-        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(1)));
-        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(2)));
-        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(3)));
-        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(4)));
-        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(5)));
+        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(0), registro));
+        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(1), registro));
+        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(2), registro));
+        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(3), registro));
+        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(4), registro));
+        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isEsNotaMaxConsistenteTest() {
-        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(0)));
-        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(1)));
-        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(2)));
-        assertTrue(fachada.isEsNotaMaxConsistente(listasCalificadores.get(3)));
-        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(4)));
-        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(5)));
+        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(0), registro));
+        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(1), registro));
+        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(2), registro));
+        assertTrue(fachada.isEsNotaMaxConsistente(listasCalificadores.get(3), registro));
+        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(4), registro));
+        assertFalse(fachada.isEsNotaMaxConsistente(listasCalificadores.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isEstanActualizadosRecursosTest() {
-        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(0),listasRecursos.get(0))));
-        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(4),listasRecursos.get(1))));
-        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(3),listasRecursos.get(2))));
-        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(8),listasRecursos.get(3))));
-        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(9),listasRecursos.get(4))));
-        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(2),listasRecursos.get(5))));
+        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(0),listasRecursos.get(0)), registro));
+        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(4),listasRecursos.get(1)), registro));
+        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(3),listasRecursos.get(2)), registro));
+        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(8),listasRecursos.get(3)), registro));
+        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(9),listasRecursos.get(4)), registro));
+        assertTrue(fachada.isEstanActualizadosRecursos(WebServiceClient.obtenerRecursosDesfasados(listaCursos.get(2),listasRecursos.get(5)), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isSonFechasCorrectasTest() {
-        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(0),listasModulos.get(0))));
-        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(4),listasModulos.get(1))));
-        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(3),listasModulos.get(2))));
-        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(8),listasModulos.get(3))));
-        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(9),listasModulos.get(4))));
-        assertFalse(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(2),listasModulos.get(5))));
+        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(0),listasModulos.get(0)), registro));
+        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(4),listasModulos.get(1)), registro));
+        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(3),listasModulos.get(2)), registro));
+        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(8),listasModulos.get(3)), registro));
+        assertTrue(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(9),listasModulos.get(4)), registro));
+        assertFalse(fachada.isSonFechasCorrectas(WebServiceClient.obtenerModulosMalFechados(listaCursos.get(2),listasModulos.get(5)), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isRespondenFeedbacksTest() {
-        assertFalse(fachada.isRespondenFeedbacks(listasAnalisis.get(0),listasUsuarios.get(0)));
-        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(1),listasUsuarios.get(1)));
-        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(2),listasUsuarios.get(2)));
-        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(3),listasUsuarios.get(3)));
-        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(4),listasUsuarios.get(4)));
-        assertFalse(fachada.isRespondenFeedbacks(listasAnalisis.get(5),listasUsuarios.get(5)));
+        assertFalse(fachada.isRespondenFeedbacks(listasAnalisis.get(0),listasUsuarios.get(0), registro));
+        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(1),listasUsuarios.get(1), registro));
+        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(2),listasUsuarios.get(2), registro));
+        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(3),listasUsuarios.get(3), registro));
+        assertTrue(fachada.isRespondenFeedbacks(listasAnalisis.get(4),listasUsuarios.get(4), registro));
+        assertFalse(fachada.isRespondenFeedbacks(listasAnalisis.get(5),listasUsuarios.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isHayTareasGrupalesTest() {
-        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(0)));
-        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(1)));
-        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(2)));
-        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(3)));
-        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(4)));
-        assertTrue(fachada.isHayTareasGrupales(listasTareas.get(5)));
+        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(0), registro));
+        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(1), registro));
+        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(2), registro));
+        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(3), registro));
+        assertFalse(fachada.isHayTareasGrupales(listasTareas.get(4), registro));
+        assertTrue(fachada.isHayTareasGrupales(listasTareas.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isMuestraCriteriosTest() {
-        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(0)));
-        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(1)));
-        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(2)));
-        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(3)));
-        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(4)));
-        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(5)));
+        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(0), registro));
+        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(1), registro));
+        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(2), registro));
+        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(3), registro));
+        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(4), registro));
+        assertFalse(fachada.isMuestraCriterios(listasModulosTareas.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
     void isHayVariedadFormatosTest() {
-        assertTrue(fachada.isHayVariedadFormatos(listasModulos.get(0)));
-        assertTrue(fachada.isHayVariedadFormatos(listasModulos.get(1)));
-        assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(2)));
-        assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(3)));
-        assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(4)));
-        assertTrue(fachada.isHayVariedadFormatos(listasModulos.get(5)));
+        assertTrue(fachada.isHayVariedadFormatos(listasModulos.get(0), registro));
+        assertTrue(fachada.isHayVariedadFormatos(listasModulos.get(1), registro));
+        assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(2), registro));
+        assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(3), registro));
+        assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(4), registro));
+        assertTrue(fachada.isHayVariedadFormatos(listasModulos.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class PostList{
     private List<Post> posts;
-    private int forumid;
-    private int courseid;
+    private long forumid;
+    private long courseid;
     private Ratinginfo ratinginfo;
     private List<Object> warnings;
 
@@ -18,19 +18,19 @@ public class PostList{
         this.posts = posts;
     }
 
-    public int getForumid() {
+    public long getForumid() {
         return forumid;
     }
 
-    public void setForumid(int forumid) {
+    public void setForumid(long forumid) {
         this.forumid = forumid;
     }
 
-    public int getCourseid() {
+    public long getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(int courseid) {
+    public void setCourseid(long courseid) {
         this.courseid = courseid;
     }
 
