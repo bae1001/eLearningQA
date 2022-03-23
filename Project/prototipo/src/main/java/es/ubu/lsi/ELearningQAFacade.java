@@ -187,7 +187,7 @@ public class ELearningQAFacade {
         return WebServiceClient.estanActualizadosRecursos(listaRecursosDesfasados, registro);
     }
 
-    public boolean isSonFechasCorrectas(List<Module> listaModulosMalFechados, AlertLog registro) {
+    public boolean isSonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados, AlertLog registro) {
         return WebServiceClient.sonFechasCorrectas(listaModulosMalFechados, registro);
     }
 
@@ -203,7 +203,7 @@ public class ELearningQAFacade {
         return WebServiceClient.muestraCriterios(listaModulosTareas, registro);
     }
 
-    public boolean isHayVariedadFormatos(List<Module> listamodulos, AlertLog registro) {
+    public boolean isHayVariedadFormatos(List<es.ubu.lsi.model.Module> listamodulos, AlertLog registro) {
         return WebServiceClient.hayVariedadFormatos(listamodulos, registro);
     }
 

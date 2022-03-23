@@ -456,7 +456,7 @@ public class WebServiceClient {
         return listaModulos;
     }
 
-    public static boolean sonFechasCorrectas(List<Module> listaModulosMalFechados, AlertLog registro){
+    public static boolean sonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados, AlertLog registro){
         StringBuilder detalles= new StringBuilder();
         if(listaModulosMalFechados.isEmpty()){
             return true;
@@ -587,7 +587,7 @@ public class WebServiceClient {
         return false;
     }
 
-    public static boolean hayVariedadFormatos(List<Module> listaModulos, AlertLog registro){
+    public static boolean hayVariedadFormatos(List<es.ubu.lsi.model.Module> listaModulos, AlertLog registro){
         List<String> formatosVistos=new ArrayList<>();
         for (es.ubu.lsi.model.Module modulo:listaModulos) {
             if ("book,resource,folder,imscp,label,page,url".contains(modulo.getModname())&&!formatosVistos.contains(modulo.getModname())){
