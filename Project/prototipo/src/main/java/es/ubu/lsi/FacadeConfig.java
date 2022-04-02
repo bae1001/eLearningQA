@@ -26,8 +26,10 @@ public class FacadeConfig {
     }
 
     public FacadeConfig(String filename) {
-        try {
-            FileReader reader = new FileReader("configurations/"+filename);
+        if(filename.contains(".")){
+            filename="config1";
+        }
+        try(FileReader reader = new FileReader("configurations/"+filename)) {
             Properties properties = new Properties();
             properties.load(reader);
             formatNumThreshold = Integer.parseInt(properties.getProperty("format_num_threshold"));

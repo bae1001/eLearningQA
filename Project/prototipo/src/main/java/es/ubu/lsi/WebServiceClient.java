@@ -168,7 +168,7 @@ public class WebServiceClient {
                 return usuario;
             }
         }
-        return null;
+        return new User();
     }
 
     public static List<Assignment> obtenerTareasConNotas(String token, Map<Integer, Long> mapaFechasLimite, String host, List<Assignment> listaTareas) {
