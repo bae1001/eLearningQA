@@ -470,7 +470,7 @@ public class WebServiceClient {
         return listaModulos;
     }
 
-    public static boolean sonFechasCorrectas(List<Module> listaModulosMalFechados, AlertLog registro){
+    public static boolean sonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados, AlertLog registro){
         StringBuilder detalles= new StringBuilder();
         if(listaModulosMalFechados.isEmpty()){
             return true;
