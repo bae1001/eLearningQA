@@ -601,7 +601,7 @@ public class WebServiceClient {
         return false;
     }
 
-    public static boolean hayVariedadFormatos(List<Module> listaModulos, AlertLog registro, FacadeConfig config){
+    public static boolean hayVariedadFormatos(List<es.ubu.lsi.model.Module> listaModulos, AlertLog registro, FacadeConfig config){
         List<String> formatosVistos=new ArrayList<>();
         for (es.ubu.lsi.model.Module modulo:listaModulos) {
             if ("book,resource,folder,imscp,label,page,url".contains(modulo.getModname())&&!formatosVistos.contains(modulo.getModname())){
