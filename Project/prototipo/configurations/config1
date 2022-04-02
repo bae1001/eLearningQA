@@ -4,4 +4,5 @@ forum_response_time=172800
 min_comment_percentage=0.8
 assignment_grading_time=604800
 min_feedback_answer_percentage=0.6
-host=https://school.moodledemo.net
+forum_relevance_period=2592000
+assignment_relevance_period=2592000

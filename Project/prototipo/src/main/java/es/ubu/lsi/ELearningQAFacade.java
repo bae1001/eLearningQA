@@ -17,6 +17,7 @@ public class ELearningQAFacade {
     private static final int CHECKS_EVALUACION =2;
     private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION + CHECKS_EVALUACION;
     protected static String[] camposInformeFases;
+    private final FacadeConfig config;
 
     static {
         String sep= File.separator;
@@ -30,12 +31,13 @@ public class ELearningQAFacade {
         }
     }
 
-    public ELearningQAFacade() {
-        //El constructor está vacío pero en un futuro podría necesitar atributos
+    public ELearningQAFacade(String configFile, String host) {
+        config=new FacadeConfig(configFile);
+        config.setHost(host);
     }
 
     public String conectarse(String username, String password){
-        return WebServiceClient.login(username, password);
+        return WebServiceClient.login(username, password, config.getHost());
     }
 
     public String generarListaCursos(String token){
@@ -49,28 +51,28 @@ public class ELearningQAFacade {
     }
 
     public List<Course> getListaCursos(String token) {
-        return WebServiceClient.obtenerCursos(token);
+        return WebServiceClient.obtenerCursos(token, config.getHost());
     }
 
     public String obtenerNombreCompleto(String token, String username) {
-        return WebServiceClient.obtenerNombreCompleto(token, username);
+        return WebServiceClient.obtenerNombreCompleto(token, username, config.getHost());
     }
 
     public int[] realizarComprobaciones(String token, long courseid, AlertLog registro) {
         Course curso= getCursoPorId(token, courseid);
-        List<User> listaUsuarios= WebServiceClient.obtenerUsuarios(token, courseid);
-        StatusList listaEstados=WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios);
-        List<es.ubu.lsi.model.Module> listaModulos=WebServiceClient.obtenerListaModulos(token, courseid);
-        List<Group> listaGrupos=WebServiceClient.obtenerListaGrupos(token, courseid);
-        List<Assignment> listaTareas=WebServiceClient.obtenerListaTareas(token, courseid);
-        List<Table> listaCalificadores=WebServiceClient.obtenerCalificadores(token, courseid);
-        List<Resource> listaRecursos=WebServiceClient.obtenerRecursos(token, courseid);
-        List<CourseModule> listaModulosTareas=WebServiceClient.obtenerModulosTareas(token, listaTareas);
-        List<Post> listaPosts=WebServiceClient.obtenerListaPosts(token, courseid);
+        List<User> listaUsuarios= WebServiceClient.obtenerUsuarios(token, courseid, config.getHost());
+        StatusList listaEstados=WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios, config.getHost());
+        List<es.ubu.lsi.model.Module> listaModulos=WebServiceClient.obtenerListaModulos(token, courseid, config.getHost());
+        List<Group> listaGrupos=WebServiceClient.obtenerListaGrupos(token, courseid, config.getHost());
+        List<Assignment> listaTareas=WebServiceClient.obtenerListaTareas(token, courseid, config.getHost());
+        List<Table> listaCalificadores=WebServiceClient.obtenerCalificadores(token, courseid, config.getHost());
+        List<Resource> listaRecursos=WebServiceClient.obtenerRecursos(token, courseid, config.getHost());
+        List<CourseModule> listaModulosTareas=WebServiceClient.obtenerModulosTareas(token, listaTareas, config.getHost());
+        List<Post> listaPosts=WebServiceClient.obtenerListaPosts(token, courseid, config.getHost());
         Map<Integer, Long> mapaFechasLimite=WebServiceClient.generarMapaFechasLimite(listaTareas);
-        List<Assignment> tareasConNotas=WebServiceClient.obtenerTareasConNotas(token,mapaFechasLimite);
-        List<ResponseAnalysis> listaAnalisis=WebServiceClient.obtenerAnalisis(token, courseid);
-        List<Survey> listaSurveys=WebServiceClient.obtenerSurveys(token, courseid);
+        List<Assignment> tareasConNotas=WebServiceClient.obtenerTareasConNotas(token,mapaFechasLimite, config.getHost(), listaTareas);
+        List<ResponseAnalysis> listaAnalisis=WebServiceClient.obtenerAnalisis(token, courseid, config.getHost());
+        List<Survey> listaSurveys=WebServiceClient.obtenerSurveys(token, courseid, config.getHost());
         List<es.ubu.lsi.model.Module> modulosMalFechados=WebServiceClient.obtenerModulosMalFechados(curso, listaModulos);
         List<Resource> recursosDesfasados=WebServiceClient.obtenerRecursosDesfasados(curso, listaRecursos);
         int[] puntosComprobaciones = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -87,7 +89,7 @@ public class ELearningQAFacade {
         if(isAlumnosEnGrupos(listaUsuarios, registro)){puntosComprobaciones[10]++;}
         if(isRespondeATiempo(listaUsuarios,listaPosts, registro)){puntosComprobaciones[11]++;}
         if(isHayRetroalimentacion(listaCalificadores, registro)){puntosComprobaciones[12]++;}
-        if(isEstaCorregidoATiempo(tareasConNotas,mapaFechasLimite, registro)){puntosComprobaciones[13]++;}
+        if(isEstaCorregidoATiempo(tareasConNotas,listaUsuarios, registro)){puntosComprobaciones[13]++;}
         if(isCalificadorMuestraPonderacion(listaCalificadores, registro)){puntosComprobaciones[14]++;}
         if(isRespondenFeedbacks(listaAnalisis,listaUsuarios, registro)){puntosComprobaciones[15]++;}
         if(isUsaSurveys(listaSurveys, registro)){puntosComprobaciones[16]++;}
@@ -135,7 +137,7 @@ public class ELearningQAFacade {
     }
 
     public Course getCursoPorId(String token, long courseid) {
-        return WebServiceClient.obtenerCursoPorId(token, courseid);
+        return WebServiceClient.obtenerCursoPorId(token, courseid, config.getHost());
     }
 
 
@@ -152,16 +154,16 @@ public class ELearningQAFacade {
         return WebServiceClient.alumnosEnGrupos(listaUsuarios, registro);
     }
 
-    public boolean isEstaCorregidoATiempo(List<Assignment> tareasConNotas, Map<Integer, Long> mapaFechasLimite, AlertLog registro) {
-        return WebServiceClient.estaCorregidoATiempo(tareasConNotas, mapaFechasLimite, registro);
+    public boolean isEstaCorregidoATiempo(List<Assignment> tareasConNotas, List<User> listaUsuarios, AlertLog registro) {
+        return WebServiceClient.estaCorregidoATiempo(tareasConNotas, listaUsuarios, registro, config);
     }
 
     public boolean isRespondeATiempo(List<User> listaUsuarios, List<Post> listaPostsCompleta, AlertLog registro) {
-        return WebServiceClient.respondeATiempo(listaUsuarios, listaPostsCompleta, registro);
+        return WebServiceClient.respondeATiempo(listaUsuarios, listaPostsCompleta, registro, config);
     }
 
     public boolean isAnidamientoCalificadorAceptable(List<Table> listaCalificadores, AlertLog registro) {
-        return WebServiceClient.anidamientoCalificadorAceptable(listaCalificadores, registro);
+        return WebServiceClient.anidamientoCalificadorAceptable(listaCalificadores, registro, config);
     }
 
     public boolean isCalificadorMuestraPonderacion(List<Table> listaCalificadores, AlertLog registro) {
@@ -169,7 +171,7 @@ public class ELearningQAFacade {
     }
 
     public boolean isHayRetroalimentacion(List<Table> listaCalificadores, AlertLog registro) {
-        return WebServiceClient.hayRetroalimentacion(listaCalificadores, registro);
+        return WebServiceClient.hayRetroalimentacion(listaCalificadores, registro, config);
     }
 
     public boolean isEsNotaMaxConsistente(List<Table> listaCalificadores, AlertLog registro) {
@@ -185,7 +187,7 @@ public class ELearningQAFacade {
     }
 
     public boolean isRespondenFeedbacks(List<ResponseAnalysis> listaAnalisis, List<User> listaUsuarios, AlertLog registro) {
-        return WebServiceClient.respondenFeedbacks(listaAnalisis,listaUsuarios, registro);
+        return WebServiceClient.respondenFeedbacks(listaAnalisis,listaUsuarios, registro, config);
     }
 
     public boolean isHayTareasGrupales(List<Assignment> listaTareas, AlertLog registro) {
@@ -197,19 +199,11 @@ public class ELearningQAFacade {
     }
 
     public boolean isHayVariedadFormatos(List<es.ubu.lsi.model.Module> listamodulos, AlertLog registro) {
-        return WebServiceClient.hayVariedadFormatos(listamodulos, registro);
+        return WebServiceClient.hayVariedadFormatos(listamodulos, registro, config);
     }
 
     public float porcentajeFraccion(float numerador, float denominador){
         return numerador/denominador*100;
-    }
-
-    public String generarCampoAbsoluto(boolean resultado){
-        if (resultado){
-            return "<td class=\"tg-pgre\">Sí</td>";
-        }else{
-            return "<td class=\"tg-pred\">No</td>";
-        }
     }
 
     public String generarCampoAbsoluto(int puntos){

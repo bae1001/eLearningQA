@@ -16,8 +16,7 @@
     <%String fullname="";
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
-      WebServiceClient.setHost(request.getParameter("host"));
-      ELearningQAFacade fachada= new ELearningQAFacade();
+      ELearningQAFacade fachada= new ELearningQAFacade(request.getParameter("configuration"),request.getParameter("host"));
       session.setAttribute("fachada", fachada);
       String respuesta="";
       try{

@@ -45,7 +45,7 @@ class ELearningQAFacadeTest {
 
     @BeforeAll
     public static void BeforeClass() {
-        fachada=new ELearningQAFacade();
+        fachada=new ELearningQAFacade("config1","https://school.moodledemo.net");
         token=fachada.conectarse("teacher","moodle");
         String sep= File.separator;
         String ruta="."+sep+"src"+sep+"main"+sep+"resources"+sep+"json"+sep;
@@ -140,12 +140,12 @@ class ELearningQAFacadeTest {
 
     @org.junit.jupiter.api.Test
     void isEstaCorregidoATiempoTest() {
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(0),WebServiceClient.generarMapaFechasLimite(listasTareas.get(0)), registro));
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(1),WebServiceClient.generarMapaFechasLimite(listasTareas.get(1)), registro));
-        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(2),WebServiceClient.generarMapaFechasLimite(listasTareas.get(2)), registro));
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(3),WebServiceClient.generarMapaFechasLimite(listasTareas.get(3)), registro));
-        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(4),WebServiceClient.generarMapaFechasLimite(listasTareas.get(4)), registro));
-        assertTrue(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(5),WebServiceClient.generarMapaFechasLimite(listasTareas.get(5)), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(0),listasUsuarios.get(0), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(1),listasUsuarios.get(1), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(2),listasUsuarios.get(2), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(3),listasUsuarios.get(3), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(4),listasUsuarios.get(4), registro));
+        assertFalse(fachada.isEstaCorregidoATiempo(listasTareasConNotas.get(5),listasUsuarios.get(5), registro));
     }
 
     @org.junit.jupiter.api.Test
@@ -279,12 +279,6 @@ class ELearningQAFacadeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void generarCampoAbsolutoTest() {
-        assertEquals("<td class=\"tg-pgre\">Sí</td>", fachada.generarCampoAbsoluto(true));
-        assertEquals("<td class=\"tg-pred\">No</td>", fachada.generarCampoAbsoluto(false));
-    }
-
-    @org.junit.jupiter.api.Test
     void generarCampoRelativoTest() {
         DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance();
         DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
@@ -303,4 +297,9 @@ class ELearningQAFacadeTest {
         assertEquals(fachada.generarCampoRelativo(100.1f,100),"<td class=\"tg-pgre\"><meter value=\"100.1\" min=\"0\" max=\"100.0\"></meter>100"+sep+"1%</td>");
     }
 
+    @org.junit.jupiter.api.Test
+    void testConfig() {
+        FacadeConfig config=new FacadeConfig("config1");
+        assertEquals(4, config.getFormatNumThreshold());
+    }
 }

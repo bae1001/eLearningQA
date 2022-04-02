@@ -1,0 +1,8 @@
+format_num_threshold=3
+excessive_nesting=5
+forum_response_time=604800
+min_comment_percentage=0.7
+assignment_grading_time=2592000
+min_feedback_answer_percentage=0.7
+forum_relevance_period=2592000
+assignment_relevance_period=5184000
