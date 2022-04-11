@@ -45,7 +45,7 @@ class ELearningQAFacadeTest {
 
     @BeforeAll
     public static void BeforeClass() {
-        fachada=new ELearningQAFacade("config1","https://school.moodledemo.net");
+        fachada=new ELearningQAFacade("Docencia_reglada","https://school.moodledemo.net");
         token=fachada.conectarse("teacher","moodle");
         String sep= File.separator;
         String ruta="."+sep+"src"+sep+"main"+sep+"resources"+sep+"json"+sep;
@@ -295,11 +295,5 @@ class ELearningQAFacadeTest {
         assertEquals(fachada.generarCampoRelativo(80,100),"<td class=\"tg-pgre\"><meter value=\"80.0\" min=\"0\" max=\"100.0\"></meter>80"+sep+"0%</td>");
         assertEquals(fachada.generarCampoRelativo(100,100),"<td class=\"tg-pgre\"><meter value=\"100.0\" min=\"0\" max=\"100.0\"></meter>100"+sep+"0%</td>");
         assertEquals(fachada.generarCampoRelativo(100.1f,100),"<td class=\"tg-pgre\"><meter value=\"100.1\" min=\"0\" max=\"100.0\"></meter>100"+sep+"1%</td>");
-    }
-
-    @org.junit.jupiter.api.Test
-    void testConfig() {
-        FacadeConfig config=new FacadeConfig("config1");
-        assertEquals(4, config.getFormatNumThreshold());
     }
 }

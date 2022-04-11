@@ -27,7 +27,7 @@ public class FacadeConfig {
 
     public FacadeConfig(String filename) {
         if(filename.contains(".")){
-            filename="config1";
+            filename="Docencia_reglada";
         }
         try(FileReader reader = new FileReader("configurations/"+filename)) {
             Properties properties = new Properties();
