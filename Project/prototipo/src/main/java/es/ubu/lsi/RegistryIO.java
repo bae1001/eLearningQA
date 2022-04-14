@@ -12,17 +12,17 @@ import java.util.List;
 
 public class RegistryIO {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String barra=File.separator;
-    private static final String carpeta="registry";
+    private static final String BARRA =File.separator;
+    private static final String CARPETA ="registry";
 
     private RegistryIO() {
         throw new IllegalStateException("Utility class");
     }
 
     public static void guardarResultados(String url, String user, String courseid, AnalysisSnapshot instantanea){
-        try (FileWriter pw = new FileWriter(carpeta+barra+url+barra+user+barra+courseid+".csv",true);){
-            File f1 = new File(carpeta+barra+url);
-            File f2 = new File(carpeta+barra+url+barra+user);
+        try (FileWriter pw = new FileWriter(CARPETA + BARRA +url+ BARRA +user+ BARRA +courseid+".csv",true);){
+            File f1 = new File(CARPETA + BARRA +url);
+            File f2 = new File(CARPETA + BARRA +url+ BARRA +user);
             f1.mkdir();
             f2.mkdir();
             pw.append(instantanea.toString());
@@ -34,7 +34,7 @@ public class RegistryIO {
 
     public static List<AnalysisSnapshot> leerCSV(String url, String user, String courseid){
         List<AnalysisSnapshot> registros=new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(carpeta+barra+url+barra+user+barra+courseid+".csv"))){
+        try (BufferedReader br = new BufferedReader(new FileReader(CARPETA + BARRA +url+ BARRA +user+ BARRA +courseid+".csv"))){
             String linea = br.readLine();
             String[] atributos;
             while (linea != null) {

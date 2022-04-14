@@ -16,6 +16,7 @@
     <%String fullname="";
       session.setAttribute("username", request.getParameter("username"));
       session.setAttribute("password", request.getParameter("password"));
+      session.setAttribute("host", request.getParameter("host"));
       ELearningQAFacade fachada= new ELearningQAFacade(request.getParameter("configuration"),request.getParameter("host"));
       session.setAttribute("fachada", fachada);
       String respuesta="";
@@ -25,7 +26,7 @@
         fullname=fachada.obtenerNombreCompleto((String)session.getAttribute("token"),(String)session.getAttribute("username"));
         session.setAttribute("fullname", fullname);
       }catch(Exception e){
-        response.sendRedirect("");
+        response.sendRedirect("login?message=Valores%20incorrectos,%20vuelve%20a%20intentarlo");
       }
       %>
 <header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col"><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>

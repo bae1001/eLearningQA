@@ -14,6 +14,8 @@
 <%File configs=new File("configurations");
   String[] configArray=configs.list();
   String configurations="";
+  String mensaje=request.getParameter("message");
+  String error=(mensaje==null)?"":mensaje;
   for(int i=0;i<configArray.length;i++){
     configurations+="<option value="+configArray[i]+">"+configArray[i]+"</option>";
   }
@@ -37,6 +39,7 @@
                             <input type="text" class="form-control" id="host" placeholder="Enter host to connect to" name="host" value="https://school.moodledemo.net">
                             <label class="text-primary" for="host">Host</label>
                         </div>
+                    <p class="text-danger"><%=error%></p>
                     <button type="submit" class="btn btn-primary">Entrar</button>
                     <select name="configuration">
                       <%=configurations%>

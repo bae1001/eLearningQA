@@ -12,8 +12,11 @@
           AlertLog alertas= new AlertLog();
           int[] puntosComprobaciones;
           int[] puntosCurso;
+          System.out.println("hey");
+          String vinculo=(String)session.getAttribute("host")+"/course/view.php?id=";
           try{ELearningQAFacade fachada=(ELearningQAFacade)session.getAttribute("fachada");
           String courseid= request.getParameter("courseid");
+          vinculo+=courseid;
           if(courseid==null){
             puntosComprobaciones=new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
             List<Course> listaCursos=fachada.getListaCursos(token);
@@ -24,7 +27,6 @@
                 puntosComprobaciones[i]+=puntosCurso[i];
               }
             }
-
             nombreCurso="Informe general de cursos";
             matriz=fachada.generarMatrizRolPerspectiva(puntosComprobaciones, listaCursos.size());
             fases=fachada.generarInformeFases(puntosComprobaciones,listaCursos.size());
@@ -38,7 +40,7 @@
           }catch(Exception e){
             Logger LOGGER = LogManager.getLogger();
             LOGGER.error("exception", e);
-            response.sendRedirect("");
+            response.sendRedirect("error");
           }
           %>
     <meta charset="UTF-8">
@@ -92,7 +94,7 @@
         <div class="btn-group col" role="group">
           <button class="tablink btn btn-primary active" style="box-shadow: none;" onclick="openTab(event, 'Fases')">Informe de fases</button>
           <button class="tablink btn btn-primary" style="box-shadow: none;" onclick="openTab(event, 'Matriz')">Evolución del rendimiento</button>
-        </div><div class="col m-3 text-center"><%=nombreCurso%></div></header>
+        </div><div class="col m-3 text-center"><a target="_blank" href=<%=vinculo%>><%=nombreCurso%></a></div></header>
                   <div class="d-flex justify-content-center" style="height:85vh;background-image: url('atardecer.jpg');">
                     <div id="Fases" class="tabcontent w-100 p-0" style="display:flex">
                 <div class="card m-2 me-0 p-1" style="width: 60%;overflow:auto;">

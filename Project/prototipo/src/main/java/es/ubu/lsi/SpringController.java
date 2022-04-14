@@ -12,7 +12,7 @@ import java.io.InputStream;
 
 @Controller
 public class SpringController{
-    @GetMapping("/")
+    @GetMapping({"/", "/login"})
     public String login() {
         return "login";
     }
@@ -36,6 +36,11 @@ public class SpringController{
     @GetMapping("/manual")
     public String manual() {
         return "manual";
+    }
+
+    @GetMapping("/error")
+    public String error() {
+        return "error";
     }
 
     @GetMapping(
