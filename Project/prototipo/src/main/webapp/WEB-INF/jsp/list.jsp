@@ -25,8 +25,10 @@
         respuesta=fachada.generarListaCursos((String)session.getAttribute("token"));
         fullname=fachada.obtenerNombreCompleto((String)session.getAttribute("token"),(String)session.getAttribute("username"));
         session.setAttribute("fullname", fullname);
+        session.setAttribute("message", "");
       }catch(Exception e){
-        response.sendRedirect("login?message=Valores%20incorrectos,%20vuelve%20a%20intentarlo");
+        session.setAttribute("message", "Valores incorrectos, vuelve a intentarlo");
+        response.sendRedirect("");
       }
       %>
 <header class="p-3 bg-dark text-white row" style="--bs-gutter-x:0;"><div class="col"><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></div><div class="col text-end">Estás registrado como <%=fullname%>.<button class="btn btn-primary ms-3 p-0" onclick="logOut()">Desconectar</button></div></header>

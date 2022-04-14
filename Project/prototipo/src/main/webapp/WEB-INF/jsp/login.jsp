@@ -14,8 +14,9 @@
 <%File configs=new File("configurations");
   String[] configArray=configs.list();
   String configurations="";
-  String mensaje=request.getParameter("message");
+  String mensaje=(String)session.getAttribute("message");
   String error=(mensaje==null)?"":mensaje;
+  session.setAttribute("message", "");
   for(int i=0;i<configArray.length;i++){
     configurations+="<option value="+configArray[i]+">"+configArray[i]+"</option>";
   }

@@ -13,7 +13,7 @@
 <body>
   <header class="bg-dark text-white row" style="--bs-gutter-x:0;">
     <div class="col m-3">
-      <img src="FullLogo.png" width="200" height="32">
+      <img src="FullLogo.png" width="200" height="32" alt="eLearningQA">
     </div>
     </header>
             <div class="justify-content-center text-white" style="background-color: #dc3545;
@@ -25,7 +25,7 @@
     <a class="text-white" href="mailto:rab1002@alu.ubu.es">rab1002@alu.ubu.es</a>
     </div>
     <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
-      <p><img src="FullLogo.png" width="200" height="32"></p>
+      <p><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></p>
 
       <a target="_blank" href="../manual">Manual de usuario</a>
       <a>Acerca de</a>
