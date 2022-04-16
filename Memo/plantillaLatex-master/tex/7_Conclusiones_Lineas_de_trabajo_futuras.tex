@@ -10,4 +10,8 @@
 	Una posible solución a estas comprobaciones es el uso de técnicas de web scraping, pero teniendo en cuenta que las páginas que contengan la información deseada pueden variar en función del servidor que aloje la plataforma, no es una solución trivial.
 	\item
 	Por el momento la aplicación solo integra cursos Moodle, pero sería conveniente que la aplicación permitiera analizar cursos online de otros LMS como Blackboard o Edmodo. Sin embargo, realizar los cambios para esto supondría adaptarse a las APIs de servicios correspondientes suponiendo que sean lo suficientemente parecidas, y en caso de no poder acceder a la información necesaria mediante servicios web, habría que implementar otras formas de acceder a la información necesaria.
+	\item
+	Los plugin de Moodle con los que comparo la aplicación tienen más idiomas disponibles, esto se debe a que están dispuestos de forma que cualquiera pueda aportar sus propias traducciones, sin embargo, el internacionalizar la aplicación la haría más competitiva.
+	\item
+	La lista de cursos que muestra la aplicación es la lista de los cursos en los que se encuentra matriculado el usuario con independencia de su rol o los permisos que tenga. Sería interesante seguir mostrando los mismos cursos pero sin resaltar en caso de que no se tengan los permisos necesarios para realizar las consultas para poder contactar al administrador en caso de problemas con los permisos.
 \end{itemize}

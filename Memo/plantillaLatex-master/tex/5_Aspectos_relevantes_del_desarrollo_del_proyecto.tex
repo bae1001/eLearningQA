@@ -36,4 +36,12 @@ A la hora de mostrar los informes se presenta la disyuntiva de si hacerlo en una
 \section{Definición del quality gate de SonarCloud}
 En SonarCloud la quality gate es una serie de condiciones sobre la calidad del codigo, por ejemplo, que la puntuación de seguridad no esté por debajo de ``A''. Existe una quality gate predefinida llamada Sonar way, pero está definida para proyectos reales, así que en mi caso he decidido definir mi propia quality gate a partir de otros proyectos en Sonarcloud de la misma índole. Realicé una búsqueda y encontré 25 TFGs de la UBU, y calculé las medianas de dichos trabajos para obtener las condiciones de mi quality gate.
 
+\section{SonarCloud en el ciclo de desarrollo}
+Desde que añadí SonarCloud al ciclo de integración y despliegue continuo he creado el hábito de comprobar los bugs, smells, y vulnerabilidades generados tras cada commit, esto evita que la cantidad de problemas se acumule y a su vez hace que el código sea más fácil de mantener.
 
+\section{Diseño del logo de la aplicación}
+Debido a que la aplicación realiza una serie de consultas se me ocurrió que el logo lo formasen unas aspas y un check, pero sin el uso de colores el símbolo resultante puede resultar confuso, así que rodeé la parte del check con color verde y la parte de las aspas con color rojo para hacerlo más entendible.
+Los colores usados son los de Bootstrap para crear concordancia con el resto de la página y de paso crear las imágenes de check y aspas usados en los resultados de las consultas y que de esta forma se mimeticen en el color de fondo de la celda. El texto del logo es blanco con reborde negro para hacerlo legible con independencia del color del fondo.
+
+\section{Almacenamiento de registros de informes}
+La aplicación almacena los registros de los informes generados para poder generar los gráficos de evolución. Ejecutando la aplicación en local no supone ningún problema, sin embargo, el almacenamiento en Heroku es volátil \cite{ephemeralHeroku-2018}. La solución a esto sería contratar un proveedor de active storage como Amazon S3 para tener un almacenamiento que funcione independiente a la aplicación \cite{activeStorageOverview-2019}.
