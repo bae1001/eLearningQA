@@ -372,6 +372,7 @@ public class WebServiceClient {
     public static boolean hayRetroalimentacion(List<Table> listaCalificadores, AlertLog registro, FacadeConfig config){
         int contadorRetroalimentacion=0;
         int contadorTuplasComentables=0;
+        String contenido="";
         final String category = "realization assignmentfeedback";
         if (listaCalificadores.isEmpty()){
             registro.guardarAlerta(category,"No hay calificadores que comprobar");
@@ -381,7 +382,8 @@ public class WebServiceClient {
             for (Tabledata tabledata:calificador.getTabledata()) {
                 if (tabledata.getItemname().getMyclass().contains("item ")){
                     contadorTuplasComentables++;
-                    if (tabledata.getFeedback().getContent().length()>6){
+                    contenido=tabledata.getFeedback().getContent();
+                    if (contenido!=null && contenido.length()>6){
                         contadorRetroalimentacion++;
                     }
                 }
