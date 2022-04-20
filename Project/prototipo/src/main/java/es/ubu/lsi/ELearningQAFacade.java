@@ -226,7 +226,7 @@ public class ELearningQAFacade {
         else{return "<td class=\"tg-pgre\">"+campoAMedias;}
     }
 
-    public String generarMatrizRolPerspectiva(int[] puntos,int numeroCursos){
+    public float[] calcularPorcentajesMatriz(int[] puntos,int numeroCursos){
         int[][] matrizPuntos=new int[][]{
                 {3,1,0,0,0,0,0,0,0},
                 {3,1,1,3,1,1,0,0,0},
@@ -246,21 +246,25 @@ public class ELearningQAFacade {
                 {1,1,3,1,1,3,1,1,3},
                 {1,1,3,1,1,3,1,1,3}
         };
-        int[] puntuaciones=new int[9];
+        float[] porcentajes=new float[9];
         int[] puntuacionesMax=new int[]{34*numeroCursos,26*numeroCursos,19*numeroCursos,17*numeroCursos,20*numeroCursos,17*numeroCursos,6*numeroCursos,3*numeroCursos,10*numeroCursos};
         for(int i=0;i<matrizPuntos.length;i++){
-            for(int j=0;j<puntuaciones.length;j++){
-                puntuaciones[j]+=matrizPuntos[i][j]*puntos[i];
+            for(int j=0;j<porcentajes.length;j++){
+                porcentajes[j]+= (float) (matrizPuntos[i][j] * puntos[i]) /puntuacionesMax[j];
             }
         }
+        return porcentajes;
+    }
+
+    public String generarMatrizRolPerspectiva(float[] porcentajes){
         return "<table class=\"tg\"><tr><td class=\"tg-plgr\"></td><td class=\"tg-plgr\">Diseñador</td>"+
                 "<td class=\"tg-plgr\">Facilitador</td><td class=\"tg-plgr\">Proveedor</td>"+
-                "</tr><tr><td class=\"tg-plgr\">Pedagógica</td>"+generarCampoRelativo(puntuaciones[0],puntuacionesMax[0])+
-                generarCampoRelativo(puntuaciones[1],puntuacionesMax[1])+generarCampoRelativo(puntuaciones[2],puntuacionesMax[2])+
-                "</tr><tr><td class=\"tg-plgr\">Tecnológica</td>"+generarCampoRelativo(puntuaciones[3],puntuacionesMax[3])+
-                generarCampoRelativo(puntuaciones[4],puntuacionesMax[4])+generarCampoRelativo(puntuaciones[5],puntuacionesMax[5])+
-                "</tr><tr><td class=\"tg-plgr\">Estratégica</td>"+generarCampoRelativo(puntuaciones[6],puntuacionesMax[6])+
-                generarCampoRelativo(puntuaciones[7],puntuacionesMax[7])+generarCampoRelativo(puntuaciones[8],puntuacionesMax[8])+
+                "</tr><tr><td class=\"tg-plgr\">Pedagógica</td>"+generarCampoRelativo(porcentajes[0],1)+
+                generarCampoRelativo(porcentajes[1],1)+generarCampoRelativo(porcentajes[2],1)+
+                "</tr><tr><td class=\"tg-plgr\">Tecnológica</td>"+generarCampoRelativo(porcentajes[3],1)+
+                generarCampoRelativo(porcentajes[4],1)+generarCampoRelativo(porcentajes[5],1)+
+                "</tr><tr><td class=\"tg-plgr\">Estratégica</td>"+generarCampoRelativo(porcentajes[6],1)+
+                generarCampoRelativo(porcentajes[7],1)+generarCampoRelativo(porcentajes[8],1)+
                 "</tr></table>";
     }
 

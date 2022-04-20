@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List, es.ubu.lsi.ELearningQAFacade, es.ubu.lsi.AlertLog, es.ubu.lsi.model.Course, org.apache.logging.log4j.LogManager, org.apache.logging.log4j.Logger" %>
+<%@ page import="java.util.List, es.ubu.lsi.ELearningQAFacade, es.ubu.lsi.AlertLog, es.ubu.lsi.RegistryIO, es.ubu.lsi.AnalysisSnapshot, es.ubu.lsi.model.Course, org.apache.logging.log4j.LogManager, org.apache.logging.log4j.Logger" %>
 <html lang="en">
 <head>
     <%String informe="";
@@ -9,10 +9,13 @@
           String fases="";
           String nombreCurso="";
           String token=(String)session.getAttribute("token");
+          String host=(String)session.getAttribute("host");
+          String fullname=(String)session.getAttribute("fullname");
+          String grafico="";
+          float[] porcentajes;
           AlertLog alertas= new AlertLog();
           int[] puntosComprobaciones;
           int[] puntosCurso;
-          System.out.println("hey");
           String vinculo=(String)session.getAttribute("host")+"/course/view.php?id=";
           try{ELearningQAFacade fachada=(ELearningQAFacade)session.getAttribute("fachada");
           String courseid= request.getParameter("courseid");
@@ -28,20 +31,26 @@
               }
             }
             nombreCurso="Informe general de cursos";
-            matriz=fachada.generarMatrizRolPerspectiva(puntosComprobaciones, listaCursos.size());
+            porcentajes=fachada.calcularPorcentajesMatriz(puntosComprobaciones, listaCursos.size());
+            matriz=fachada.generarMatrizRolPerspectiva(porcentajes);
             fases=fachada.generarInformeFases(puntosComprobaciones,listaCursos.size());
           }else{
             Course curso= fachada.getCursoPorId(token, Integer.parseInt(courseid));
             puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid), alertas);
             nombreCurso=curso.getFullname();
-            matriz=fachada.generarMatrizRolPerspectiva(puntosComprobaciones, 1);
+            porcentajes=fachada.calcularPorcentajesMatriz(puntosComprobaciones,1);
+            matriz=fachada.generarMatrizRolPerspectiva(porcentajes);
             fases=fachada.generarInformeFases(puntosComprobaciones,1);
+            RegistryIO.guardarResultados(host, fullname, courseid,
+                       new AnalysisSnapshot(nombreCurso, puntosComprobaciones, porcentajes, alertas.toString()));
+            grafico=RegistryIO.generarGraficos(host, fullname, courseid);
           }
           }catch(Exception e){
             Logger LOGGER = LogManager.getLogger();
             LOGGER.error("exception", e);
             response.sendRedirect("error");
           }
+
           %>
     <meta charset="UTF-8">
     <title><%=nombreCurso%>-Informe</title>
@@ -49,6 +58,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/plotly-latest.min.js"></script>
     <style type="text/css">
     .tg  {border-collapse:collapse;border-spacing:0;}
     .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -108,6 +118,7 @@
         <div id="Matriz" class="tabcontent w-100 p-0" style="display:none">
             <div class="card m-2 me-0 p-1">
             <%=matriz%>
+            <div id="grafico" style="width:50%"></div>
             </div></div>
       </div>
           <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
@@ -118,6 +129,8 @@
             <a>Contacto</a>
           </footer>
           <script>
+          <%=grafico%>
+
           function openTab(evt, tab) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
