@@ -41,7 +41,9 @@ public class RegistryIO {
             LOGGER.error(EXCEPTION, e);
         }finally {
             try {
-                pw.close();
+                if(pw != null){
+                    pw.close();
+                }
             } catch (IOException e) {
                 LOGGER.error(EXCEPTION, e);
             }
