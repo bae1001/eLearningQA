@@ -3,20 +3,17 @@ package es.ubu.lsi;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RegistryIO {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String BARRA =File.separator;
     private static final String CARPETA ="registry";
+    private static final String EXCEPTION = "exception";
 
     private RegistryIO() {
         throw new IllegalStateException("Utility class");
@@ -25,23 +22,29 @@ public class RegistryIO {
     public static void guardarResultados(String url, String user, String courseid, AnalysisSnapshot instantanea){
         URL netUrl = null;
         String host="";
+        FileWriter pw = null;
         try {
             netUrl = new URL(url);
             host = netUrl.getHost();
         } catch (MalformedURLException e) {
-            LOGGER.error("exception", e);
+            LOGGER.error(EXCEPTION, e);
         }
         try {
             File f1 = new File(CARPETA + BARRA +host);
             File f2 = new File(CARPETA + BARRA +host+ BARRA +user);
             f1.mkdir();
             f2.mkdir();
-            FileWriter pw = new FileWriter(CARPETA + BARRA +host+ BARRA +user+ BARRA +courseid+".csv",true);
+            pw = new FileWriter(CARPETA + BARRA +host+ BARRA +user+ BARRA +courseid+".csv",true);
             pw.append(instantanea.toString());
             pw.flush();
-            pw.close();
         }catch (Exception e){
-            LOGGER.error("exception", e);
+            LOGGER.error(EXCEPTION, e);
+        }finally {
+            try {
+                pw.close();
+            } catch (IOException e) {
+                LOGGER.error(EXCEPTION, e);
+            }
         }
     }
 
@@ -52,7 +55,7 @@ public class RegistryIO {
             netUrl = new URL(url);
             host = netUrl.getHost();
         } catch (MalformedURLException e) {
-            LOGGER.error("exception", e);
+            LOGGER.error(EXCEPTION, e);
         }
         List<AnalysisSnapshot> registros=new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(CARPETA + BARRA +host+ BARRA +user+ BARRA +courseid+".csv"))){
@@ -64,7 +67,7 @@ public class RegistryIO {
                 linea = br.readLine();
             }
         }catch (Exception e){
-            LOGGER.error("exception", e);
+            LOGGER.error(EXCEPTION, e);
         }
         return registros;
     }
