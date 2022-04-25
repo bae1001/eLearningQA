@@ -41,10 +41,10 @@
                             <label class="text-primary" for="host">Host</label>
                         </div>
                     <p class="text-danger"><%=error%></p>
-                    <button type="submit" class="btn btn-primary">Entrar</button>
-                    <select name="configuration">
+                    <label for="configuration">Tipo de curso:</label><select name="configuration">
                       <%=configurations%>
                     </select>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
                 </form>
           </div>
     </div>

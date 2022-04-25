@@ -16,9 +16,9 @@
       <img src="FullLogo.png" width="200" height="32" alt="eLearningQA">
     </div>
     </header>
-            <div class="justify-content-center text-white" style="background-color: #dc3545;
+            <div class="justify-content-center p-3 text-white" style="background-color: #dc3545;
     height: 100vh;">
-    <h1>Uff...<br>Ha habido un problema inesperado</h1><br>
+    <h1>Ha habido un problema inesperado</h1><br>
     <p>Si sospechas qué ha podido pasar informa del error en el siguiente link:</p>
     <a class="text-white" href="https://github.com/RobertoArastiBlanco/eLearningQA/issues/new">https://github.com/RobertoArastiBlanco/eLearningQA/issues/new</a>
     <p><br>También puedes mandar un correo a:</p>

@@ -84,7 +84,7 @@ public class RegistryIO {
         for (int i=0;i<9;i++){
             lineas.add(generarLinea(listaInformes,i));
         }
-        grafico.append(lineas).append(",{title: \"Grafico de evolución\",yaxis:{tickformat:',.0%',range:[0,1]}});");
+        grafico.append(lineas).append(",{title: \"Gráfico de la evolución temporal del curso respecto a roles y perspectivas\",legend:{title:{text:\"Roles-Perspectivas\"}},xaxis: {title:\"Fecha\"},yaxis:{title:\"Desempeño (%)\",tickformat:',.0%',range:[0,1]}});");
         return grafico.toString();
     }
 
