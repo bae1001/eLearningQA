@@ -201,7 +201,7 @@ class ELearningQAFacadeTest {
     @org.junit.jupiter.api.Test
     void isHayRetroalimentacionTest() {
         assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(0), registro));
-        assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(1), registro));
+        assertTrue(fachada.isHayRetroalimentacion(listasCalificadores.get(1), registro));
         assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(2), registro));
         assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(3), registro));
         assertFalse(fachada.isHayRetroalimentacion(listasCalificadores.get(4), registro));

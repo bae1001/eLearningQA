@@ -380,7 +380,8 @@ public class WebServiceClient {
         }
         for (Table calificador:listaCalificadores) {
             for (Tabledata tabledata:calificador.getTabledata()) {
-                if (tabledata.getItemname().getMyclass().contains("item ")){
+                if (tabledata.getItemname().getMyclass().contains("item ")&&
+                        tabledata.getGrade()!=null&&!tabledata.getGrade().getContent().equals("-")){
                     contadorTuplasComentables++;
                     feedback=tabledata.getFeedback();
                     if (feedback!=null && feedback.getContent().length()>6){
