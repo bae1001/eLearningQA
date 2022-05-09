@@ -38,6 +38,7 @@
             Course curso= fachada.getCursoPorId(token, Integer.parseInt(courseid));
             puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid), alertas);
             nombreCurso=curso.getFullname();
+            session.setAttribute("coursename",nombreCurso);
             porcentajes=fachada.calcularPorcentajesMatriz(puntosComprobaciones,1);
             matriz=fachada.generarMatrizRolPerspectiva(porcentajes);
             fases=fachada.generarInformeFases(puntosComprobaciones,1);
@@ -116,9 +117,9 @@
                 </div>
         </div>
         <div id="Matriz" class="tabcontent w-100 p-0" style="display:none">
-            <div class="card m-2 me-0 p-1">
+            <div class="card m-3 p-3 w-100">
             <%=matriz%>
-            <div id="grafico" style="width:50%"></div>
+            <div id="grafico"></div>
             </div></div>
       </div>
           <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">

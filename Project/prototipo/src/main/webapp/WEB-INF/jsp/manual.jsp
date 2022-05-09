@@ -52,7 +52,7 @@
                     <li><strong>Fechas de apertura y cierre de tareas son correctas:</strong> se comprueba que las fechas de apertura y cierre de tareas y cuestionarios no se solapen de forma erronea con las fechas de inicio y fin del curso. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
                     <li><strong>Se detallan los criterios de evaluación:</strong> se comprueba que exista en al menos una actividad una rúbrica o una guía de calificación en el curso. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
                     <li><strong>El calificador no tiene demasiado anidamiento:</strong> se comprueba que la estructura de las categorías del calificador no sea demasiado enrevesada. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica y Estratégica</li>
-                    <li><strong>Los alumnos están divididos en grupos:</strong> se comprueba que cada alumno pertenezca a un grupo. <u>Responsable:</u> Proveedor <u>Involucrados:</u> Diseñador <u>Perspectivas:</u> Tecnológica y Estratégica</li>
+                    <li><strong>Todos los alumnos están en algún grupo:</strong> se comprueba que cada alumno pertenezca a un grupo. <u>Responsable:</u> Proveedor <u>Involucrados:</u> Diseñador <u>Perspectivas:</u> Tecnológica y Estratégica</li>
                     </ul>
                     <p><strong>Realización:</strong></p>
                     <ul>

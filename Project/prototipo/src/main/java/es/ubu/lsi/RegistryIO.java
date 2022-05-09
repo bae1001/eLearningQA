@@ -30,10 +30,12 @@ public class RegistryIO {
             LOGGER.error(EXCEPTION, e);
         }
         try {
-            File f1 = new File(CARPETA + BARRA +host);
-            File f2 = new File(CARPETA + BARRA +host+ BARRA +user);
+            File f1 = new File(CARPETA);
+            File f2 = new File(CARPETA + BARRA +host);
+            File f3 = new File(CARPETA + BARRA +host+ BARRA +user);
             f1.mkdir();
             f2.mkdir();
+            f3.mkdir();
             pw = new FileWriter(CARPETA + BARRA +host+ BARRA +user+ BARRA +courseid+".csv",true);
             pw.append(instantanea.toString());
             pw.flush();
@@ -84,7 +86,7 @@ public class RegistryIO {
         for (int i=0;i<9;i++){
             lineas.add(generarLinea(listaInformes,i));
         }
-        grafico.append(lineas).append(",{title: \"Gráfico de la evolución temporal del curso respecto a roles y perspectivas\",legend:{title:{text:\"Roles-Perspectivas\"}},xaxis: {title:\"Fecha\"},yaxis:{title:\"Desempeño (%)\",tickformat:',.0%',range:[0,1]}});");
+        grafico.append(lineas).append(",{title: \"Gráfico de la evolución temporal del curso respecto a roles y perspectivas\",legend:{title:{text:\"Roles-Perspectivas\"}},xaxis: {title:\"Fecha\"},yaxis:{title:\"Desempeño (%)\",tickformat:',.0%',range:[0,1]}},{responsive: true});");
         return grafico.toString();
     }
 

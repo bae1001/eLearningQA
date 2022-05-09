@@ -69,7 +69,7 @@ public class WebServiceClient {
 
     public static List<Course> obtenerCursos(String token, String host){
         RestTemplate restTemplate = new RestTemplate();
-        String url = host + "/webservice/rest/server.php?wsfunction=core_course_get_enrolled_courses_by_timeline_classification&moodlewsrestformat=json&wstoken=" +token+"&classification=inprogress";
+        String url = host + "/webservice/rest/server.php?wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&wstoken=" +token;
         CourseList listacursos=restTemplate.getForObject(url,CourseList.class);
         if (listacursos==null){return new ArrayList<>();}
         return listacursos.getCourses();
@@ -381,7 +381,7 @@ public class WebServiceClient {
         for (Table calificador:listaCalificadores) {
             for (Tabledata tabledata:calificador.getTabledata()) {
                 if (tabledata.getItemname().getMyclass().contains("item ")&&
-                        tabledata.getGrade()!=null&&!tabledata.getGrade().getContent().equals("-")){
+                        tabledata.getGrade()!=null&&!tabledata.getGrade().getContent().matches("[- ]")){
                     contadorTuplasComentables++;
                     feedback=tabledata.getFeedback();
                     if (feedback!=null && feedback.getContent().length()>6){
@@ -432,11 +432,15 @@ public class WebServiceClient {
 
     public static boolean estanActualizadosRecursos(List<Resource> listaRecursosDesfasados, AlertLog registro){
         StringBuilder detalles= new StringBuilder();
+        List<Contentfile> archivos;
         if(listaRecursosDesfasados.isEmpty()){
             return true;
         }else{
             for (Resource recurso:listaRecursosDesfasados) {
-                detalles.append(recurso.getContentfiles().get(0).getFilename()).append("<br>");
+                archivos=recurso.getContentfiles();
+                for (Contentfile archivo:archivos) {
+                    detalles.append(archivo.getFilename()).append(recurso.getVisible()==1?"":" (No visible)").append("<br>");
+                }
             }
             registro.guardarAlertaDesplegable("implementation resourcesuptodate", "El curso contiene archivos desfasados", "Archivos desfasados", detalles.toString());
             return false;
@@ -479,7 +483,10 @@ public class WebServiceClient {
             return true;
         }else{
             for (es.ubu.lsi.model.Module modulo:listaModulosMalFechados) {
-                detalles.append(modulo.getName()).append("<br>");
+                detalles.append("<a href=\"").append(modulo.getUrl()).append("\">")
+                        .append(modulo.getName())
+                        .append(modulo.getVisible()==1?"":" (no visible)")
+                        .append("</a><br>");
             }
             registro.guardarAlertaDesplegable("implementation correctdates", "Hay módulos con fechas incorrectas", "Módulos mal fechados", detalles.toString());
             return false;
@@ -493,6 +500,9 @@ public class WebServiceClient {
         List<es.ubu.lsi.model.Module> listaModulosMalFechados=new ArrayList<>();
         long opendate;
         long duedate;
+        if (listaModulos==null){
+            return listaModulosMalFechados;
+        }
         for (es.ubu.lsi.model.Module modulo:listaModulos) {
             opendate=0;
             duedate=0;

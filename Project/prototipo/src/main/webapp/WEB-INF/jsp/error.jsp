@@ -18,7 +18,8 @@
     </header>
             <div class="justify-content-center p-3 text-white" style="background-color: #dc3545;
     height: 100vh;">
-    <h1>Ha habido un problema inesperado</h1><br>
+    <%String curso=(String)session.getAttribute("coursename");%>
+    <h1>Ha habido un problema inesperado intentando acceder al curso <%=curso%></h1><br>
     <p>Si sospechas qué ha podido pasar informa del error en el siguiente link:</p>
     <a class="text-white" href="https://github.com/RobertoArastiBlanco/eLearningQA/issues/new">https://github.com/RobertoArastiBlanco/eLearningQA/issues/new</a>
     <p><br>También puedes mandar un correo a:</p>
