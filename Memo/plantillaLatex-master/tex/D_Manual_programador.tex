@@ -3,7 +3,29 @@
 \section{Introducción}
 En este apéndice se describe una serie de detalles sobre la programación de la aplicación para que sirvan de ayuda a futuros programadores que utilicen el proyecto. Contiene la estructura de directorios del proyecto en la que se explica el contenido de cada uno, un manual del programador que explica ciertos aspectos que puedan ser de ayuda, los detalles sobre la compilación, instalación, y ejecución en un entorno de desarrollo integrado, y por último, qué pruebas del sistema se han realizado.
 \section{Estructura de directorios}
-
+El repositorio está organizado de la siguiente manera:
+\begin{itemize}
+	\item \textbf{/}: Contiene el README y un .gitignore que evita que se suban los archivos de configuración del IDE al repositorio.
+	\item \textbf{/.github/workflows}: Contiene el archivo que establece las tareas de integración continua.
+	\item \textbf{/Memo/plantillaLatex-master}: Contiene la memoria y los anexos.
+	\item \textbf{/Memo/plantillaLatex-master/img}: Contiene las imágenes a usar en memoria y anexos.
+	\item \textbf{/Memo/plantillaLatex-master/tex}: Contiene los apartados en formato \LaTeX usados de la memoria y anexos.
+	\item \textbf{/Project/prototipo}: Contiene el proyecto de la aplicación web.
+	\item \textbf{/Project/prototipo/configurations}: Contiene los archivos de propiedades.
+	\item \textbf{/Project/prototipo/src}: Contiene el código fuente de la aplicación.
+	\item \textbf{/Project/prototipo/src/main}: Contiene el código, los test, y los recursos que utiliza la aplicación.
+	\item \textbf{/Project/prototipo/src/main/java/es/ubu/lsi}: Contiene las clases necesarias para el funcionamiento de la aplicación.
+	\item \textbf{/Project/prototipo/src/main/java/es/ubu/lsi/model}: Contiene clases Java Bean para poder deserializar los datos extraídos por medio de servicios web.
+	\item \textbf{/Project/prototipo/src/main/resources}: Contiene el archivo de propiedades de la aplicación web y otros recursos.
+	\item \textbf{/Project/prototipo/src/main/resources/images}: Contiene las imágenes a mostrar en la aplicación web.
+	\item \textbf{/Project/prototipo/src/main/resources/json}: Contiene información de cursos en formato json para usarla en los tests.
+	\item \textbf{/Project/prototipo/src/main/resources/json/informe}: Contiene los textos estáticos de la tabla del informe de fases en formato json.
+	\item \textbf{/Project/prototipo/src/main/resources/static/js}: Contiene las librerías JavaScript que utiliza la aplicación.
+	\item \textbf{/Project/prototipo/src/main/webapp/WEB-INF/jsp}: Contiene las páginas de la aplicación en formato jsp.
+	\item \textbf{/Project/prototipo/src/test/java/es/ubu/lsi}: Contiene los test sobre las consultas que realiza la aplicación en los cursos.
+	\item \textbf{/Project/prototipo/target}: Es el directorio donde maven deposita los resultados, como las clases compiladas y la aplicación compilada en formato WAR.
+	
+\end{itemize}
 \section{Manual del programador}
 
 \section{Compilación, instalación y ejecución del proyecto}
