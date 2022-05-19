@@ -20,6 +20,8 @@ teachers using Moodle.
 - Allows the user to choose which Moodle host to connect to when logging in
 - 17 checks on different aspects of a course
 - Generates reports showing the checks' results and additional information concerning the quality framework
+- Shows alerts explaining the causes of check failures, occasionally with links to take you to the source of the problem
+- Graphs that show the evolution of the quality of courses
 
 
 
