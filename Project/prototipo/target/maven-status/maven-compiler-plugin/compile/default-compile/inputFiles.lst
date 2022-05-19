@@ -1,3 +1,4 @@
+C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\AlertLog.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\SpringController.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\CourseModuleWrapper.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Html.java
@@ -5,7 +6,7 @@ C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\sr
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Config.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Module.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\SurveyList.java
-C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\MoodleQAFacade.java
+C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\ELearningQAFacade.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\GradeTableField.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Content.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Detail.java
@@ -15,6 +16,7 @@ C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\sr
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Assignment.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\ResponseAnalysis.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\Application.java
+C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\RegistryIO.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Grade.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Itemname.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\PostList.java
@@ -43,6 +45,7 @@ C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\sr
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Rulevalue.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Discussion.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\CourseList.java
+C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\FacadeConfig.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Course.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Completiondata.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Contentsinfo.java
@@ -52,7 +55,9 @@ C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\sr
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Date.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Resource.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Group.java
+C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\AnalysisSnapshot.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Anonattempt.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Post.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\DiscussionList.java
+C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\MoodleObject.java
 C:\Users\pjuli\Desktop\Universidad\Universidad 5º\MoodleQA\Project\prototipo\src\main\java\es\ubu\lsi\model\Capabilities.java

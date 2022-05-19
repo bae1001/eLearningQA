@@ -44,7 +44,7 @@ public class ELearningQAFacade {
         List<Course> listaCursos= getListaCursos(token);
         StringBuilder listaEnTabla= new StringBuilder("<table>");
         for (Course curso: listaCursos) {
-            listaEnTabla.append("<tr><td><a target=\"_blank\" href=\"../informe?courseid=").append(curso.getId()).append("\">").append(curso.getFullname()).append("</a></td></tr>");
+            listaEnTabla.append("<tr><td><a target=\"_blank\" href=\"./informe?courseid=").append(curso.getId()).append("\">").append(curso.getFullname()).append("</a></td></tr>");
         }
         listaEnTabla.append("</table>");
         return listaEnTabla.toString();

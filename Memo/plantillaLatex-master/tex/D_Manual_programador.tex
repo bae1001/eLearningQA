@@ -7,10 +7,11 @@ El repositorio está organizado de la siguiente manera:
 \begin{itemize}
 	\item \textbf{/}: Contiene el README y un .gitignore que evita que se suban los archivos de configuración del IDE al repositorio.
 	\item \textbf{/.github/workflows}: Contiene el archivo que establece las tareas de integración continua.
+	Las tareas son: instalar Java en la maquina que realiza las tareas, almacenar paquetes de SonarCloud en la caché, almacenar paquetes de Maven en la caché, montar (compilar, ejecutar tests y empaquetar) con maven y analizar con SonarCloud.
 	\item \textbf{/Memo/plantillaLatex-master}: Contiene la memoria y los anexos.
 	\item \textbf{/Memo/plantillaLatex-master/img}: Contiene las imágenes a usar en memoria y anexos.
 	\item \textbf{/Memo/plantillaLatex-master/tex}: Contiene los apartados en formato \LaTeX usados de la memoria y anexos.
-	\item \textbf{/Project/prototipo}: Contiene el proyecto de la aplicación web.
+	\item \textbf{/Project/prototipo}: Contiene el proyecto de la aplicación web. Incluye el Procfile, un archivo usado por Heroku para el despliegue continuo que indica el comando a ejecutar para arrancar la aplicación.
 	\item \textbf{/Project/prototipo/configurations}: Contiene los archivos de propiedades.
 	\item \textbf{/Project/prototipo/src}: Contiene el código fuente de la aplicación.
 	\item \textbf{/Project/prototipo/src/main}: Contiene el código, los test, y los recursos que utiliza la aplicación.
