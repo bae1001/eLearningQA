@@ -69,7 +69,7 @@ public class WebServiceClient {
 
     public static List<Course> obtenerCursos(String token, String host){
         RestTemplate restTemplate = new RestTemplate();
-        String url = host + "/webservice/rest/server.php?wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&wstoken=" +token;
+        String url = host + "/webservice/rest/server.php?wsfunction=core_course_get_enrolled_courses_by_timeline_classification&moodlewsrestformat=json&wstoken="+token+"&classification=all";
         CourseList listacursos=restTemplate.getForObject(url,CourseList.class);
         if (listacursos==null){return new ArrayList<>();}
         return listacursos.getCourses();
@@ -150,13 +150,15 @@ public class WebServiceClient {
                 if (tieneRelevancia(tarea.getDuedate(), nota.getTimemodified(),
                         config.getAssignmentGradingTime(), config.getAssignmentRelevancePeriod()) ||
                         (System.currentTimeMillis() / 1000L) - tarea.getDuedate() > config.getAssignmentGradingTime() && Float.parseFloat(nota.getGradeValue()) < 0) {
-                    detalles.append("La entrega en "+tarea.getName()+" por "+obtenerUsuarioPorId(listaUsuarios,nota.getUserid()).getFullname()+"<br>");
+                    detalles.append("La entrega en "+tarea.getName()+" por "+
+                            (obtenerUsuarioPorId(listaUsuarios,nota.getUserid()).getFullname()!=null?obtenerUsuarioPorId(listaUsuarios,nota.getUserid()).getFullname():"Alumno desmatriculado")+
+                            "<br>");
                 }
             }
         }
         if(!detalles.toString().equals("")){
             registro.guardarAlertaDesplegable("realization assignmentsgraded",
-                    "Hay entregas sin corregir", "Entregas sin corregir", detalles.toString());
+                    "Hay entregas sin corregir", "Entregas sin corregir <a href=\""+config.getHost()+"/mod/assign/index.php?id="+registro.getCourseid()+"\">(tareas)</a>", detalles.toString());
             return false;
         }
         return true;
@@ -430,7 +432,7 @@ public class WebServiceClient {
         return listaRecursos.getResources();
     }
 
-    public static boolean estanActualizadosRecursos(List<Resource> listaRecursosDesfasados, AlertLog registro){
+    public static boolean estanActualizadosRecursos(List<Resource> listaRecursosDesfasados, AlertLog registro, FacadeConfig config){
         StringBuilder detalles= new StringBuilder();
         List<Contentfile> archivos;
         if(listaRecursosDesfasados.isEmpty()){
@@ -439,10 +441,10 @@ public class WebServiceClient {
             for (Resource recurso:listaRecursosDesfasados) {
                 archivos=recurso.getContentfiles();
                 for (Contentfile archivo:archivos) {
-                    detalles.append(archivo.getFilename()).append(recurso.getVisible()==1?"":" (No visible)").append("<br>");
+                    detalles.append(archivo.getFilename()).append(recurso.getVisible()==1?"":" <img src=\"eye-slash.png\" width=\"16\" height=\"16\" alt=\"No visible\"></td>").append("<br>");
                 }
             }
-            registro.guardarAlertaDesplegable("implementation resourcesuptodate", "El curso contiene archivos desfasados", "Archivos desfasados", detalles.toString());
+            registro.guardarAlertaDesplegable("implementation resourcesuptodate", "El curso contiene archivos desfasados", "Archivos desfasados <a href=\""+config.getHost()+"/course/resources.php?id="+registro.getCourseid()+"\">(recursos)</a>", detalles.toString());
             return false;
         }
     }
@@ -485,7 +487,7 @@ public class WebServiceClient {
             for (es.ubu.lsi.model.Module modulo:listaModulosMalFechados) {
                 detalles.append("<a href=\"").append(modulo.getUrl()).append("\">")
                         .append(modulo.getName())
-                        .append(modulo.getVisible()==1?"":" (no visible)")
+                        .append(modulo.getVisible()==1?"":" <img src=\"eye-slash.png\" width=\"16\" height=\"16\" alt=\"No visible\"></td>")
                         .append("</a><br>");
             }
             registro.guardarAlertaDesplegable("implementation correctdates", "Hay módulos con fechas incorrectas", "Módulos mal fechados", detalles.toString());

@@ -44,7 +44,9 @@ public class ELearningQAFacade {
         List<Course> listaCursos= getListaCursos(token);
         StringBuilder listaEnTabla= new StringBuilder("<table>");
         for (Course curso: listaCursos) {
-            listaEnTabla.append("<tr><td><a target=\"_blank\" href=\"./informe?courseid=").append(curso.getId()).append("\">").append(curso.getFullname()).append("</a></td></tr>");
+            listaEnTabla.append("<tr><td><a target=\"_blank\" href=\"./informe?courseid=").append(curso.getId())
+                    .append("\">").append(curso.getFullname())
+                    .append(" ("+curso.getCoursecategory()+")").append("</a></td></tr>");
         }
         listaEnTabla.append("</table>");
         return listaEnTabla.toString();
@@ -179,7 +181,7 @@ public class ELearningQAFacade {
     }
 
     public boolean isEstanActualizadosRecursos(List<Resource> listaRecursosDesfasados, AlertLog registro) {
-        return WebServiceClient.estanActualizadosRecursos(listaRecursosDesfasados, registro);
+        return WebServiceClient.estanActualizadosRecursos(listaRecursosDesfasados, registro, config);
     }
 
     public boolean isSonFechasCorrectas(List<es.ubu.lsi.model.Module> listaModulosMalFechados, AlertLog registro) {

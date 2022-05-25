@@ -102,4 +102,14 @@ public class SpringController{
                 .getResourceAsStream("images/Check.png");
         return IOUtils.toByteArray(in);
     }
+
+    @GetMapping(
+            value = "/eye-slash.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] eyeslash() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/eye-slash.png");
+        return IOUtils.toByteArray(in);
+    }
 }

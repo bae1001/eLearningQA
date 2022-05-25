@@ -2,6 +2,7 @@ package es.ubu.lsi;
 
 public class AlertLog {
     private StringBuilder alertas;
+    private int courseid;
     private int contadorAcordeones=0;
 
     public AlertLog() {
@@ -37,5 +38,13 @@ public class AlertLog {
     @Override
     public String toString() {
         return alertas.toString();
+    }
+
+    public int getCourseid() {
+        return courseid;
+    }
+
+    public void setCourseid(int courseid) {
+        this.courseid = courseid;
     }
 }

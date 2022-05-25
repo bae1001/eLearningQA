@@ -36,9 +36,10 @@
             fases=fachada.generarInformeFases(puntosComprobaciones,listaCursos.size());
           }else{
             Course curso= fachada.getCursoPorId(token, Integer.parseInt(courseid));
-            puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid), alertas);
+            alertas.setCourseid(Integer.parseInt(courseid));
             nombreCurso=curso.getFullname();
             session.setAttribute("coursename",nombreCurso);
+            puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid), alertas);
             porcentajes=fachada.calcularPorcentajesMatriz(puntosComprobaciones,1);
             matriz=fachada.generarMatrizRolPerspectiva(porcentajes);
             fases=fachada.generarInformeFases(puntosComprobaciones,1);
