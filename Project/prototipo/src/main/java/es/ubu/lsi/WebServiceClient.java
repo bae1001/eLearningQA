@@ -2,6 +2,7 @@ package es.ubu.lsi;
 
 import es.ubu.lsi.model.*;
 import es.ubu.lsi.model.Date;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -92,10 +93,16 @@ public class WebServiceClient {
         }
     }
 
-    public static List<Group> obtenerListaGrupos(String token, long courseid, String host) {
+    public static List<Group> obtenerListaGrupos(String token, long courseid, String host, AlertLog registro) {
         RestTemplate restTemplate = new RestTemplate();
         String url = host + "/webservice/rest/server.php?wsfunction=core_group_get_course_groups&moodlewsrestformat=json&wstoken=" + token + COURSEID + courseid;
-        Group[] listaGrupos= restTemplate.getForObject(url, Group[].class);
+        Group[] listaGrupos;
+        try {
+            listaGrupos= restTemplate.getForObject(url, Group[].class);
+        } catch (Exception e) {
+            registro.guardarAlerta("design hasgroups","No tienes permisos para ver los grupos, contacta al administrador si no debería ser así");
+            listaGrupos=null;
+        }
         if (listaGrupos==null){return new ArrayList<>();}
         return new ArrayList<>(Arrays.asList(listaGrupos));
     }
@@ -163,6 +170,8 @@ public class WebServiceClient {
         }
         return true;
     }
+
+
 
     public static User obtenerUsuarioPorId(List<User> listaUsuarios, long id){
         for (User usuario:listaUsuarios) {

@@ -65,7 +65,7 @@ public class ELearningQAFacade {
         List<User> listaUsuarios= WebServiceClient.obtenerUsuarios(token, courseid, config.getHost());
         StatusList listaEstados=WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios, config.getHost());
         List<es.ubu.lsi.model.Module> listaModulos=WebServiceClient.obtenerListaModulos(token, courseid, config.getHost());
-        List<Group> listaGrupos=WebServiceClient.obtenerListaGrupos(token, courseid, config.getHost());
+        List<Group> listaGrupos=WebServiceClient.obtenerListaGrupos(token, courseid, config.getHost(), registro);
         List<Assignment> listaTareas=WebServiceClient.obtenerListaTareas(token, courseid, config.getHost());
         List<Table> listaCalificadores=WebServiceClient.obtenerCalificadores(token, courseid, config.getHost());
         List<Resource> listaRecursos=WebServiceClient.obtenerRecursos(token, courseid, config.getHost());
