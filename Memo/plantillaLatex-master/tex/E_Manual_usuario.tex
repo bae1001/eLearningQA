@@ -16,19 +16,20 @@ Para utilizar la aplicación como usuario se necesita:
 \subsubsection{Pantallas:}
 
 \textbf{Página de login:} la página de login contiene un formulario de
-inicio de sesión, un link "Acerca de" que resume los objetivos y el
-funcionamiento de la aplicación, y un link "Manual de usuario" que
-muestra la versión web de este manual.
+inicio de sesión, un link ''Acerca de'', un link ''Manual de usuario'' que
+muestra la versión web de este manual, y un link de contacto.
+\imagen{Login.png}{Página de login}
 
 \textbf{Página principal:~}la página principal contiene una cabecera que
 indica el nombre de usuario con el que se ha registrado, un botón para
 desconectarse, un enlace para generar un informe global de todos los
 cursos, y una tabla con una lista de enlaces para generar los informes
-específicos de cada curso.
+específicos de cada curso con una caja de búsqueda.
+\imagen{ListaCursos.png}{Página principal}
 
 \textbf{Página de informe:} la página de informe genera el informe
 dependiendo de cómo se haya accedido a esta, ya sea mediante el enlace
-"Generar informe global" o por medio de los enlaces a informes de cursos
+''Generar informe global'' o por medio de los enlaces a informes de cursos
 específicos.~
 
 Los informes contienen los siguientes elementos:
@@ -41,15 +42,19 @@ Los informes contienen los siguientes elementos:
 	las tres perspectivas definidas (Pedagógica, Tecnológica, y
 	Estratégica) según los resultados del análisis.
 	\item
+	\textbf{Gráfico de evolución:} la aplicación almacena estas puntuaciones cada vez que se carga un informe para generar un gráfico interactivo de la evolución de estos valores.
+	\imagen{Evolucion.png}{Página de evolución del rendimiento}
+	\item
 	\textbf{Informe de fases:} el informe contiene también una tabla que
-	muestra los resultados en cada una delas comprobaciones del análisis y
+	muestra los resultados en cada una de las comprobaciones del análisis y
 	las agrupa en las distintas fases del diseño instruccional (Diseño,
-	Implementación, Realización, y Evaluación) además de ~dar una
+	Implementación, Realización, y Evaluación) además de dar una
 	puntuación general.
 	\item
 	\textbf{Lista de mejoras:} por último, el informe muestra una lista de
 	motivos concretos que producen resultados negativos en el análisis
-	para subsanarlos o tenerlos en cuenta de cara al futuro.
+	para subsanarlos o tenerlos en cuenta de cara al futuro. Haciendo clic en las filas de la tabla se puede filtrar la lista de mejoras.
+	\imagen{InformeFases.png}{Página de informe de fases}
 \end{itemize}
 
 El informe especifico muestra los resultados de las comprobaciones en el
@@ -67,12 +72,12 @@ dicho criterio.
 	credenciales de acceso a una cuenta de la plataforma Moodle a la que
 	accede la aplicación (en el caso del prototipo es Mount ~Orange
 	School). Debe introducir su usuario y contraseña en los campos
-	"Username" y "Password". Si quiere vaciar los campos pulse el botón
-	"Borrar". Para acceder a la página principal, pulse el botón "Entrar"
+	''Username'' y ''Password''. Si quiere vaciar los campos pulse el botón
+	''Borrar''. Para acceder a la página principal, pulse el botón ''Entrar''
 	tras haber introducido sus credenciales.
 	\item
 	\textbf{Desconectar:} desde la página principal, si desea finalizar su
-	sesión, pulse el botón "Desconectar". Esto invalidará sus credenciales
+	sesión, pulse el botón ''Desconectar''. Esto invalidará sus credenciales
 	y le impedirá acceder a la aplicación hasta que se registre de nuevo
 	con unas credenciales válidas.
 	\item
@@ -84,7 +89,7 @@ dicho criterio.
 	curso correspondiente.
 	\item
 	\textbf{Generar informe global:} en la página principal hay un enlace
-	llamado "Generar informe global". Al hacer clic sobre este, se
+	llamado ''Generar informe global''. Al hacer clic sobre este, se
 	generará un informe en una pestaña aparte del navegador que mostrará
 	un resumen de los análisis de todos los cursos en los que se encuentra
 	matriculado el profesor.

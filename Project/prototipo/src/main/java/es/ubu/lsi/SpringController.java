@@ -38,6 +38,11 @@ public class SpringController{
         return "manual";
     }
 
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
     @GetMapping("/error")
     public String error() {
         return "error";
@@ -110,6 +115,56 @@ public class SpringController{
     public @ResponseBody byte[] eyeslash() throws IOException {
         InputStream in = getClass().getClassLoader()
                 .getResourceAsStream("images/eye-slash.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/InformeFases.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] informeFases() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/InformeFases.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/Evolucion.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] evolucion() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/Evolucion.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/ListaCursos.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] listaCursos() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/ListaCursos.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/Login.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] loginpng() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/Login.png");
+        return IOUtils.toByteArray(in);
+    }
+
+    @GetMapping(
+            value = "/escudoInfor.png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] escudoInfor() throws IOException {
+        InputStream in = getClass().getClassLoader()
+                .getResourceAsStream("images/escudoInfor.png");
         return IOUtils.toByteArray(in);
     }
 }

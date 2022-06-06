@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="Logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-     <script src="/prototipo-0.3-SNAPSHOT/js/bootstrap.bundle.min.js"></script>
+     <script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
@@ -45,8 +45,8 @@
       <p><img src="FullLogo.png" width="200" height="32" alt="eLearningQA"></p>
 
       <a target="_blank" href="./manual">Manual de usuario</a>
-      <a>Acerca de</a>
-      <a>Contacto</a>
+      <a target="_blank" href="./about">Acerca de</a>
+      <a href="mailto:rab1002@alu.ubu.es">Contacto</a>
     </footer>
     <script>
 function filter() {
