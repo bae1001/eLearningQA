@@ -24,12 +24,67 @@ El repositorio está organizado de la siguiente manera:
 	\item \textbf{/Project/prototipo/src/main/resources/static/js}: Contiene las librerías JavaScript que utiliza la aplicación.
 	\item \textbf{/Project/prototipo/src/main/webapp/WEB-INF/jsp}: Contiene las páginas de la aplicación en formato jsp.
 	\item \textbf{/Project/prototipo/src/test/java/es/ubu/lsi}: Contiene los test sobre las consultas que realiza la aplicación en los cursos.
-	\item \textbf{/Project/prototipo/target}: Es el directorio donde maven deposita los resultados, como las clases compiladas y la aplicación compilada en formato WAR.
+	\item \textbf{/Project/prototipo/target}: Es el directorio donde Maven deposita los resultados, como las clases compiladas y la aplicación compilada en formato WAR.
 	
 \end{itemize}
 \section{Manual del programador}
+\subsection{Entorno}
+Para trabajar en el proyecto se necesita:
+\begin{itemize}
+	\item Java JDK 8
+	\item IntelliJ IDEA
+\end{itemize}
+
+JDK 8 se puede descargar desde \url{https://www.oracle.com/java/technologies/downloads/#java8} si se está en posesión de una cuenta de Oracle.
+
+La versión gratuita de IDEA se puede descargar desde \url{https://www.jetbrains.com/es-es/idea/download}.
+
+\subsection{Obtención del código fuente}
+Primero se debería crear un \textit{fork} del repositorio principal en \url{https://github.com/RobertoArastiBlanco/eLearningQA}.
+IDEA tiene Git integrado, lo que facilita acciones como los \textit{pull}, \textit{push} y \textit{commit}, pero se puede usar la herramienta de control de versiones que se prefiera para clonar el \textit{fork} y así tenerlo descargado en nuestro equipo.
+\imagen{IDEAGit.png}{Desplegable de Git en IDEA}
+Para trabajar en el proyecto se debe abrir desde IDEA utilizando \texttt{/Project/prototipo} como directorio raíz.
+\subsection{Propósito de las clases principales}
+\begin{itemize}
+	\item \textbf{Application:} es la clase principal de la aplicación, arranca la aplicación web.
+	\item \textbf{SpringController:} indica mediante anotaciones y funciones qué devolver cuando el usuario accede a cada página. En este caso solo devuelve páginas jsp e imágenes, pero se podrían devolver otros tipos de recurso, como archivos de audio o documentos.
+	\item \textbf{ELearningQAFacade:} hace de intermediario entre el usuario y la clase WebServiceClient.También contiene funciones para generar tablas y sus contenidos a partir de la información obtenida. 
+	\item \textbf{WebServiceClient:} contiene el código de las comprobaciones y realiza las llamadas REST al servidor de Moodle para obtener la información necesaria.
+	\item \textbf{FacadeConfig:} almacena la configuración elegida por el usuario junto con el host de Moodle y se guarda como atributo de la fachada para poder pasarlo a las funciones de WebServiceClient y que pueda cambiar su comportamiento según la configuración.
+	\item \textbf{AlertLog:} genera y almacena mensajes de alerta, se pasa como parámetro a las funciones de WebServiceClient para que puedan almacenar los mensajes para la lista de mejoras del informe.
+	\item \textbf{RegistryIO:} se encarga de almacenar y acceder a la información guardada en csv utilizada para generar los gráficos. También contiene una función que genera un gráfico a partir de los datos de un csv.
+	\item \textbf{AnalysisSnapshot:} la clase que representa el conjunto de datos almacenado en cada línea de los archivos csv, facilita el trabajo de almacenamiento de datos y generación de gráficos.
+\end{itemize}
+\subsection{Integración continua}
+El proyecto contiene un archivo llamado \texttt{maven.yml} en \texttt{/.github/workflows} en el que se indica los pasos a seguir tras realizar un \textit{push} al repositorio. Vamos a explicarlos brevemente. \imagen{MavenYML.png}{Trabajos de integración continua}
+Lo primero que se puede apreciar es que la máquina virtual que se encarga de la integración continua utiliza la versión más reciente de Ubuntu. Después, se instala JDK 11 (antes se utilizaba JDK 8 para la integración continua, pero tras añadir SonarCloud al proceso, JDK 11 pasó a ser necesario), luego se almacenan en la memoria caché de la máquina virtual los paquetes de SonarCloud y Maven. Finalmente, se construye y analiza el proyecto, se indica la ubicación del archivo \texttt{pom.xml} debido a que el directorio raíz del proyecto no coincide con el del repositorio (después veremos otro problema causado por esto).
+\subsection{Herramienta de calidad de código}
+Para analizar la calidad del código del proyecto hemos utilizado SonarCloud.
+Para integrar SonarCloud en un proyecto se puede hacer desde \url{https://sonarcloud.io/projects/create} y se hace relativamente fácil, ya que durante el proceso se te guía paso a paso.
+
+La página principal resume el estado del proyecto respecto a errores, \textit{code smells}, seguridad, y cantidad de código duplicado. También muestra el estado del proyecto según el \textit{Quality Gate}, que indica si se cumple una serie de condiciones establecidas.
+\imagen{SonarCloud.png}{Página del proyecto en SonarCloud en \url{https://sonarcloud.io/summary/overall?id=RobertoArastiBlanco_MoodleQA}}
+Es muy útil a la hora de arreglar los errores encontrados, ya que posee variedad de filtros para los errores, explica el motivo del error, posible causa, e incluso suele sugerir formas de solventarlo.
+\imagen{SonarCloudIssues.png}{Apartado de problemas de código}
 
 \section{Compilación, instalación y ejecución del proyecto}
+\subsection{Ejecución en local}
+Para ejecutar la aplicación en local solo es necesario ejecutar la clase principal: Application, IDEA se encarga de compilar las clases necesarias de forma automática. Con la aplicación en ejecución, se puede acceder a ella en \url{http://localhost:8080/}.
+\imagen{EjecucionLocal.png}{Ejecución de la clase principal}
+\imagen{EjecucionLocalhost.png}{Ejecución en local}
+\subsection{Despliegue en Heroku}
+A la hora de desplegar la aplicación en Heroku, existen algunas consideraciones a tener en cuenta para conseguirlo.
+
+Para indicar a Heroku cómo ejecutar la aplicación, el directorio raíz del proyecto debe contener un archivo llamado \texttt{Procfile} (sin extensión de archivo) con el comando ``web: java -jar -Dserver.port=\$PORT target/prototipo-0.4-SNAPSHOT.war'' (el nombre del ejecutable puede cambiar al cambiar la versión de la aplicación en \texttt{pom.xml})
+
+Debido a que el directorio raíz de la aplicación difiere del directorio raíz del repositorio, es necesario el uso de un \textit{buildpack} específico, un script que se ejecuta en el despliegue y configura el entorno de ejecución.
+
+Se debe especificar la ruta del directorio raíz de la aplicación asociada a la clave \texttt{PROJECT\_PATH} en variables de configuración y añadir los buildpacks \texttt{\url{https://github.com/timanovsky/subdir-heroku-buildpack.git}} y \texttt{heroku/java}
+\imagen{Buildpack.png}{Configuración necesaria para el despliegue}
+
+En la pestaña ``Deployment'' debes elegir GitHub como método de despliegue. Al indicar el repositorio, utiliza el \textit{fork} creado, porque se te pedirá registrarte con GitHub para obtener un \textit{token OAuth} para tener acceso al repositorio y se necesita ser colaborador para tener acceso.
+
+\imagen{Deployment.png}{Configuración del despliegue automático}
 
 \section{Pruebas del sistema}
 Los test se realizan con JUnit.

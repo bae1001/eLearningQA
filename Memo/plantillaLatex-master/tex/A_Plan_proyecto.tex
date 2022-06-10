@@ -46,20 +46,85 @@ Ahora paso a resumir los objetivos y sucesos de cada sprint:
 \subsection{Sprint 16 (12/5/2022 - 26/5/2022)} 
 	En este sprint se siguió haciendo lo mismo que en el sprint anterior, arreglar errores y añadir contenido a la memoria. En la reunión se decidió pasar a hacer sprints de una semana debido a la cercanía de la fecha limite y centrarse en completar los anexos.
 \subsection{Sprint 17 (26/5/2022 - 2/6/2022)} 
-
+	En este sprint se solucionó alguno de los problemas restantes de la aplicación y se rellenaron algunos apartados restantes de los anexos. A la reunión solo pudo acudir Carlos López, y en esta se decidió dejar de arreglar errores de código y centrarse en treminar memoria y anexos.
 \subsection{Sprint 18 (2/6/2022 - 9/6/2022)} 
-
+	En este sprint se revisó la memoria a partir de los comentarios recibidos de los tutores. No hubo reunión porque se había decidido comunicarse mediante correos a partir de este punto.
 
 \section{Estudio de viabilidad}
 
 \subsection{Viabilidad económica}
+En este apartado se estiman los costes que tendría la realización del proyecto en un caso real.
+
+A pesar de haber llevado 8 meses el desarrollo del proyecto, la cantidad de trabajo ronda las 800 horas, que equivaldría a 5 meses a jornada completa que es en lo que nos basaremos para el cálculo.
+\begin{table}[H]
+	\centering
+	\caption{Costes de personal}
+	\resizebox{0.5\textwidth}{!}{%
+		\begin{tabular}{lc}
+			\hline
+			\textbf{Concepto}        & \textbf{Coste} \\ \hline
+			Sueldo mensual neto      & 1.000,00€      \\
+			Retención IRPF (19\%)    & 254,52€        \\
+			Seguridad Social (6,35\%) & 85,06€         \\
+			Sueldo mensual bruto     & 1.339,58€      \\ \hline
+			\textbf{Total 5 meses}   & 6.697,90€      \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+Las cuotas a la seguridad social se componen de un 4,70\% de contingencias comunes, un 1,55\% por desempleo de tipo general, y un 0,10\% de formación profesional.
+
+Se supone que el ordenador portátil se amortiza en cinco años y ha sido usado cinco meses.
+\begin{table}[H]
+	\centering
+	\caption{Costes de hardware}
+	\resizebox{0.75\textwidth}{!}{%
+		\begin{tabular}{lcc}
+			\hline
+			\textbf{Concepto}        & \textbf{Coste}& \textbf{Coste amortizado} \\ \hline
+			Ordenador portátil     & 550€ & 45,83€    \\ \hline
+			\textbf{Total}   & 550€ & 45,83€    \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Costes varios}
+	\resizebox{0.5\textwidth}{!}{%
+		\begin{tabular}{lc}
+			\hline
+			\textbf{Concepto}        & \textbf{Coste} \\ \hline
+			Internet      & 150,00€      \\
+			Electricidad    & 175,00€        \\ \hline
+			\textbf{Total}   & 325,00€      \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+
+A partir de estos costes obtenemos el coste total del proyecto:
+\begin{table}[H]
+	\centering
+	\caption{Costes totales}
+	\resizebox{0.5\textwidth}{!}{%
+		\begin{tabular}{lc}
+			\hline
+			\textbf{Concepto}        & \textbf{Coste} \\ \hline
+			Personal      & 6.697,90€      \\
+			Hardware    & 45,83€           \\
+			Varios     & 325,00€      \\ \hline
+			\textbf{Total 5 meses}   & 7.068,73€      \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+
 Para hacer rentable el desarrollo de la aplicación teniendo en cuenta que es de código abierto se podría adoptar un modelo SaaS (Software as a Service) en el que los clientes paguen una suscripción al dueño del software y este a su vez se encargue del hosting y mantenimiento de la aplicación.
-Para amortizar el coste de desarrollo de la aplicación se necesitaría ...
+Se podrían ofrecer subscripciones a varios niveles ofreciendo distintos niveles de funcionalidad y servicios a distintos precios.
 \subsection{Viabilidad legal}
 \subsubsection{Licencias de software}
 Para determinar la licencia software que va a utilizar la aplicación hay que tener en cuenta las licencias utilizadas por las dependencias que utiliza la aplicación.
 
 \begin{table}[H]
+	\caption{Licencias del software utilizado}
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{|c|c|c|}
 			\hline
