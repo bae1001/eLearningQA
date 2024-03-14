@@ -35,6 +35,7 @@ Report page
 ## Authors
 
 - [Roberto Arasti Blanco](https://www.github.com/RobertoArastiBlanco)
+- [Bilal Azar El Mourabit](https://github.com/bae1001)
 
 ## Mentors
 
