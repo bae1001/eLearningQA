@@ -771,9 +771,12 @@ public class WebServiceClient {
     }
 
     private static String cambiaFormatoVisible(String json) {
-        json.replaceAll("\"visible\":1", "\"visible\":true");
-        json.replaceAll("\"visible\":0", "\"visible\":false");
-        return json;
+        if (json != null) {
+            String newJson = json.replaceAll("\"visible\":1", "\"visible\":true");
+            newJson = json.replaceAll("\"visible\":0", "\"visible\":false");
+            return newJson;
+        }
+        return "";
     }
 
 }
