@@ -2,9 +2,10 @@ package es.ubu.lsi;
 
 import es.ubu.lsi.model.*;
 import es.ubu.lsi.model.Date;
-import org.springframework.web.client.RestClientException;
+
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
 import java.time.Instant;
 import java.util.*;
 
@@ -150,7 +151,11 @@ public class WebServiceClient {
         String url = host
                 + "/webservice/rest/server.php?wsfunction=core_completion_get_activities_completion_status&moodlewsrestformat=json&wstoken="
                 + token + COURSEID + courseid + "&userid=" + idProfesor;
-        StatusList listaEstados = restTemplate.getForObject(url, StatusList.class);
+
+        String listaEstadosString = restTemplate.getForObject(url, String.class);
+        listaEstadosString = cambiaFormatoVisible(listaEstadosString);
+        Gson gson = new Gson();
+        StatusList listaEstados = gson.fromJson(listaEstadosString, StatusList.class);
         if (listaEstados == null) {
             return new StatusList();
         }
@@ -232,7 +237,12 @@ public class WebServiceClient {
         for (Integer id : mapaFechasLimite.keySet()) {
             url.append("&assignmentids[").append(contador++).append("]=").append(id);
         }
-        AssignmentList tareasConNotas = restTemplate.getForObject(url.toString(), AssignmentList.class);
+
+        String listaTareasConNotasString = restTemplate.getForObject(url.toString(), String.class);
+        listaTareasConNotasString = cambiaFormatoVisible(listaTareasConNotasString);
+        Gson gson = new Gson();
+        AssignmentList tareasConNotas = gson.fromJson(listaTareasConNotasString, AssignmentList.class);
+
         if (tareasConNotas == null) {
             return new ArrayList<>();
         }
@@ -261,7 +271,13 @@ public class WebServiceClient {
         String url = host
                 + "/webservice/rest/server.php?wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&wstoken="
                 + token;
-        CourseList listaCursos = restTemplate.getForObject(url, CourseList.class);
+
+        String listaCursosString = restTemplate.getForObject(url, String.class);
+        listaCursosString = cambiaFormatoVisible(listaCursosString);
+
+        Gson gson = new Gson();
+        CourseList listaCursos = gson.fromJson(listaCursosString, CourseList.class);
+
         List<Assignment> listaTareas = new ArrayList<>();
         if (listaCursos == null) {
             return listaTareas;
@@ -335,7 +351,10 @@ public class WebServiceClient {
         String url = host
                 + "/webservice/rest/server.php?wsfunction=mod_forum_get_discussion_posts&moodlewsrestformat=json&wstoken="
                 + token + "&discussionid=" + debate.getDiscussionNumber();
-        listaPostsDebate = restTemplate.getForObject(url, PostList.class);
+        String listaPostsDebateString = restTemplate.getForObject(url, String.class);
+        Gson gson = new Gson();
+        listaPostsDebate = gson.fromJson(listaPostsDebateString, PostList.class);
+
         if (listaPostsDebate == null) {
             return new ArrayList<>();
         }
@@ -381,7 +400,10 @@ public class WebServiceClient {
         String url = host
                 + "/webservice/rest/server.php?wsfunction=mod_survey_get_surveys_by_courses&moodlewsrestformat=json&wstoken="
                 + token + COURSEIDS_0 + courseid;
-        SurveyList listaEncuestas = restTemplate.getForObject(url, SurveyList.class);
+        String listaEncuestasString = restTemplate.getForObject(url, String.class);
+        listaEncuestasString = cambiaFormatoVisible(listaEncuestasString);
+        Gson gson = new Gson();
+        SurveyList listaEncuestas = gson.fromJson(listaEncuestasString, SurveyList.class);
         if (listaEncuestas == null) {
             return new ArrayList<>();
         }
@@ -514,7 +536,10 @@ public class WebServiceClient {
         String url = host
                 + "/webservice/rest/server.php?wsfunction=mod_resource_get_resources_by_courses&moodlewsrestformat=json&wstoken="
                 + token + COURSEIDS_0 + courseid;
-        ResourceList listaRecursos = restTemplate.getForObject(url, ResourceList.class);
+        String listaRecursosString = restTemplate.getForObject(url, String.class);
+        listaRecursosString = cambiaFormatoVisible(listaRecursosString);
+        Gson gson = new Gson();
+        ResourceList listaRecursos = gson.fromJson(listaRecursosString, ResourceList.class);
         if (listaRecursos == null) {
             return new ArrayList<>();
         }
@@ -646,7 +671,11 @@ public class WebServiceClient {
         String url = host
                 + "/webservice/rest/server.php?wsfunction=mod_feedback_get_feedbacks_by_courses&moodlewsrestformat=json&wstoken="
                 + token + COURSEIDS_0 + courseid;
-        FeedbackList listaFeedbacks = restTemplate.getForObject(url, FeedbackList.class);
+        String listaFeedbacksString = restTemplate.getForObject(url, String.class);
+        listaFeedbacksString = cambiaFormatoVisible(listaFeedbacksString);
+        Gson gson = new Gson();
+        FeedbackList listaFeedbacks = gson.fromJson(listaFeedbacksString, FeedbackList.class);
+
         if (listaFeedbacks == null) {
             return new ArrayList<>();
         }
@@ -739,6 +768,12 @@ public class WebServiceClient {
                     + formatosVistos.size() + " cuando debería haber un mínimo de " + config.getFormatNumThreshold());
             return false;
         }
+    }
+
+    private static String cambiaFormatoVisible(String json) {
+        json.replaceAll("\"visible\":1", "\"visible\":true");
+        json.replaceAll("\"visible\":0", "\"visible\":false");
+        return json;
     }
 
 }
