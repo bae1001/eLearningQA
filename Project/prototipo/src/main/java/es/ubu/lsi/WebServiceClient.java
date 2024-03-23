@@ -537,6 +537,7 @@ public class WebServiceClient {
                 + "/webservice/rest/server.php?wsfunction=mod_resource_get_resources_by_courses&moodlewsrestformat=json&wstoken="
                 + token + COURSEIDS_0 + courseid;
         String listaRecursosString = restTemplate.getForObject(url, String.class);
+        System.out.println(listaRecursosString);
         listaRecursosString = cambiaFormatoVisible(listaRecursosString);
         Gson gson = new Gson();
         ResourceList listaRecursos = gson.fromJson(listaRecursosString, ResourceList.class);
@@ -771,12 +772,13 @@ public class WebServiceClient {
     }
 
     private static String cambiaFormatoVisible(String json) {
-        if (json != null) {
-            String newJson = json.replaceAll("\"visible\":1", "\"visible\":true");
+        String newJson = "";
+        if (json != null && !"".equals(json)) {
+            newJson = json.replaceAll("\"visible\":1", "\"visible\":true");
             newJson = json.replaceAll("\"visible\":0", "\"visible\":false");
-            return newJson;
         }
-        return "";
+
+        return newJson;
     }
 
 }
