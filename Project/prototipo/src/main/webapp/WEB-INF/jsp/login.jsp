@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.io.FileReader,java.util.Properties,java.io.File"%>
+<%@ page import="java.io.FileReader,java.util.Properties,java.io.File,java.util.Map"%>
 <html lang="en">
 <head>
   <title>eLearningQA-Login</title>
@@ -11,8 +11,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="/js/bootstrap.bundle.min.js"></script>
 </head>
-<%File configs=new File("configurations");
-  String[] configArray=configs.list();
+<%
+  String[] configArray={"Docencia_reglada","Comunidades_y_grupos","TFG"};
   String configurations="";
   String mensaje=(String)session.getAttribute("message");
   String error=(mensaje==null)?"":mensaje;
