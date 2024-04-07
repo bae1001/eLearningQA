@@ -3,6 +3,7 @@ package es.ubu.lsi;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class FacadeConfig {
@@ -26,12 +27,13 @@ public class FacadeConfig {
     }
 
     public FacadeConfig(String filename) {
-        if(filename.contains(".")){
-            filename="Docencia_reglada";
+        if (filename.contains(".")) {
+            filename = "Docencia_reglada";
         }
-        try(FileReader reader = new FileReader("configurations/"+filename)) {
+        try (InputStream stream = getClass().getClassLoader()
+                .getResourceAsStream("configurations/" + filename)) {
             Properties properties = new Properties();
-            properties.load(reader);
+            properties.load(stream);
             formatNumThreshold = Integer.parseInt(properties.getProperty("format_num_threshold"));
             excessiveNesting = Integer.parseInt(properties.getProperty("excessive_nesting"));
             forumResponseTime = Integer.parseInt(properties.getProperty("forum_response_time"));
