@@ -428,7 +428,8 @@ public class WebServiceClient {
     public static List<User> obtenerAlumnosSinGrupo(List<User> listaUsuarios) {
         List<User> listaUsuariosHuerfanos = new ArrayList<>();
         for (User usuario : listaUsuarios) {
-            if (usuario.getGroups() == null && esAlumno(listaUsuarios, usuario.getId())) {
+            if ((usuario.getGroups() == null || usuario.getGroups().isEmpty())
+                    && esAlumno(listaUsuarios, usuario.getId())) {
                 listaUsuariosHuerfanos.add(usuario);
             }
         }
