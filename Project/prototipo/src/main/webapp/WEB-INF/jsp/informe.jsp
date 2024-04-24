@@ -170,6 +170,5 @@
           return new bootstrap.Tooltip(tooltipTriggerEl)
           })
           </script>
-
 </body>
 </html>
