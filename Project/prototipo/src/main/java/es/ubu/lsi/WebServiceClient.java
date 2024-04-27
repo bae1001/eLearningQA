@@ -2,10 +2,18 @@ package es.ubu.lsi;
 
 import es.ubu.lsi.model.*;
 import es.ubu.lsi.model.Date;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+
+import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 
@@ -13,6 +21,7 @@ public class WebServiceClient {
 
     private static final String COURSEID = "&courseid=";
     private static final String COURSEIDS_0 = "&courseids[0]=";
+    private static SessionService sessionService;
 
     private WebServiceClient() {
         throw new IllegalStateException("Utility class");
@@ -23,6 +32,12 @@ public class WebServiceClient {
         String token = restTemplate.getForObject(
                 host + "/login/token.php?username=" + username + "&password=" + password + "&service=moodle_mobile_app",
                 String.class);
+        try {
+            sessionService = SessionService.getInstance(username, password, host);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (token == null) {
             return "";
         }
@@ -779,6 +794,31 @@ public class WebServiceClient {
         }
 
         return newJson;
+    }
+
+    private static String getQuizzStatisticJson(String host, String quizzId) {
+        String sessionKey = sessionService.getSSKey(host);
+        if (sessionKey == null) {
+            return null;
+        }
+        String statisticFileUrl = host + "/mod/quiz/report.php?sesskey=" + sessionKey
+                + "&download=json&id=" + quizzId
+                + "&mode=statistics&everything=1&lang=en";
+        String refreshStatisticReportPageUrl = host + "/mod/quiz/report.php?id=" + quizzId
+                + "&mode=statistics";
+        Request recalculationRequest = new Request.Builder()
+                .url(refreshStatisticReportPageUrl)
+                .build();
+        try (Response recalculateStatisticsResponse = sessionService.getResponse(recalculationRequest)) {
+            Request jsonStatisticsRequest = new Request.Builder()
+                    .url(statisticFileUrl)
+                    .build();
+            Response jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest);
+            return jsonStatisticsResponse.body().string();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

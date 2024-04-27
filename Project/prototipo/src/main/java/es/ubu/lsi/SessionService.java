@@ -4,6 +4,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+
 import okhttp3.*;
 import java.time.Duration;
 
@@ -30,19 +33,24 @@ public class SessionService {
 				.build();
 	}
 
-	public static SessionService getInstance() {
+	public static SessionService getInstance(String username, String password, String host) throws IOException {
 		if (SessionService.service == null) {
-			return new SessionService();
+			SessionService.service = new SessionService();
+			SessionService.setSSKeyString(username, password, host);
+			return SessionService.service;
 		}
 		return service;
 	}
 
-	public String getSSkey(String username, String password, String host) throws IOException {
-		if (SessionService.sessionKey == null && checkSSKey(SessionService.sessionKey, host)) {
-			SessionService.setSSKeyString(username, password, host);
-			return SessionService.sessionKey;
+	public String getSSKey(String host) {
+		if (checkSSKey(host)) {
+			return sessionKey;
 		}
-		return SessionService.sessionKey;
+		return null;
+	}
+
+	public Response getResponse(Request request) throws IOException {
+		return client.newCall(request).execute();
 	}
 
 	private static void setSSKeyString(String username, String password, String host) throws IOException {
@@ -59,11 +67,11 @@ public class SessionService {
 		Request request = new Request.Builder()
 				.url(loginUrl)
 				.build();
-		try (Response response = client.newCall(request).execute()) {
-			String loginFormUrl = response.request()
+		try (Response responseForLoginPetitionForm = client.newCall(request).execute()) {
+			String loginFormUrl = responseForLoginPetitionForm.request()
 					.url()
 					.toString();
-			Document loginDoc = Jsoup.parse(response.body()
+			Document loginDoc = Jsoup.parse(responseForLoginPetitionForm.body()
 					.byteStream(), null, loginUrl);
 			Element e = loginDoc.selectFirst("input[name=logintoken]");
 			String logintoken = (e == null) ? "" : e.attr("value");
@@ -73,22 +81,30 @@ public class SessionService {
 					.add("logintoken", logintoken)
 					.build();
 
-			try (Response response2 = client.newCall(new Request.Builder().url(loginFormUrl).post(formBody).build())
+			try (Response loginResponse = client.newCall(new Request.Builder().url(loginFormUrl).post(formBody).build())
 					.execute()) {
-				return response2.body().string();
+				return loginResponse.body().string();
 
 			}
 		}
 	}
 
-	private boolean checkSSKey(String sskey, String host) throws IOException {
-		String testUrl = host + "/lib/ajax/service.php?sesskey=" + sskey + "&info=core_message_get_conversations";
+	private boolean checkSSKey(String host) {
+		String testUrl = host + "/lib/ajax/service.php?sesskey=" + sessionKey + "&info=core_user_set_user_preferences";
+		String jsonString = "[{\"index\":0,\"methodname\":\"core_user_set_user_preferences\",\"args\":{\"preferences\":[{\"name\":\"drawer-open-index\",\"value\":false,\"userid\":0}]}}]";
+		RequestBody requestBody = RequestBody.create(jsonString, MediaType.parse("application/json"));
 		Request request = new Request.Builder()
 				.url(testUrl)
+				.post(requestBody)
 				.build();
 		try (Response response = client.newCall(request).execute()) {
-			return response.isSuccessful();
+			JsonArray jsonTest = JsonParser.parseString(response.body().string()).getAsJsonArray();
+			return "false".equals(jsonTest.get(0).getAsJsonObject().get("error").getAsString());
+		} catch (IllegalStateException e) {
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
-
 }
