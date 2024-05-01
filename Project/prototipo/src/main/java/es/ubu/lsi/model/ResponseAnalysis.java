@@ -2,19 +2,18 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class ResponseAnalysis{
-    private List<Attempt> attempts;
+public class ResponseAnalysis {
+    private List<AnalysisAttempt> attempts;
     private int totalattempts;
     private List<Anonattempt> anonattempts;
     private int totalanonattempts;
     private List<Object> warnings;
 
-
-    public List<Attempt> getAttempts() {
+    public List<AnalysisAttempt> getAttempts() {
         return attempts;
     }
 
-    public void setAttempts(List<Attempt> attempts) {
+    public void setAttempts(List<AnalysisAttempt> attempts) {
         this.attempts = attempts;
     }
 
