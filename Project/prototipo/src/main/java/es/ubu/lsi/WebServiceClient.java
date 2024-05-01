@@ -24,6 +24,7 @@ public class WebServiceClient {
     private static final String COURSEID = "&courseid=";
     private static final String COURSEIDS_0 = "&courseids[0]=";
     private static SessionService sessionService;
+    private static final long MOODLE_V4 = 2022041900;
 
     private WebServiceClient() {
         throw new IllegalStateException("Utility class");
@@ -888,6 +889,160 @@ public class WebServiceClient {
             return totalStudents;
         }
         return totalStudentsAttempted / totalStudents;
+    }
+
+    public static boolean isCourseFacilityIndexCorrect(List<String> quizStatisticJsonList, long version,
+            QuizList quizList, AlertLog registro) {
+        float courseFacilityIndex = getCourseFacilityIndex(quizStatisticJsonList, version, quizList);
+        if (courseFacilityIndex >= 0.35 && courseFacilityIndex <= 0.65) {
+            return true;
+        }
+
+        if (courseFacilityIndex < 0.35) {
+            registro.guardarAlerta("realization quizzes",
+                    "Las preguntas de sus cuestionarios son demasiado complicadas para el alumnado."
+                            + "Tiene un índice de facilidad de " + courseFacilityIndex * 100
+                            + "%, cuando lo correcto esta en el intervalo [35% - 65%]");
+        }
+
+        if (courseFacilityIndex > 0.65) {
+            registro.guardarAlerta("realization quizzes", "Las preguntas de sus cuestionarios son demasiado fáciles."
+                    + "Tiene un índice de facilidad de " + courseFacilityIndex * 100
+                    + "%, cuando lo correcto esta en el intervalo [35% - 65%]");
+        }
+
+        return false;
+    }
+
+    public static float getCourseFacilityIndex(List<String> quizStatisticJsonList, long version, QuizList quizList) {
+        float sumQuizzesFacilityIndex = 0;
+        float totalQuizzesCounted = 0;
+        HashMap<Integer, Float> questionsFacilityIndex = new HashMap<Integer, Float>();
+        for (String quizStatisticJson : quizStatisticJsonList) {
+            if (version >= MOODLE_V4) {
+                questionsFacilityIndex = getQuestionsFacilityIndexV4(quizStatisticJson);
+            } else {
+                questionsFacilityIndex = getQuestionsFacilityIndexV3(quizStatisticJson);
+            }
+            sumQuizzesFacilityIndex += getQuizFacilityIndex(questionsFacilityIndex);
+            totalQuizzesCounted++;
+        }
+        if (totalQuizzesCounted == 0) {
+            return totalQuizzesCounted;
+        }
+
+        return sumQuizzesFacilityIndex / totalQuizzesCounted;
+    }
+
+    public static float getQuizFacilityIndex(HashMap<Integer, Float> questionsFacilityIndex) {
+        float sumOfQuizFacilityIndex = 0;
+        float countedQuestion = 0;
+
+        Iterator<Entry<Integer, Float>> it = questionsFacilityIndex.entrySet().iterator();
+
+        while (it.hasNext()) {
+            sumOfQuizFacilityIndex += (it.next().getValue() / 100);
+            countedQuestion++;
+        }
+
+        if (countedQuestion == 0) {
+            return countedQuestion;
+        }
+        return sumOfQuizFacilityIndex / 100;
+    }
+
+    public static HashMap<Integer, Float> getQuestionsFacilityIndexV4(String quizSatisticJson) {
+        HashMap<Integer, Float> quizzesfacilityIndex = new HashMap<Integer, Float>();
+
+        if (quizSatisticJson == null) {
+            return quizzesfacilityIndex;
+        }
+
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray();
+        JsonArray json = jsonArray.get(1).getAsJsonArray();
+
+        for (JsonElement element : json.asList()) {
+            String question = element.getAsJsonObject().get("q").getAsString();
+            JsonElement facilityIndexJsonValue = element.getAsJsonObject().get("facilityindex");
+            if (facilityIndexJsonValue == null) {
+                break;
+            }
+            String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
+
+            quizzesfacilityIndex.put(Integer.valueOf(question), Float.valueOf(facilityIndex));
+
+        }
+
+        return quizzesfacilityIndex;
+    }
+
+    public static HashMap<Integer, Float> getQuestionsFacilityIndexV3(String quizSatisticJson) {
+        HashMap<Integer, Float> quizzesfacilityIndex = new HashMap<Integer, Float>();
+        if (quizSatisticJson == null) {
+            return quizzesfacilityIndex;
+        }
+
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray();
+        JsonArray json = jsonArray.get(1).getAsJsonArray();
+        for (JsonElement element : json.asList()) {
+            int question = element.getAsJsonArray().get(0).getAsInt();
+            JsonElement facilityIndexJsonValue = element.getAsJsonArray().get(4);
+            if (facilityIndexJsonValue == null) {
+                break;
+            }
+            String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
+
+            quizzesfacilityIndex.put(Integer.valueOf(question), Float.valueOf(facilityIndex));
+
+        }
+
+        return quizzesfacilityIndex;
+    }
+
+    public static String getQuizStatisticJson(String host, String quizId) {
+        String sessionKey = sessionService.getSSKey(host);
+        if (sessionKey == null) {
+            return null;
+        }
+        String refreshStatisticReportPageUrl = host + "/mod/quiz/report.php";
+
+        String jsonString = "id=" + quizId + "&mode=statistics&recalculate=1&sesskey=" + sessionKey;
+        RequestBody requestBody = RequestBody.create(jsonString, MediaType.parse("application/x-www-form-urlencoded"));
+
+        String statisticFileUrl = host + "/mod/quiz/report.php?sesskey=" + sessionKey
+                + "&download=json&id=" + quizId
+                + "&mode=statistics&everything=1&lang=en";
+
+        Request recalculationRequest = new Request.Builder()
+                .url(refreshStatisticReportPageUrl)
+                .post(requestBody)
+                .build();
+
+        try (Response recalculateStatisticsResponse = sessionService.getResponse(recalculationRequest)) {
+            Request jsonStatisticsRequest = new Request.Builder()
+                    .url(statisticFileUrl)
+                    .build();
+            Response jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest);
+
+            return jsonStatisticsResponse.body().string();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static long getMoodleSiteVersion(String host, String token) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = host
+                + "/webservice/rest/server.php?wsfunction=core_webservice_get_site_info&moodlewsrestformat=json&wstoken="
+                + token;
+
+        String jsonResponse = restTemplate.getForObject(url, String.class);
+
+        JsonObject siteInfoJson = JsonParser.parseString(jsonResponse).getAsJsonObject();
+        long siteVersion = siteInfoJson.get("version").getAsLong();
+
+        return siteVersion;
     }
 
 }
