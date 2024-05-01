@@ -2,9 +2,7 @@ package es.ubu.lsi;
 
 import es.ubu.lsi.model.*;
 import es.ubu.lsi.model.Date;
-import okhttp3.MediaType;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import org.springframework.web.client.RestTemplate;
@@ -12,12 +10,12 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class WebServiceClient {
 
@@ -789,22 +787,6 @@ public class WebServiceClient {
         }
     }
 
-    public static boolean isCourseQuizzEngagementCorrect(List<List<AttemptsList>> quizzesUsersAttempt,
-            List<User> usersList, AlertLog registro) {
-        float courseQuizzesTotalEngagement = getTotalEngagement(quizzesUsersAttempt, usersList);
-
-        if (courseQuizzesTotalEngagement > 0.8) {
-            return true;
-        }
-
-        registro.guardarAlerta("realization quizzes",
-                "Los cuestionarios no tienen alcance. Un" + courseQuizzesTotalEngagement * 100
-                        + "% de los alumnos realizan los cuestionarios."
-                        + ". Lo correcto es un mínimo de 80% de participación.;");
-
-        return false;
-    }
-
     private static String cambiaFormatoVisible(String json) {
         String newJson = "";
         if (json != null && !"".equals(json)) {
@@ -815,80 +797,29 @@ public class WebServiceClient {
         return newJson;
     }
 
-    public static float getQuizTotalStudentsAttempted(List<AttemptsList> usersAttempt) {
-        float totalUsersAttempted = 0;
-        for (AttemptsList attemptList : usersAttempt) {
-            for (QuizzAttempt attempt : attemptList.getAttempts()) {
-                if ("finished".equals(attempt.getState())) {
-                    totalUsersAttempted++;
-                    break;
-                }
-            }
+    private static String getQuizzStatisticJson(String host, String quizzId) {
+        String sessionKey = sessionService.getSSKey(host);
+        if (sessionKey == null) {
+            return null;
         }
-        return totalUsersAttempted;
-    }
-
-    public static List<AttemptsList> getAllAttemptsListInQuiz(String quizId, String host, String token,
-            List<User> usersList) {
-        ArrayList<AttemptsList> totalAttemptsInQuiz = new ArrayList<AttemptsList>();
-        for (User user : usersList) {
-            totalAttemptsInQuiz.add(getUserAttemptListByQuiz(quizId, user.getId(), host, token));
+        String statisticFileUrl = host + "/mod/quiz/report.php?sesskey=" + sessionKey
+                + "&download=json&id=" + quizzId
+                + "&mode=statistics&everything=1&lang=en";
+        String refreshStatisticReportPageUrl = host + "/mod/quiz/report.php?id=" + quizzId
+                + "&mode=statistics";
+        Request recalculationRequest = new Request.Builder()
+                .url(refreshStatisticReportPageUrl)
+                .build();
+        try (Response recalculateStatisticsResponse = sessionService.getResponse(recalculationRequest)) {
+            Request jsonStatisticsRequest = new Request.Builder()
+                    .url(statisticFileUrl)
+                    .build();
+            Response jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest);
+            return jsonStatisticsResponse.body().string();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return totalAttemptsInQuiz;
-    }
-
-    private static AttemptsList getUserAttemptListByQuiz(String quizId, int userId, String host, String token) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = host
-                + "/webservice/rest/server.php?wsfunction=mod_quiz_get_user_attempts&moodlewsrestformat=json&wstoken="
-                + token + "&quizid=" + quizId + "&userid=" + userId;
-
-        String listAttemptsString = restTemplate.getForObject(url, String.class);
-        Gson gson = new Gson();
-        AttemptsList attemptsList = gson.fromJson(listAttemptsString, AttemptsList.class);
-
-        if (attemptsList == null) {
-            return new AttemptsList();
-        }
-        return attemptsList;
-    }
-
-    public static QuizList getQuizzesByCourse(String token, long courseid, String host) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = host
-                + "/webservice/rest/server.php?wsfunction=mod_quiz_get_quizzes_by_courses&moodlewsrestformat=json&wstoken="
-                + token + "&courseids[0]=" + courseid;
-
-        String quizzesList = restTemplate.getForObject(url, String.class);
-        Gson gson = new Gson();
-        QuizList quizzList = gson.fromJson(quizzesList, QuizList.class);
-        if (quizzList == null) {
-            return new QuizList();
-        }
-        return quizzList;
-    }
-
-    public static float getTotalEngagement(List<List<AttemptsList>> quizzesUsersAttempt, List<User> usersList) {
-        float total = 0;
-        float countedQuizzes = 0;
-        for (List<AttemptsList> usersAttempt : quizzesUsersAttempt) {
-            float totalStudentsAttempted = getQuizTotalStudentsAttempted(usersAttempt);
-            total += getQuizEngagementPercentage(totalStudentsAttempted, usersList);
-            countedQuizzes++;
-        }
-
-        if (countedQuizzes == 0) {
-            return countedQuizzes;
-        }
-        return total / countedQuizzes;
-    }
-
-    private static float getQuizEngagementPercentage(float totalStudentsAttempted, List<User> usersList) {
-        int totalStudents = numeroAlumnos(usersList);
-        if (totalStudents == 0) {
-            return totalStudents;
-        }
-        return totalStudentsAttempted / totalStudents;
     }
 
     public static boolean isCourseFacilityIndexCorrect(List<String> quizStatisticJsonList, long version,

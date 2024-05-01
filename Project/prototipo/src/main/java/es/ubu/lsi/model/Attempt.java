@@ -2,13 +2,14 @@ package es.ubu.lsi.model;
 
 import java.util.List;
 
-public class AnalysisAttempt {
+public class Attempt{
     private long id;
     private long courseid;
     private long userid;
     private long timemodified;
     private String fullname;
     private List<Response> responses;
+
 
     public long getId() {
         return id;
