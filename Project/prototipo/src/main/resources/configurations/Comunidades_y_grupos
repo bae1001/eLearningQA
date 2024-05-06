@@ -20,4 +20,4 @@ facility_index_max=0.65
 #Minimum engagement required in a quiz
 min_quiz_engagement_percentage=0.8
 #Maximum random guess score in a quiz
-max_random_guess_score=0.10
+max_random_guess_score=0.010
