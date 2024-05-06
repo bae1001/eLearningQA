@@ -13,9 +13,11 @@ min_feedback_answer_percentage=0.6
 #Seconds after posting before a forum post is considered irrelevant for checks
 forum_relevance_period=2592000
 #Seconds after deadline before an assignment is considered irrelevant for checks
-assignment_relevance_period=2592000assignment_relevance_period=2592000
+assignment_relevance_period=2592000
 #Interval for facility index
 facility_index_min=0.35
 facility_index_max=0.65
 #Minimum engagement required in a quiz
 min_quiz_engagement_percentage=0.8
+#Maximum random guess score in a quiz
+max_random_guess_score=0.10

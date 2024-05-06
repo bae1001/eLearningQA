@@ -15,9 +15,10 @@ public class FacadeConfig {
     private double minFeedbackAnswerPercentage;
     private int forumRelevancePeriod;
     private int assignmentRelevancePeriod;
-    private float facilityIndexMin;
-    private float facilityIndexMax;
-    private float minQuizEngagementPercentage;
+    private double facilityIndexMin;
+    private double facilityIndexMax;
+    private double minQuizEngagementPercentage;
+    private double maxRandomScoreInQuizz;
     private String host;
 
     public String getHost() {
@@ -44,15 +45,21 @@ public class FacadeConfig {
             minFeedbackAnswerPercentage = Double.parseDouble(properties.getProperty("min_feedback_answer_percentage"));
             forumRelevancePeriod = Integer.parseInt(properties.getProperty("forum_relevance_period"));
             assignmentRelevancePeriod = Integer.parseInt(properties.getProperty("assignment_relevance_period"));
-            facilityIndexMin = Float.parseFloat(properties.getProperty("facility_index_min"));
-            facilityIndexMax = Float.parseFloat(properties.getProperty("facility_index_max"));
-            minQuizEngagementPercentage = Float.parseFloat(properties.getProperty("min_quiz_engagement_percentage"));
+            facilityIndexMin = Double.parseDouble(properties.getProperty("facility_index_min"));
+            facilityIndexMax = Double.parseDouble(properties.getProperty("facility_index_max"));
+            minQuizEngagementPercentage = Double.parseDouble(properties.getProperty("min_quiz_engagement_percentage"));
+            maxRandomScoreInQuizz = Double.parseDouble(properties.getProperty("max_random_guess_score"));
+
         } catch (Exception e) {
             LOGGER.error("exception", e);
         }
     }
 
-    public float getMinQuizEngagementPercentage() {
+    public double getMaxRandomScoreInQuizz() {
+        return maxRandomScoreInQuizz;
+    }
+
+    public double getMinQuizEngagementPercentage() {
         return minQuizEngagementPercentage;
     }
 
@@ -72,11 +79,11 @@ public class FacadeConfig {
         return minCommentPercentage;
     }
 
-    public float getFacilityIndexMin() {
+    public double getFacilityIndexMin() {
         return facilityIndexMin;
     }
 
-    public float getFacilityIndexMax() {
+    public double getFacilityIndexMax() {
         return facilityIndexMax;
     }
 
