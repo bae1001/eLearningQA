@@ -892,29 +892,32 @@ public class WebServiceClient {
     }
 
     public static boolean isCourseFacilityIndexCorrect(List<String> quizStatisticJsonList, long version,
-            QuizList quizList, AlertLog registro) {
-        float courseFacilityIndex = getCourseFacilityIndex(quizStatisticJsonList, version, quizList);
-        if (courseFacilityIndex >= 0.35 && courseFacilityIndex <= 0.65) {
+            AlertLog registro, FacadeConfig config) {
+        float courseFacilityIndex = getCourseFacilityIndex(quizStatisticJsonList, version);
+        if (courseFacilityIndex >= config.getFacilityIndexMin()
+                && courseFacilityIndex <= config.getFacilityIndexMax()) {
             return true;
         }
 
-        if (courseFacilityIndex < 0.35) {
+        if (courseFacilityIndex < config.getFacilityIndexMin()) {
             registro.guardarAlerta("realization quizzes",
                     "Las preguntas de sus cuestionarios son demasiado complicadas para el alumnado."
                             + "Tiene un índice de facilidad de " + courseFacilityIndex * 100
-                            + "%, cuando lo correcto esta en el intervalo [35% - 65%]");
+                            + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
+                            + config.getFacilityIndexMax() + "%]");
         }
 
-        if (courseFacilityIndex > 0.65) {
+        if (courseFacilityIndex > config.getFacilityIndexMax()) {
             registro.guardarAlerta("realization quizzes", "Las preguntas de sus cuestionarios son demasiado fáciles."
                     + "Tiene un índice de facilidad de " + courseFacilityIndex * 100
-                    + "%, cuando lo correcto esta en el intervalo [35% - 65%]");
+                    + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
+                    + config.getFacilityIndexMax() + "%]");
         }
 
         return false;
     }
 
-    public static float getCourseFacilityIndex(List<String> quizStatisticJsonList, long version, QuizList quizList) {
+    public static float getCourseFacilityIndex(List<String> quizStatisticJsonList, long version) {
         float sumQuizzesFacilityIndex = 0;
         float totalQuizzesCounted = 0;
         HashMap<Integer, Float> questionsFacilityIndex = new HashMap<Integer, Float>();

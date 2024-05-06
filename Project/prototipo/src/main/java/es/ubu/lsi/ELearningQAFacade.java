@@ -249,6 +249,10 @@ public class ELearningQAFacade {
         return WebServiceClient.hayVariedadFormatos(listamodulos, registro, config);
     }
 
+    public boolean isCourseFacilityIndexCorrect(List<String> quizStatisticJsonList, long version, AlertLog registro) {
+        return WebServiceClient.isCourseFacilityIndexCorrect(quizStatisticJsonList, version, registro, config);
+    }
+
     public float porcentajeFraccion(float numerador, float denominador) {
         return numerador / denominador * 100;
     }

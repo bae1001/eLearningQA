@@ -15,6 +15,9 @@ public class FacadeConfig {
     private double minFeedbackAnswerPercentage;
     private int forumRelevancePeriod;
     private int assignmentRelevancePeriod;
+    private float facilityIndexMin;
+    private float facilityIndexMax;
+    private float minQuizEngagementPercentage;
     private String host;
 
     public String getHost() {
@@ -41,9 +44,16 @@ public class FacadeConfig {
             minFeedbackAnswerPercentage = Double.parseDouble(properties.getProperty("min_feedback_answer_percentage"));
             forumRelevancePeriod = Integer.parseInt(properties.getProperty("forum_relevance_period"));
             assignmentRelevancePeriod = Integer.parseInt(properties.getProperty("assignment_relevance_period"));
+            facilityIndexMin = Float.parseFloat(properties.getProperty("facility_index_min"));
+            facilityIndexMax = Float.parseFloat(properties.getProperty("facility_index_max"));
+            minQuizEngagementPercentage = Float.parseFloat(properties.getProperty("min_quiz_engagement_percentage"));
         } catch (Exception e) {
             LOGGER.error("exception", e);
         }
+    }
+
+    public float getMinQuizEngagementPercentage() {
+        return minQuizEngagementPercentage;
     }
 
     public int getFormatNumThreshold() {
@@ -60,6 +70,14 @@ public class FacadeConfig {
 
     public double getMinCommentPercentage() {
         return minCommentPercentage;
+    }
+
+    public float getFacilityIndexMin() {
+        return facilityIndexMin;
+    }
+
+    public float getFacilityIndexMax() {
+        return facilityIndexMax;
     }
 
     public int getAssignmentGradingTime() {
