@@ -790,19 +790,40 @@ public class WebServiceClient {
     }
 
     public static boolean isCourseQuizzEngagementCorrect(List<List<AttemptsList>> quizzesUsersAttempt,
-            List<User> usersList, AlertLog registro) {
+            List<User> usersList, AlertLog registro, FacadeConfig config) {
         float courseQuizzesTotalEngagement = getTotalEngagement(quizzesUsersAttempt, usersList);
 
-        if (courseQuizzesTotalEngagement > 0.8) {
+        if (courseQuizzesTotalEngagement > config.getMinQuizEngagementPercentage()) {
             return true;
         }
 
         registro.guardarAlerta("realization quizzes",
                 "Los cuestionarios no tienen alcance. Un" + courseQuizzesTotalEngagement * 100
                         + "% de los alumnos realizan los cuestionarios."
-                        + ". Lo correcto es un mínimo de 80% de participación.;");
+                        + ". Lo correcto es un mínimo de " + config.getMinQuizEngagementPercentage() * 100
+                        + "% de participación.");
 
         return false;
+    }
+
+    public static boolean courseHasDatesAndSummaryDefinde(Course course, AlertLog registro) {
+        boolean datesAndSummaryDefined = true;
+        if (course.getStartdate() == 0) {
+            registro.guardarAlerta("design courses", "El curso no dispone de una fecha de inicio definida.");
+            datesAndSummaryDefined = false;
+        }
+
+        if (course.getEnddate() == 0) {
+            registro.guardarAlerta("design courses", "El curso no dispone de una fecha de fin definida.");
+            datesAndSummaryDefined = false;
+        }
+
+        if ("".equals(course.getSummary())) {
+            registro.guardarAlerta("design courses", "El curso no dispone de una descripción definida.");
+            datesAndSummaryDefined = false;
+        }
+
+        return datesAndSummaryDefined;
     }
 
     private static String cambiaFormatoVisible(String json) {
