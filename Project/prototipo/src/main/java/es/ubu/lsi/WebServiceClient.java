@@ -1017,10 +1017,8 @@ public class WebServiceClient {
             return quizzesfacilityIndex;
         }
 
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray();
-        JsonArray json = jsonArray.get(1).getAsJsonArray();
-
-        for (JsonElement element : json.asList()) {
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        for (JsonElement element : jsonArray.asList()) {
             String question = element.getAsJsonObject().get("q").getAsString();
             JsonElement facilityIndexJsonValue = element.getAsJsonObject().get("facilityindex");
             if (facilityIndexJsonValue == null) {
@@ -1041,9 +1039,8 @@ public class WebServiceClient {
             return quizzesfacilityIndex;
         }
 
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray();
-        JsonArray json = jsonArray.get(1).getAsJsonArray();
-        for (JsonElement element : json.asList()) {
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        for (JsonElement element : jsonArray.asList()) {
             int question = element.getAsJsonArray().get(0).getAsInt();
             JsonElement facilityIndexJsonValue = element.getAsJsonArray().get(4);
             if (facilityIndexJsonValue == null) {
@@ -1064,19 +1061,16 @@ public class WebServiceClient {
         if (quizSatisticJson == null) {
             return quizzesRandomGuessScore;
         }
-
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray();
-        JsonArray json = jsonArray.get(1).getAsJsonArray();
-
-        for (JsonElement element : json.asList()) {
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        for (JsonElement element : jsonArray.asList()) {
             String question = element.getAsJsonObject().get("q").getAsString();
-            JsonElement facilityIndexJsonValue = element.getAsJsonObject().get("randomguessscore");
-            if (facilityIndexJsonValue == null) {
+            JsonElement randomGuessScoreJsonValue = element.getAsJsonObject().get("randomguessscore");
+            if (randomGuessScoreJsonValue == null) {
                 break;
             }
-            String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
+            String randomGuessScore = randomGuessScoreJsonValue.getAsString().replaceAll("%", "");
 
-            quizzesRandomGuessScore.put(Integer.valueOf(question), Float.valueOf(facilityIndex));
+            quizzesRandomGuessScore.put(Integer.valueOf(question), Float.valueOf(randomGuessScore));
         }
         return quizzesRandomGuessScore;
     }
@@ -1087,24 +1081,69 @@ public class WebServiceClient {
             return quizzesRandomGuessScore;
         }
 
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray();
-        JsonArray json = jsonArray.get(1).getAsJsonArray();
-        for (JsonElement element : json.asList()) {
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        for (JsonElement element : jsonArray.asList()) {
             int question = element.getAsJsonArray().get(0).getAsInt();
-            JsonElement facilityIndexJsonValue = null;
+            JsonElement randomGuessScoreJsonValue = null;
             if (element.getAsJsonArray().size() == 9) {
-                facilityIndexJsonValue = element.getAsJsonArray().get(5);
+                randomGuessScoreJsonValue = element.getAsJsonArray().get(5);
             } else {
-                facilityIndexJsonValue = element.getAsJsonArray().get(6);
+                randomGuessScoreJsonValue = element.getAsJsonArray().get(6);
             }
-            if (facilityIndexJsonValue == null) {
+            if (randomGuessScoreJsonValue == null) {
                 break;
             }
-            String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
+            String randomGuessScore = randomGuessScoreJsonValue.getAsString().replaceAll("%", "");
 
-            quizzesRandomGuessScore.put(Integer.valueOf(question), Float.valueOf(facilityIndex));
+            quizzesRandomGuessScore.put(Integer.valueOf(question), Float.valueOf(randomGuessScore));
         }
         return quizzesRandomGuessScore;
+    }
+
+    public static HashMap<Integer, Float> getQuestionsDiscriminationIndex(String quizSatisticJson) {
+        HashMap<Integer, Float> quizzesDiscriminationIndex = new HashMap<Integer, Float>();
+
+        if (quizSatisticJson == null) {
+            return quizzesDiscriminationIndex;
+        }
+
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        for (JsonElement element : jsonArray.asList()) {
+            String question = element.getAsJsonObject().get("q").getAsString();
+            JsonElement discriminationIndexJsonValue = element.getAsJsonObject().get("discriminationindex");
+            if (discriminationIndexJsonValue == null) {
+                break;
+            }
+            String discriminationIndex = discriminationIndexJsonValue.getAsString().replaceAll("%", "");
+
+            quizzesDiscriminationIndex.put(Integer.valueOf(question), Float.valueOf(discriminationIndex));
+        }
+        return quizzesDiscriminationIndex;
+    }
+
+    public static HashMap<Integer, Float> getQuestionsDiscriminationIndexV3(String quizSatisticJson) {
+        HashMap<Integer, Float> quizzesDiscriminationIndex = new HashMap<Integer, Float>();
+        if (quizSatisticJson == null) {
+            return quizzesDiscriminationIndex;
+        }
+
+        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        for (JsonElement element : jsonArray.asList()) {
+            int question = element.getAsJsonArray().get(0).getAsInt();
+            JsonElement discriminationIndexJsonValue = null;
+            if (element.getAsJsonArray().size() == 9) {
+                discriminationIndexJsonValue = element.getAsJsonArray().get(7);
+            } else {
+                discriminationIndexJsonValue = element.getAsJsonArray().get(9);
+            }
+            if (discriminationIndexJsonValue == null) {
+                break;
+            }
+            String discriminationIndex = discriminationIndexJsonValue.getAsString().replaceAll("%", "");
+
+            quizzesDiscriminationIndex.put(Integer.valueOf(question), Float.valueOf(discriminationIndex));
+        }
+        return quizzesDiscriminationIndex;
     }
 
     public static String getQuizStatisticJson(String host, String quizId) {

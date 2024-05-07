@@ -21,3 +21,5 @@ facility_index_max=0.65
 min_quiz_engagement_percentage=0.8
 #Maximum random guess score in a quiz
 max_random_guess_score=0.010
+#Minimum discrimination index for a question in quiz
+discrimination_index_min=0.5
