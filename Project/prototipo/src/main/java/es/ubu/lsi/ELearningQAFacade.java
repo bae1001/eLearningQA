@@ -256,6 +256,9 @@ public class ELearningQAFacade {
         return WebServiceClient.isCourseFacilityIndexCorrect(quizzes, registro, config);
     }
 
+    public boolean isCourseQuizzesEngagementCorrect(QuizList quizzes, AlertLog registro) {
+        return WebServiceClient.isCourseFacilityIndexCorrect(quizzes, registro, config);
+    }
     public boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         return WebServiceClient.isRandomGuessScoreInQuizzesCorrect(quizzes, registro, config);
