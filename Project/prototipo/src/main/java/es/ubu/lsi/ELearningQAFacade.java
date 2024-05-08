@@ -256,6 +256,11 @@ public class ELearningQAFacade {
         return WebServiceClient.isCourseFacilityIndexCorrect(quizzes, registro, config);
     }
 
+    public boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
+            AlertLog registro, FacadeConfig config) {
+        return WebServiceClient.isRandomGuessScoreInQuizzesCorrect(quizzes, registro, config);
+    }
+
     public float porcentajeFraccion(float numerador, float denominador) {
         return numerador / denominador * 100;
     }
