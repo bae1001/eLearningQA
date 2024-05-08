@@ -788,21 +788,22 @@ public class WebServiceClient {
         }
     }
 
-    public static boolean isCourseQuizzEngagementCorrect(List<List<AttemptsList>> quizzesUsersAttempt,
+    public static boolean isCourseQuizzesEngagementCorrect(QuizList quizzes,
             List<User> usersList, AlertLog registro, FacadeConfig config) {
-        double courseQuizzesTotalEngagement = getTotalEngagement(quizzesUsersAttempt, usersList);
+        boolean isCourseQuizzesEngagementCorrect = true;
 
-        if (courseQuizzesTotalEngagement > config.getMinQuizEngagementPercentage()) {
-            return true;
+        for (Quiz quiz : quizzes.getQuizzes()) {
+            if (quiz.getQuizEngagement() < config.getMinQuizEngagementPercentage()) {
+                isCourseQuizzesEngagementCorrect = false;
+                registro.guardarAlerta("realization quizzes",
+                        "El cuestionario" + quiz.getName() + " no tienen la suficiente participación. Un"
+                                + quiz.getQuizEngagement() * 100
+                                + "% de los alumnos realizan los cuestionarios."
+                                + ". Lo correcto es un mínimo de " + config.getMinQuizEngagementPercentage() * 100
+                                + "% de participación.");
+            }
         }
-
-        registro.guardarAlerta("realization quizzes",
-                "Los cuestionarios no tienen alcance. Un" + courseQuizzesTotalEngagement * 100
-                        + "% de los alumnos realizan los cuestionarios."
-                        + ". Lo correcto es un mínimo de " + config.getMinQuizEngagementPercentage() * 100
-                        + "% de participación.");
-
-        return false;
+        return isCourseQuizzesEngagementCorrect;
     }
 
     public static boolean courseHasDatesAndSummaryDefinde(Course course, AlertLog registro) {
@@ -831,7 +832,6 @@ public class WebServiceClient {
             newJson = json.replaceAll("\"visible\":1", "\"visible\":true");
             newJson = newJson.replaceAll("\"visible\":0", "\"visible\":false");
         }
-
         return newJson;
     }
 
@@ -888,21 +888,6 @@ public class WebServiceClient {
         return quizzList;
     }
 
-    public static double getTotalEngagement(List<List<AttemptsList>> quizzesUsersAttempt, List<User> usersList) {
-        double total = 0;
-        double countedQuizzes = 0;
-        for (List<AttemptsList> usersAttempt : quizzesUsersAttempt) {
-            double totalStudentsAttempted = getQuizTotalStudentsAttempted(usersAttempt);
-            total += getQuizEngagementPercentage(totalStudentsAttempted, usersList);
-            countedQuizzes++;
-        }
-
-        if (countedQuizzes == 0) {
-            return countedQuizzes;
-        }
-        return total / countedQuizzes;
-    }
-
     public static double getQuizEngagementPercentage(double totalStudentsAttempted, List<User> usersList) {
         int totalStudents = numeroAlumnos(usersList);
         if (totalStudents == 0) {
@@ -954,18 +939,6 @@ public class WebServiceClient {
             }
         }
         return isRandomGuessScoreInQuizzesCorrect;
-    }
-
-    public static float getQuizRandomGuessScore(HashMap<Integer, Float> qustionsRandomGuessScore) {
-        float sumOfQuizRandomeGuessScore = 0;
-
-        Iterator<Entry<Integer, Float>> it = qustionsRandomGuessScore.entrySet().iterator();
-
-        while (it.hasNext()) {
-            sumOfQuizRandomeGuessScore += (it.next().getValue() / 100);
-        }
-
-        return sumOfQuizRandomeGuessScore;
     }
 
     public static List<Question> getQuizQuestionsV4(String quizSatisticJson, int quizId) {
@@ -1058,97 +1031,6 @@ public class WebServiceClient {
         }
 
         return quizQuestions;
-    }
-
-    public static HashMap<Integer, Float> getQuestionsRandomGuessScoreV4(String quizSatisticJson) {
-        HashMap<Integer, Float> quizzesRandomGuessScore = new HashMap<Integer, Float>();
-
-        if (quizSatisticJson == null) {
-            return quizzesRandomGuessScore;
-        }
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
-        for (JsonElement element : jsonArray.asList()) {
-            String question = element.getAsJsonObject().get("q").getAsString();
-            JsonElement randomGuessScoreJsonValue = element.getAsJsonObject().get("randomguessscore");
-            if (randomGuessScoreJsonValue == null) {
-                break;
-            }
-            String randomGuessScore = randomGuessScoreJsonValue.getAsString().replaceAll("%", "");
-
-            quizzesRandomGuessScore.put(Integer.valueOf(question), Float.valueOf(randomGuessScore));
-        }
-        return quizzesRandomGuessScore;
-    }
-
-    public static HashMap<Integer, Float> getQuestionsRandomGuessScoreV3(String quizSatisticJson) {
-        HashMap<Integer, Float> quizzesRandomGuessScore = new HashMap<Integer, Float>();
-        if (quizSatisticJson == null) {
-            return quizzesRandomGuessScore;
-        }
-
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
-        for (JsonElement element : jsonArray.asList()) {
-            int question = element.getAsJsonArray().get(0).getAsInt();
-            JsonElement randomGuessScoreJsonValue = null;
-            if (element.getAsJsonArray().size() == 9) {
-                randomGuessScoreJsonValue = element.getAsJsonArray().get(5);
-            } else {
-                randomGuessScoreJsonValue = element.getAsJsonArray().get(6);
-            }
-            if (randomGuessScoreJsonValue == null) {
-                break;
-            }
-            String randomGuessScore = randomGuessScoreJsonValue.getAsString().replaceAll("%", "");
-
-            quizzesRandomGuessScore.put(Integer.valueOf(question), Float.valueOf(randomGuessScore));
-        }
-        return quizzesRandomGuessScore;
-    }
-
-    public static HashMap<Integer, Float> getQuestionsDiscriminationIndex(String quizSatisticJson) {
-        HashMap<Integer, Float> quizzesDiscriminationIndex = new HashMap<Integer, Float>();
-
-        if (quizSatisticJson == null) {
-            return quizzesDiscriminationIndex;
-        }
-
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
-        for (JsonElement element : jsonArray.asList()) {
-            String question = element.getAsJsonObject().get("q").getAsString();
-            JsonElement discriminationIndexJsonValue = element.getAsJsonObject().get("discriminationindex");
-            if (discriminationIndexJsonValue == null) {
-                break;
-            }
-            String discriminationIndex = discriminationIndexJsonValue.getAsString().replaceAll("%", "");
-
-            quizzesDiscriminationIndex.put(Integer.valueOf(question), Float.valueOf(discriminationIndex));
-        }
-        return quizzesDiscriminationIndex;
-    }
-
-    public static HashMap<Integer, Float> getQuestionsDiscriminationIndexV3(String quizSatisticJson) {
-        HashMap<Integer, Float> quizzesDiscriminationIndex = new HashMap<Integer, Float>();
-        if (quizSatisticJson == null) {
-            return quizzesDiscriminationIndex;
-        }
-
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
-        for (JsonElement element : jsonArray.asList()) {
-            int question = element.getAsJsonArray().get(0).getAsInt();
-            JsonElement discriminationIndexJsonValue = null;
-            if (element.getAsJsonArray().size() == 9) {
-                discriminationIndexJsonValue = element.getAsJsonArray().get(7);
-            } else {
-                discriminationIndexJsonValue = element.getAsJsonArray().get(9);
-            }
-            if (discriminationIndexJsonValue == null) {
-                break;
-            }
-            String discriminationIndex = discriminationIndexJsonValue.getAsString().replaceAll("%", "");
-
-            quizzesDiscriminationIndex.put(Integer.valueOf(question), Float.valueOf(discriminationIndex));
-        }
-        return quizzesDiscriminationIndex;
     }
 
     public static String getQuizStatisticJson(String host, String courseModule) {
