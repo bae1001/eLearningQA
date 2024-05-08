@@ -17,7 +17,6 @@ import com.google.gson.JsonParser;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class WebServiceClient {
 
@@ -939,6 +938,21 @@ public class WebServiceClient {
             }
         }
         return isRandomGuessScoreInQuizzesCorrect;
+    }
+
+    public static boolean isDiscriminationIndexInQuizzesCorrect(QuizList quizzes,
+            AlertLog registro, FacadeConfig config) {
+        boolean isDiscriminationIndexInQuizzesCorrect = true;
+        for (Quiz quiz : quizzes.getQuizzes()) {
+            if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex()) {
+                registro.guardarAlerta("design realization", "Las preguntas del cuestionario:" + quiz.getName()
+                        + " no disponen de un buen índice de discriminación. Su cuestionario tiene un índice de discriminación del "
+                        + quiz.getQuizDiscriminationIndex() * 100
+                        + "%. Los valores recomendados son un " + config.getMinQuizDiscriminationIndex()
+                        + "% o superior.");
+            }
+        }
+        return isDiscriminationIndexInQuizzesCorrect;
     }
 
     public static List<Question> getQuizQuestionsV4(String quizSatisticJson, int quizId) {

@@ -259,9 +259,15 @@ public class ELearningQAFacade {
     public boolean isCourseQuizzesEngagementCorrect(QuizList quizzes, AlertLog registro) {
         return WebServiceClient.isCourseFacilityIndexCorrect(quizzes, registro, config);
     }
+
     public boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         return WebServiceClient.isRandomGuessScoreInQuizzesCorrect(quizzes, registro, config);
+    }
+
+    public boolean isDiscriminationIndexInQuizzesCorrect(QuizList quizzes,
+            AlertLog registro, FacadeConfig config) {
+        return WebServiceClient.isDiscriminationIndexInQuizzesCorrect(quizzes, registro, config);
     }
 
     public float porcentajeFraccion(float numerador, float denominador) {

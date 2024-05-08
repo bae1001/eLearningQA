@@ -19,6 +19,7 @@ public class FacadeConfig {
     private double facilityIndexMax;
     private double minQuizEngagementPercentage;
     private double maxRandomScoreInQuizz;
+    private double minQuizDiscriminationIndex;
     private String host;
 
     public String getHost() {
@@ -49,6 +50,7 @@ public class FacadeConfig {
             facilityIndexMax = Double.parseDouble(properties.getProperty("facility_index_max"));
             minQuizEngagementPercentage = Double.parseDouble(properties.getProperty("min_quiz_engagement_percentage"));
             maxRandomScoreInQuizz = Double.parseDouble(properties.getProperty("max_random_guess_score"));
+            minQuizDiscriminationIndex = Double.parseDouble(properties.getProperty("discrimination_index_min"));
 
         } catch (Exception e) {
             LOGGER.error("exception", e);
@@ -101,5 +103,9 @@ public class FacadeConfig {
 
     public int getAssignmentRelevancePeriod() {
         return assignmentRelevancePeriod;
+    }
+
+    public double getMinQuizDiscriminationIndex() {
+        return minQuizDiscriminationIndex;
     }
 }

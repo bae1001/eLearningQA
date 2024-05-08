@@ -12,6 +12,7 @@ public class Quiz {
     private double quizEngagement;
     private double quizFacilityIndex;
     private double quizRandomGuessScore;
+    private double quizDiscriminationIndex;
     private List<Question> questions;
     private List<AttemptsList> quizAttempts;
 
@@ -28,11 +29,11 @@ public class Quiz {
             countedQuestion++;
         }
 
-        if (countedQuestion == 0) {
-            quizFacilityIndex = 0;
+        if (countedQuestion != 0) {
+            quizFacilityIndex = sumOfQuizFacilityIndex / countedQuestion;
         }
 
-        quizFacilityIndex = sumOfQuizFacilityIndex / countedQuestion;
+        quizFacilityIndex = 0;
     }
 
     public double getQuizEngagement() {
@@ -115,6 +116,25 @@ public class Quiz {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getQuizDiscriminationIndex() {
+        return quizDiscriminationIndex;
+    }
+
+    public void setQuizDiscriminationIndex() {
+        double sumOfQuizDiscriminationIndex = 0;
+        double countedQuestion = 0;
+        for (Question question : questions) {
+            sumOfQuizDiscriminationIndex += (question.getDiscriminationIndex() / 100);
+            countedQuestion++;
+        }
+
+        if (countedQuestion != 0) {
+            quizDiscriminationIndex = sumOfQuizDiscriminationIndex / countedQuestion;
+        }
+
+        quizDiscriminationIndex = 0;
     }
 
 }
