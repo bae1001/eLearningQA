@@ -270,6 +270,10 @@ public class ELearningQAFacade {
         return WebServiceClient.isDiscriminationIndexInQuizzesCorrect(quizzes, registro, config);
     }
 
+    public boolean courseHasDatesAndSummaryDefinde(Course course, AlertLog registro) {
+        return WebServiceClient.courseHasDatesAndSummaryDefinde(course, registro);
+    }
+
     public float porcentajeFraccion(float numerador, float denominador) {
         return numerador / denominador * 100;
     }
