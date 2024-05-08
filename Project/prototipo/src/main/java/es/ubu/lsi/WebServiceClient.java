@@ -24,7 +24,6 @@ public class WebServiceClient {
     private static final String COURSEID = "&courseid=";
     private static final String COURSEIDS_0 = "&courseids[0]=";
     private static SessionService sessionService;
-    private static final long MOODLE_V4 = 2022041900;
 
     private WebServiceClient() {
         throw new IllegalStateException("Utility class");
@@ -791,7 +790,7 @@ public class WebServiceClient {
 
     public static boolean isCourseQuizzEngagementCorrect(List<List<AttemptsList>> quizzesUsersAttempt,
             List<User> usersList, AlertLog registro, FacadeConfig config) {
-        float courseQuizzesTotalEngagement = getTotalEngagement(quizzesUsersAttempt, usersList);
+        double courseQuizzesTotalEngagement = getTotalEngagement(quizzesUsersAttempt, usersList);
 
         if (courseQuizzesTotalEngagement > config.getMinQuizEngagementPercentage()) {
             return true;
@@ -836,8 +835,8 @@ public class WebServiceClient {
         return newJson;
     }
 
-    public static float getQuizTotalStudentsAttempted(List<AttemptsList> usersAttempt) {
-        float totalUsersAttempted = 0;
+    public static double getQuizTotalStudentsAttempted(List<AttemptsList> usersAttempt) {
+        double totalUsersAttempted = 0;
         for (AttemptsList attemptList : usersAttempt) {
             for (QuizzAttempt attempt : attemptList.getAttempts()) {
                 if ("finished".equals(attempt.getState())) {
@@ -889,11 +888,11 @@ public class WebServiceClient {
         return quizzList;
     }
 
-    public static float getTotalEngagement(List<List<AttemptsList>> quizzesUsersAttempt, List<User> usersList) {
-        float total = 0;
-        float countedQuizzes = 0;
+    public static double getTotalEngagement(List<List<AttemptsList>> quizzesUsersAttempt, List<User> usersList) {
+        double total = 0;
+        double countedQuizzes = 0;
         for (List<AttemptsList> usersAttempt : quizzesUsersAttempt) {
-            float totalStudentsAttempted = getQuizTotalStudentsAttempted(usersAttempt);
+            double totalStudentsAttempted = getQuizTotalStudentsAttempted(usersAttempt);
             total += getQuizEngagementPercentage(totalStudentsAttempted, usersList);
             countedQuizzes++;
         }
@@ -904,7 +903,7 @@ public class WebServiceClient {
         return total / countedQuizzes;
     }
 
-    private static float getQuizEngagementPercentage(float totalStudentsAttempted, List<User> usersList) {
+    public static double getQuizEngagementPercentage(double totalStudentsAttempted, List<User> usersList) {
         int totalStudents = numeroAlumnos(usersList);
         if (totalStudents == 0) {
             return totalStudents;
@@ -912,90 +911,49 @@ public class WebServiceClient {
         return totalStudentsAttempted / totalStudents;
     }
 
-    public static boolean isCourseFacilityIndexCorrect(List<String> quizStatisticJsonList, long version,
+    public static boolean isCourseFacilityIndexCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
-        float courseFacilityIndex = getCourseFacilityIndex(quizStatisticJsonList, version);
-        if (courseFacilityIndex >= config.getFacilityIndexMin()
-                && courseFacilityIndex <= config.getFacilityIndexMax()) {
-            return true;
-        }
+        for (Quiz quiz : quizzes.getQuizzes()) {
+            if (quiz.getQuizFacilityIndex() >= config.getFacilityIndexMin()
+                    && quiz.getQuizFacilityIndex() <= config.getFacilityIndexMax()) {
+                return true;
+            }
 
-        if (courseFacilityIndex < config.getFacilityIndexMin()) {
-            registro.guardarAlerta("realization quizzes",
-                    "Las preguntas de sus cuestionarios son demasiado complicadas para el alumnado."
-                            + "Tiene un índice de facilidad de " + courseFacilityIndex * 100
-                            + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
-                            + config.getFacilityIndexMax() + "%]");
-        }
+            if (quiz.getQuizFacilityIndex() < config.getFacilityIndexMin()) {
+                registro.guardarAlerta("realization quizzes",
+                        "Las preguntas de sus cuestionario " + quiz.getName()
+                                + " son demasiado complicadas para el alumnado."
+                                + "Tiene un índice de facilidad de " + quiz.getQuizFacilityIndex() * 100
+                                + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
+                                + config.getFacilityIndexMax() + "%]");
+            }
 
-        if (courseFacilityIndex > config.getFacilityIndexMax()) {
-            registro.guardarAlerta("realization quizzes", "Las preguntas de sus cuestionarios son demasiado fáciles."
-                    + "Tiene un índice de facilidad de " + courseFacilityIndex * 100
-                    + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
-                    + config.getFacilityIndexMax() + "%]");
+            if (quiz.getQuizFacilityIndex() > config.getFacilityIndexMax()) {
+                registro.guardarAlerta("realization quizzes",
+                        "Las preguntas de sus cuestionario " + quiz.getName()
+                                + " son demasiado fáciles para el alumnado."
+                                + "Tiene un índice de facilidad de " + quiz.getQuizFacilityIndex() * 100
+                                + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
+                                + config.getFacilityIndexMax() + "%]");
+            }
         }
 
         return false;
     }
 
-    public static boolean isRandomGuessScoreInQuizzesCorrect(List<String> quizStatisticJsonList, long version,
+    public static boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
-        float quizRandomGuessScore = 0;
-        HashMap<Integer, Float> questionsRandomGuessScore = new HashMap<Integer, Float>();
-        for (String quizStatisticJson : quizStatisticJsonList) {
-            if (version >= MOODLE_V4) {
-                questionsRandomGuessScore = getQuestionsFacilityIndexV4(quizStatisticJson);
-            } else {
-                questionsRandomGuessScore = getQuestionsFacilityIndexV3(quizStatisticJson);
-            }
-            quizRandomGuessScore = getQuizFacilityIndex(questionsRandomGuessScore);
-
-            if (quizRandomGuessScore > config.getMaxRandomScoreInQuizz()) {
-                registro.guardarAlerta("design quizzes", "Las preguntas de sus cuestionarios permiten una calificación"
-                        + " aleatoria de " + quizRandomGuessScore * 100 + " superior a "
+        boolean isRandomGuessScoreInQuizzesCorrect = true;
+        for (Quiz quiz : quizzes.getQuizzes()) {
+            if (quiz.getQuizRandomGuessScore() > config.getMaxRandomScoreInQuizz()) {
+                registro.guardarAlerta("design quizzes", "Las preguntas de sus cuestionario: " + quiz.getName()
+                        + " permiten una calificación"
+                        + " aleatoria de " + quiz.getQuizRandomGuessScore() * 100 + " superior a "
                         + config.getMaxRandomScoreInQuizz() * 100 + "%.");
-                return false;
+                isRandomGuessScoreInQuizzesCorrect = false;
             }
-
         }
-        return true;
-    }
-
-    public static float getCourseFacilityIndex(List<String> quizStatisticJsonList, long version) {
-        float sumQuizzesFacilityIndex = 0;
-        float totalQuizzesCounted = 0;
-        HashMap<Integer, Float> questionsFacilityIndex = new HashMap<Integer, Float>();
-        for (String quizStatisticJson : quizStatisticJsonList) {
-            if (version >= MOODLE_V4) {
-                questionsFacilityIndex = getQuestionsFacilityIndexV4(quizStatisticJson);
-            } else {
-                questionsFacilityIndex = getQuestionsFacilityIndexV3(quizStatisticJson);
-            }
-            sumQuizzesFacilityIndex += getQuizFacilityIndex(questionsFacilityIndex);
-            totalQuizzesCounted++;
-        }
-        if (totalQuizzesCounted == 0) {
-            return totalQuizzesCounted;
-        }
-
-        return sumQuizzesFacilityIndex / totalQuizzesCounted;
-    }
-
-    public static float getQuizFacilityIndex(HashMap<Integer, Float> questionsFacilityIndex) {
-        float sumOfQuizFacilityIndex = 0;
-        float countedQuestion = 0;
-
-        Iterator<Entry<Integer, Float>> it = questionsFacilityIndex.entrySet().iterator();
-
-        while (it.hasNext()) {
-            sumOfQuizFacilityIndex += (it.next().getValue() / 100);
-            countedQuestion++;
-        }
-
-        if (countedQuestion == 0) {
-            return countedQuestion;
-        }
-        return sumOfQuizFacilityIndex / countedQuestion;
+        return isRandomGuessScoreInQuizzesCorrect;
     }
 
     public static float getQuizRandomGuessScore(HashMap<Integer, Float> qustionsRandomGuessScore) {
@@ -1010,49 +968,96 @@ public class WebServiceClient {
         return sumOfQuizRandomeGuessScore;
     }
 
-    public static HashMap<Integer, Float> getQuestionsFacilityIndexV4(String quizSatisticJson) {
-        HashMap<Integer, Float> quizzesfacilityIndex = new HashMap<Integer, Float>();
+    public static List<Question> getQuizQuestionsV4(String quizSatisticJson, int quizId) {
+        List<Question> quizQuestions = new ArrayList<Question>();
 
         if (quizSatisticJson == null) {
-            return quizzesfacilityIndex;
+            return quizQuestions;
         }
 
         JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
         for (JsonElement element : jsonArray.asList()) {
-            String question = element.getAsJsonObject().get("q").getAsString();
+            Question question = new Question();
+            question.setQuizId(quizId);
+            JsonElement questionNumber = element.getAsJsonObject().get("q");
             JsonElement facilityIndexJsonValue = element.getAsJsonObject().get("facilityindex");
-            if (facilityIndexJsonValue == null) {
-                break;
+            JsonElement questionName = element.getAsJsonObject().get("questionname");
+            JsonElement randomGuessScoreJsonValue = element.getAsJsonObject().get("randomguessscore");
+            JsonElement discriminationIndexJsonValue = element.getAsJsonObject().get("discriminationindex");
+
+            if (questionNumber != null) {
+                question.setQuestionNumber(questionNumber.getAsInt());
             }
-            String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
 
-            quizzesfacilityIndex.put(Integer.valueOf(question), Float.valueOf(facilityIndex));
+            if (questionName != null) {
+                question.setQuestionName(questionName.getAsString());
+            }
 
+            if (facilityIndexJsonValue != null) {
+                String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
+                question.setFacilityIndex(Double.valueOf(facilityIndex));
+            }
+
+            if (randomGuessScoreJsonValue != null) {
+                String randomGuessScore = randomGuessScoreJsonValue.getAsString().replaceAll("%", "");
+                question.setRandomGuessScore(Double.valueOf(randomGuessScore));
+            }
+
+            if (discriminationIndexJsonValue != null) {
+                String discriminationIndex = discriminationIndexJsonValue.getAsString().replaceAll("%", "");
+                question.setDiscriminationIndex(Double.valueOf(discriminationIndex));
+            }
+
+            quizQuestions.add(question);
         }
 
-        return quizzesfacilityIndex;
+        return quizQuestions;
     }
 
-    public static HashMap<Integer, Float> getQuestionsFacilityIndexV3(String quizSatisticJson) {
-        HashMap<Integer, Float> quizzesfacilityIndex = new HashMap<Integer, Float>();
+    public static List<Question> getQuizQuestionsV3(String quizSatisticJson, int quizId) {
+        List<Question> quizQuestions = new ArrayList<Question>();
+
         if (quizSatisticJson == null) {
-            return quizzesfacilityIndex;
+            return quizQuestions;
         }
 
         JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
         for (JsonElement element : jsonArray.asList()) {
-            int question = element.getAsJsonArray().get(0).getAsInt();
+            Question question = new Question();
+            question.setQuizId(quizId);
+            JsonElement questionNumber = element.getAsJsonArray().get(0);
+            JsonElement questionName = element.getAsJsonArray().get(2);
             JsonElement facilityIndexJsonValue = element.getAsJsonArray().get(4);
-            if (facilityIndexJsonValue == null) {
-                break;
+            JsonElement randomGuessScoreJsonValue = element.getAsJsonArray().get(6);
+            JsonElement discriminationIndexJsonValue = element.getAsJsonArray().get(9);
+
+            if (questionNumber != null) {
+                question.setQuestionNumber(questionNumber.getAsInt());
             }
-            String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
 
-            quizzesfacilityIndex.put(Integer.valueOf(question), Float.valueOf(facilityIndex));
+            if (questionName != null) {
+                question.setQuestionName(questionName.getAsString());
+            }
 
+            if (facilityIndexJsonValue != null) {
+                String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
+                question.setFacilityIndex(Double.valueOf(facilityIndex));
+            }
+
+            if (randomGuessScoreJsonValue != null) {
+                String randomGuessScore = randomGuessScoreJsonValue.getAsString().replaceAll("%", "");
+                question.setRandomGuessScore(Double.valueOf(randomGuessScore));
+            }
+
+            if (discriminationIndexJsonValue != null) {
+                String discriminationIndex = discriminationIndexJsonValue.getAsString().replaceAll("%", "");
+                question.setDiscriminationIndex(Double.valueOf(discriminationIndex));
+            }
+
+            quizQuestions.add(question);
         }
 
-        return quizzesfacilityIndex;
+        return quizQuestions;
     }
 
     public static HashMap<Integer, Float> getQuestionsRandomGuessScoreV4(String quizSatisticJson) {
@@ -1146,18 +1151,18 @@ public class WebServiceClient {
         return quizzesDiscriminationIndex;
     }
 
-    public static String getQuizStatisticJson(String host, String quizId) {
+    public static String getQuizStatisticJson(String host, String courseModule) {
         String sessionKey = sessionService.getSSKey(host);
         if (sessionKey == null) {
             return null;
         }
         String refreshStatisticReportPageUrl = host + "/mod/quiz/report.php";
 
-        String jsonString = "id=" + quizId + "&mode=statistics&recalculate=1&sesskey=" + sessionKey;
+        String jsonString = "id=" + courseModule + "&mode=statistics&recalculate=1&sesskey=" + sessionKey;
         RequestBody requestBody = RequestBody.create(jsonString, MediaType.parse("application/x-www-form-urlencoded"));
 
         String statisticFileUrl = host + "/mod/quiz/report.php?sesskey=" + sessionKey
-                + "&download=json&id=" + quizId
+                + "&download=json&id=" + courseModule
                 + "&mode=statistics&everything=1&lang=en";
 
         Request recalculationRequest = new Request.Builder()
