@@ -17,6 +17,7 @@ public class ELearningQAFacade {
     private static final int CHECKS_EVALUACION = 2;
     private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION
             + CHECKS_EVALUACION;
+    private static final long MOODLE_V4 = 2022041900;
     protected static String[] camposInformeFases;
     private final FacadeConfig config;
 
@@ -65,6 +66,8 @@ public class ELearningQAFacade {
     public int[] realizarComprobaciones(String token, long courseid, AlertLog registro) {
         Course curso = getCursoPorId(token, courseid);
         List<User> listaUsuarios = WebServiceClient.obtenerUsuarios(token, courseid, config.getHost());
+        long siteVersion = WebServiceClient.getMoodleSiteVersion(config.getHost(), token);
+        QuizList quizzes = getQuizzesData(token, curso.getId(), listaUsuarios, siteVersion, registro);
         StatusList listaEstados = WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios,
                 config.getHost());
         List<es.ubu.lsi.model.Module> listaModulos = WebServiceClient.obtenerListaModulos(token, courseid,
@@ -249,8 +252,8 @@ public class ELearningQAFacade {
         return WebServiceClient.hayVariedadFormatos(listamodulos, registro, config);
     }
 
-    public boolean isCourseFacilityIndexCorrect(List<String> quizStatisticJsonList, long version, AlertLog registro) {
-        return WebServiceClient.isCourseFacilityIndexCorrect(quizStatisticJsonList, version, registro, config);
+    public boolean isCourseFacilityIndexCorrect(QuizList quizzes, AlertLog registro) {
+        return WebServiceClient.isCourseFacilityIndexCorrect(quizzes, registro, config);
     }
 
     public float porcentajeFraccion(float numerador, float denominador) {
@@ -327,6 +330,30 @@ public class ELearningQAFacade {
                 "</tr><tr><td class=\"tg-plgr\">Estratégica</td>" + generarCampoRelativo(porcentajes[6], 1) +
                 generarCampoRelativo(porcentajes[7], 1) + generarCampoRelativo(porcentajes[8], 1) +
                 "</tr></table>";
+    }
+
+    private QuizList getQuizzesData(String token, long courseid, List<User> users, long moodleVersion,
+            AlertLog registro) {
+        QuizList courseQuizzes = WebServiceClient.getQuizzesByCourse(token, courseid, config.getHost());
+        for (Quiz quiz : courseQuizzes.getQuizzes()) {
+            quiz.setQuizAttempts(
+                    WebServiceClient.getAllAttemptsListInQuiz(quiz.getId(), config.getHost(), token, users));
+            double quizEngagement = WebServiceClient.getQuizEngagementPercentage(
+                    WebServiceClient.getQuizTotalStudentsAttempted(quiz.getQuizAttempts()), users);
+            quiz.setQuizEngagement(quizEngagement);
+            String quizStatisticJson = WebServiceClient.getQuizStatisticJson(config.getHost(), quiz.getCoursemodule());
+            if (MOODLE_V4 >= moodleVersion) {
+                quiz.setQuestions(
+                        WebServiceClient.getQuizQuestionsV4(quizStatisticJson, Integer.valueOf(quiz.getId())));
+            } else {
+                quiz.setQuestions(
+                        WebServiceClient.getQuizQuestionsV3(quizStatisticJson, Integer.valueOf(quiz.getId())));
+            }
+
+            quiz.setQuizFacilityIndex();
+            quiz.setQuizRandomGuessScore();
+        }
+        return courseQuizzes;
     }
 
 }
