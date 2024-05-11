@@ -50,7 +50,9 @@
                     <li><strong>El curso tiene actividades grupales:</strong> se comprueba que existan actividades con entrega grupal habilitada en el curso. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica</li>
                     <li><strong>Los estudiantes pueden ver las condiciones necesarias para completar una actividad:</strong> se comprueba que esté habilitada la opción de mostrar las condiciones para completar una actividad en el curso. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica</li>
                     <li><strong>Todas las actividades tienen la misma nota máxima en el calificador:</strong> se comprueba que exista una consistencia en las notas máximas de los items de calificación (tareas, entregas, cuestionarios) del curso. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica</li>
-                    </ul>
+                    <li><strong>El curso tiene fechas y descripción definidas:</strong> se comprueba que estén definidas las fechas de inicio y fín del curso así como una descripción. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica y Estratégica</li>  
+                    <li><strong>Las preguntas de los cuestionarios tienen una calificación aleatoria adecuada:</strong> se comprueba que el índice de calificación aleatoria de los cuestionarios este por debajo de un valor definido. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador <u>Perspectivas:</u> Pedagógica</li>  
+                  </ul>
                     <p><strong>Implementación:</strong></p>
                     <ul>
                     <li><strong>Los recursos están actualizados:</strong> se comprueba que los recursos del curso tengan una fecha de creación reciente. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
@@ -65,7 +67,10 @@
                     <li><strong>Se ofrece retroalimentación de las tareas:</strong> se comprueba que el profesor deje comentarios en la mayoría de calificaciones que haga. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
                     <li><strong>Las tareas están calificadas:</strong> se comprueba que no hayan entregas de alumnos que hayan pasado una semana sin calificación. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
                     <li><strong>El calificador muestra cómo ponderan las diferentes tareas:</strong> se comprueba que el calificador muestre los pesos de los items de calificación. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
-                    </ul>
+                    <li><strong>Los índices de facilidad de las preguntas son adecuados:</strong> se comprueba que los índices de facilidad de las preguntas de los cuestionarios estén dentro de los intervalos definidos.<u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>
+                    <li><strong>Los cuestionarios tienen una participación adecuada:</strong> se comprueba que la participación de los cuestionarios sea superior a un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>
+                    <li><strong>Las preguntas de los cuestionarios tienen un índice de discriminación adecuado:</strong> se comprueba que los índices de discriminación de las preguntas estén por encima de un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>  
+                  </ul>
                     <p><strong>Evaluación:</strong></p>
                     <ul>
                     <li><strong>La mayoría de alumnos responden a los feedbacks:</strong> se comprueba que no hayan muchos alumnos que no respondan a los feedbacks. <u>Responsable:</u> Proveedor <u>Involucrados:</u> Diseñador y Facilitador <u>Perspectivas:</u> Pedagógica, Tecnológica, y Estratégica</li>
