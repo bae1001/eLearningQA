@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class ELearningQAFacade {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final int CHECKS_DISENO = 6;
+    private static final int CHECKS_DISENO = 8;
     private static final int CHECKS_IMPLEMENTACION = 5;
-    private static final int CHECKS_REALIZACION = 4;
+    private static final int CHECKS_REALIZACION = 7;
     private static final int CHECKS_EVALUACION = 2;
     private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION
             + CHECKS_EVALUACION;
@@ -87,7 +87,7 @@ public class ELearningQAFacade {
         List<es.ubu.lsi.model.Module> modulosMalFechados = WebServiceClient.obtenerModulosMalFechados(curso,
                 listaModulos);
         List<Resource> recursosDesfasados = WebServiceClient.obtenerRecursosDesfasados(curso, listaRecursos);
-        int[] puntosComprobaciones = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        int[] puntosComprobaciones = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         if (isestaProgresoActivado(listaEstados, registro)) {
             puntosComprobaciones[0]++;
         }
@@ -106,60 +106,77 @@ public class ELearningQAFacade {
         if (isEsNotaMaxConsistente(listaCalificadores, registro)) {
             puntosComprobaciones[5]++;
         }
-        if (isEstanActualizadosRecursos(recursosDesfasados, registro)) {
+        if (courseHasDatesAndSummaryDefinde(curso, registro)) {
             puntosComprobaciones[6]++;
         }
-        if (isSonFechasCorrectas(modulosMalFechados, registro)) {
+        if (isRandomGuessScoreInQuizzesCorrect(quizzes, registro)) {
             puntosComprobaciones[7]++;
         }
-        if (isMuestraCriterios(listaModulosTareas, registro)) {
+        if (isEstanActualizadosRecursos(recursosDesfasados, registro)) {
             puntosComprobaciones[8]++;
         }
-        if (isAnidamientoCalificadorAceptable(listaCalificadores, registro)) {
+        if (isSonFechasCorrectas(modulosMalFechados, registro)) {
             puntosComprobaciones[9]++;
         }
-        if (isAlumnosEnGrupos(listaUsuarios, registro)) {
+        if (isMuestraCriterios(listaModulosTareas, registro)) {
             puntosComprobaciones[10]++;
         }
-        if (isRespondeATiempo(listaUsuarios, listaPosts, registro)) {
+        if (isAnidamientoCalificadorAceptable(listaCalificadores, registro)) {
             puntosComprobaciones[11]++;
         }
-        if (isHayRetroalimentacion(listaCalificadores, registro)) {
+        if (isAlumnosEnGrupos(listaUsuarios, registro)) {
             puntosComprobaciones[12]++;
         }
-        if (isEstaCorregidoATiempo(tareasConNotas, listaUsuarios, registro)) {
+        if (isRespondeATiempo(listaUsuarios, listaPosts, registro)) {
             puntosComprobaciones[13]++;
         }
-        if (isCalificadorMuestraPonderacion(listaCalificadores, registro)) {
+        if (isHayRetroalimentacion(listaCalificadores, registro)) {
             puntosComprobaciones[14]++;
         }
-        if (isRespondenFeedbacks(listaAnalisis, listaUsuarios, registro)) {
+        if (isEstaCorregidoATiempo(tareasConNotas, listaUsuarios, registro)) {
             puntosComprobaciones[15]++;
         }
-        if (isUsaSurveys(listaSurveys, registro)) {
+        if (isCalificadorMuestraPonderacion(listaCalificadores, registro)) {
             puntosComprobaciones[16]++;
+        }
+        if (isCourseFacilityIndexCorrect(quizzes, registro)) {
+            puntosComprobaciones[17]++;
+        }
+        if (isCourseQuizzesEngagementCorrect(quizzes, registro)) {
+            puntosComprobaciones[18]++;
+        }
+        if (isDiscriminationIndexInQuizzesCorrect(quizzes, registro)) {
+            puntosComprobaciones[19]++;
+        }
+        if (isRespondenFeedbacks(listaAnalisis, listaUsuarios, registro)) {
+            puntosComprobaciones[20]++;
+        }
+        if (isUsaSurveys(listaSurveys, registro)) {
+            puntosComprobaciones[21]++;
         }
         return puntosComprobaciones;
     }
 
     public String generarInformeFases(int[] puntos, int nroCursos) {
-        int contadorDiseno = puntos[0] + puntos[1] + puntos[2] + puntos[3] + puntos[4] + puntos[5];
-        int contadorImplementacion = puntos[6] + puntos[7] + puntos[8] + puntos[9] + puntos[10];
-        int contadorRealizacion = puntos[11] + puntos[12] + puntos[13] + puntos[14];
-        int contadorEvaluacion = puntos[15] + puntos[16];
+        int contadorDiseno = puntos[0] + puntos[1] + puntos[2] + puntos[3] + puntos[4] + puntos[5] + puntos[6]
+                + puntos[7];
+        int contadorImplementacion = puntos[8] + puntos[9] + puntos[10] + puntos[11] + puntos[12];
+        int contadorRealizacion = puntos[13] + puntos[14] + puntos[15] + puntos[16] + puntos[17] + puntos[18]
+                + puntos[19];
+        int contadorEvaluacion = puntos[20] + puntos[21];
         int contadorTotal = contadorDiseno + contadorImplementacion + contadorRealizacion + contadorEvaluacion;
         return camposInformeFases[0] + generarCampoRelativo((float) contadorTotal / nroCursos, CHECKS_TOTAL) +
                 camposInformeFases[1] + generarCampoRelativo((float) contadorDiseno / nroCursos, CHECKS_DISENO) +
-                generarFilas(new int[] { 2, 0 }, 6, puntos, nroCursos) +
-                camposInformeFases[8]
+                generarFilas(new int[] { 2, 0 }, CHECKS_DISENO, puntos, nroCursos) +
+                camposInformeFases[10]
                 + generarCampoRelativo((float) contadorImplementacion / nroCursos, CHECKS_IMPLEMENTACION) +
-                generarFilas(new int[] { 9, 6 }, 5, puntos, nroCursos) +
-                camposInformeFases[14]
+                generarFilas(new int[] { 11, 8 }, CHECKS_IMPLEMENTACION, puntos, nroCursos) +
+                camposInformeFases[16]
                 + generarCampoRelativo((float) contadorRealizacion / nroCursos, CHECKS_REALIZACION) +
-                generarFilas(new int[] { 15, 11 }, 4, puntos, nroCursos) +
-                camposInformeFases[19] + generarCampoRelativo((float) contadorEvaluacion / nroCursos, CHECKS_EVALUACION)
+                generarFilas(new int[] { 17, 13 }, CHECKS_REALIZACION, puntos, nroCursos) +
+                camposInformeFases[24] + generarCampoRelativo((float) contadorEvaluacion / nroCursos, CHECKS_EVALUACION)
                 +
-                generarFilas(new int[] { 20, 15 }, 2, puntos, nroCursos) + camposInformeFases[22];
+                generarFilas(new int[] { 25, 20 }, CHECKS_EVALUACION, puntos, nroCursos) + camposInformeFases[27];
     }
 
     private String generarFilas(int[] posiciones, int cantidad, int[] puntos, int nroCursos) {
@@ -257,16 +274,16 @@ public class ELearningQAFacade {
     }
 
     public boolean isCourseQuizzesEngagementCorrect(QuizList quizzes, AlertLog registro) {
-        return WebServiceClient.isCourseFacilityIndexCorrect(quizzes, registro, config);
+        return WebServiceClient.isCourseQuizzesEngagementCorrect(quizzes, registro, config);
     }
 
     public boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
-            AlertLog registro, FacadeConfig config) {
+            AlertLog registro) {
         return WebServiceClient.isRandomGuessScoreInQuizzesCorrect(quizzes, registro, config);
     }
 
     public boolean isDiscriminationIndexInQuizzesCorrect(QuizList quizzes,
-            AlertLog registro, FacadeConfig config) {
+            AlertLog registro) {
         return WebServiceClient.isDiscriminationIndexInQuizzesCorrect(quizzes, registro, config);
     }
 
@@ -360,7 +377,7 @@ public class ELearningQAFacade {
                     WebServiceClient.getQuizTotalStudentsAttempted(quiz.getQuizAttempts()), users);
             quiz.setQuizEngagement(quizEngagement);
             String quizStatisticJson = WebServiceClient.getQuizStatisticJson(config.getHost(), quiz.getCoursemodule());
-            if (MOODLE_V4 >= moodleVersion) {
+            if (MOODLE_V4 <= moodleVersion) {
                 quiz.setQuestions(
                         WebServiceClient.getQuizQuestionsV4(quizStatisticJson, Integer.valueOf(quiz.getId())));
             } else {
