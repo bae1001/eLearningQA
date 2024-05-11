@@ -6,7 +6,7 @@ public class Quiz {
     private String id;
     private String coursemodule;
     private String course;
-    private String timeclose;
+    private int timeclose;
     private String name;
     private boolean visible;
     private double quizEngagement;
@@ -84,11 +84,11 @@ public class Quiz {
         this.course = course;
     }
 
-    public String getTimeclose() {
+    public int getTimeclose() {
         return timeclose;
     }
 
-    public void setTimeclose(String timeclose) {
+    public void setTimeclose(int timeclose) {
         this.timeclose = timeclose;
     }
 
@@ -106,7 +106,7 @@ public class Quiz {
 
     public void setQuizRandomGuessScore() {
         for (Question question : questions) {
-            quizRandomGuessScore += question.getRandomGuessScore();
+            quizRandomGuessScore += question.getRandomGuessScore() / 100;
         }
     }
 

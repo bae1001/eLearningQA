@@ -2,6 +2,7 @@ package es.ubu.lsi;
 
 import es.ubu.lsi.model.*;
 import es.ubu.lsi.model.Date;
+import es.ubu.lsi.SessionService;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -787,18 +788,18 @@ public class WebServiceClient {
         }
     }
 
-    public static boolean isCourseQuizzesEngagementCorrect(QuizList quizzes,
-            List<User> usersList, AlertLog registro, FacadeConfig config) {
+    public static boolean isCourseQuizzesEngagementCorrect(QuizList quizzes, AlertLog registro, FacadeConfig config) {
         boolean isCourseQuizzesEngagementCorrect = true;
-
         for (Quiz quiz : quizzes.getQuizzes()) {
-            if (quiz.getQuizEngagement() < config.getMinQuizEngagementPercentage()) {
+            if (quiz.getQuizEngagement() < config.getMinQuizEngagementPercentage() && quiz.isVisible()) {
                 isCourseQuizzesEngagementCorrect = false;
-                registro.guardarAlerta("realization quizzes",
-                        "El cuestionario" + quiz.getName() + " no tienen la suficiente participación. Un"
-                                + quiz.getQuizEngagement() * 100
+
+                registro.guardarAlerta("realization quizzesEngagement",
+                        "El cuestionario: " + quiz.getName() + " no tiene la suficiente participación. Un "
+                                + (int) (quiz.getQuizEngagement() * 100)
                                 + "% de los alumnos realizan los cuestionarios."
-                                + ". Lo correcto es un mínimo de " + config.getMinQuizEngagementPercentage() * 100
+                                + " Lo correcto es un mínimo de "
+                                + (int) (config.getMinQuizEngagementPercentage() * 100)
                                 + "% de participación.");
             }
         }
@@ -808,18 +809,24 @@ public class WebServiceClient {
     public static boolean courseHasDatesAndSummaryDefinde(Course course, AlertLog registro) {
         boolean datesAndSummaryDefined = true;
         if (course.getStartdate() == 0) {
-            registro.guardarAlerta("design courses", "El curso no dispone de una fecha de inicio definida.");
             datesAndSummaryDefined = false;
+
+            registro.guardarAlerta("design definedValues", "El curso no dispone de una fecha de inicio definida.");
+
         }
 
         if (course.getEnddate() == 0) {
-            registro.guardarAlerta("design courses", "El curso no dispone de una fecha de fin definida.");
             datesAndSummaryDefined = false;
+
+            registro.guardarAlerta("design definedValues", "El curso no dispone de una fecha de fin definida.");
+
         }
 
         if ("".equals(course.getSummary())) {
-            registro.guardarAlerta("design courses", "El curso no dispone de una descripción definida.");
             datesAndSummaryDefined = false;
+
+            registro.guardarAlerta("design definedValues", "El curso no dispone de una descripción definida.");
+
         }
 
         return datesAndSummaryDefined;
@@ -897,32 +904,50 @@ public class WebServiceClient {
 
     public static boolean isCourseFacilityIndexCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
+        boolean isCourseFacilityIndexCorrect = true;
         for (Quiz quiz : quizzes.getQuizzes()) {
-            if (quiz.getQuizFacilityIndex() >= config.getFacilityIndexMin()
-                    && quiz.getQuizFacilityIndex() <= config.getFacilityIndexMax()) {
-                return true;
+            if (quiz.getQuizFacilityIndex() < config.getFacilityIndexMin() && quiz.isVisible()) {
+                isCourseFacilityIndexCorrect = false;
+
+                String message = "Las preguntas de sus cuestionario " + quiz.getName()
+                        + " son demasiado complicadas para el alumnado."
+                        + "Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
+                        + "%, cuando lo correcto esta en el intervalo ["
+                        + (int) (config.getFacilityIndexMin() * 100)
+                        + "% - "
+                        + (int) (config.getFacilityIndexMax() * 100) + "%]";
+                StringBuilder detalles = new StringBuilder();
+                for (Question question : quiz.getQuestions()) {
+                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                            + ": " + question.getFacilityIndex() + "%<br>");
+                }
+                registro.guardarAlertaDesplegable("realization quizzesfacilityIndex",
+                        message,
+                        "Preguntas complejas", detalles.toString());
             }
 
-            if (quiz.getQuizFacilityIndex() < config.getFacilityIndexMin()) {
-                registro.guardarAlerta("realization quizzes",
-                        "Las preguntas de sus cuestionario " + quiz.getName()
-                                + " son demasiado complicadas para el alumnado."
-                                + "Tiene un índice de facilidad de " + quiz.getQuizFacilityIndex() * 100
-                                + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
-                                + config.getFacilityIndexMax() + "%]");
-            }
+            if (quiz.getQuizFacilityIndex() > config.getFacilityIndexMax() && quiz.isVisible()
+                    && (int) System.currentTimeMillis() > quiz.getTimeclose()) {
+                isCourseFacilityIndexCorrect = false;
 
-            if (quiz.getQuizFacilityIndex() > config.getFacilityIndexMax()) {
-                registro.guardarAlerta("realization quizzes",
-                        "Las preguntas de sus cuestionario " + quiz.getName()
-                                + " son demasiado fáciles para el alumnado."
-                                + "Tiene un índice de facilidad de " + quiz.getQuizFacilityIndex() * 100
-                                + "%, cuando lo correcto esta en el intervalo [" + config.getFacilityIndexMin() + "% - "
-                                + config.getFacilityIndexMax() + "%]");
+                String message = "Las preguntas de sus cuestionario " + quiz.getName()
+                        + " son demasiado fáciles para el alumnado."
+                        + "Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
+                        + "%, cuando lo correcto esta en el intervalo ["
+                        + (int) (config.getFacilityIndexMin() * 100)
+                        + "% - "
+                        + (int) (config.getFacilityIndexMax() * 100) + "%]";
+                StringBuilder detalles = new StringBuilder();
+                for (Question question : quiz.getQuestions()) {
+                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                            + ": " + question.getFacilityIndex() + "%<br>");
+                }
+                registro.guardarAlertaDesplegable("realization quizzesfacilityIndex",
+                        message,
+                        "Preguntas sencillas", detalles.toString());
             }
         }
-
-        return false;
+        return isCourseFacilityIndexCorrect;
     }
 
     public static boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
@@ -930,11 +955,20 @@ public class WebServiceClient {
         boolean isRandomGuessScoreInQuizzesCorrect = true;
         for (Quiz quiz : quizzes.getQuizzes()) {
             if (quiz.getQuizRandomGuessScore() > config.getMaxRandomScoreInQuizz()) {
-                registro.guardarAlerta("design quizzes", "Las preguntas de sus cuestionario: " + quiz.getName()
-                        + " permiten una calificación"
-                        + " aleatoria de " + quiz.getQuizRandomGuessScore() * 100 + " superior a "
-                        + config.getMaxRandomScoreInQuizz() * 100 + "%.");
                 isRandomGuessScoreInQuizzesCorrect = false;
+
+                String message = "Las preguntas de sus cuestionario: " + quiz.getName()
+                        + " tienen una calificación"
+                        + " aleatoria de " + quiz.getQuizRandomGuessScore() * 100 + "% superior a "
+                        + config.getMaxRandomScoreInQuizz() * 100 + "%.";
+                StringBuilder detalles = new StringBuilder();
+                for (Question question : quiz.getQuestions()) {
+                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                            + ": " + question.getRandomGuessScore() + "%<br>");
+                }
+                registro.guardarAlertaDesplegable("realization randomGuessQuizzes",
+                        message,
+                        "Preguntas con índice de discriminación inadecuado", detalles.toString());
             }
         }
         return isRandomGuessScoreInQuizzesCorrect;
@@ -944,12 +978,23 @@ public class WebServiceClient {
             AlertLog registro, FacadeConfig config) {
         boolean isDiscriminationIndexInQuizzesCorrect = true;
         for (Quiz quiz : quizzes.getQuizzes()) {
-            if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex()) {
-                registro.guardarAlerta("design realization", "Las preguntas del cuestionario:" + quiz.getName()
+            if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex() && quiz.isVisible()) {
+                isDiscriminationIndexInQuizzesCorrect = false;
+
+                String message = "Las preguntas del cuestionario: "
+                        + quiz.getName()
                         + " no disponen de un buen índice de discriminación. Su cuestionario tiene un índice de discriminación del "
-                        + quiz.getQuizDiscriminationIndex() * 100
-                        + "%. Los valores recomendados son un " + config.getMinQuizDiscriminationIndex()
-                        + "% o superior.");
+                        + (int) (quiz.getQuizDiscriminationIndex() * 100)
+                        + "%. Los valores recomendados son un " + (int) (config.getMinQuizDiscriminationIndex() * 100)
+                        + "% o superior.";
+                StringBuilder detalles = new StringBuilder();
+                for (Question question : quiz.getQuestions()) {
+                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                            + ": " + question.getDiscriminationIndex() + "%<br>");
+                }
+                registro.guardarAlertaDesplegable("realization quizzesdiscriminationIndex",
+                        message,
+                        "Preguntas con índice de discriminación inadecuado", detalles.toString());
             }
         }
         return isDiscriminationIndexInQuizzesCorrect;
@@ -959,6 +1004,10 @@ public class WebServiceClient {
         List<Question> quizQuestions = new ArrayList<Question>();
 
         if (quizSatisticJson == null) {
+            return quizQuestions;
+        }
+
+        if (JsonParser.parseString(quizSatisticJson).getAsJsonArray().size() < 2) {
             return quizQuestions;
         }
 
@@ -982,19 +1031,25 @@ public class WebServiceClient {
 
             if (facilityIndexJsonValue != null) {
                 String facilityIndex = facilityIndexJsonValue.getAsString().replaceAll("%", "");
-                question.setFacilityIndex(Double.valueOf(facilityIndex));
+                if (!"".equals(facilityIndex)) {
+                    question.setFacilityIndex(Double.valueOf(facilityIndex));
+                }
             }
 
             if (randomGuessScoreJsonValue != null) {
                 String randomGuessScore = randomGuessScoreJsonValue.getAsString().replaceAll("%", "");
-                question.setRandomGuessScore(Double.valueOf(randomGuessScore));
+                if (!"".equals(randomGuessScore)) {
+                    question.setRandomGuessScore(Double.valueOf(randomGuessScore));
+
+                }
             }
 
             if (discriminationIndexJsonValue != null) {
                 String discriminationIndex = discriminationIndexJsonValue.getAsString().replaceAll("%", "");
-                question.setDiscriminationIndex(Double.valueOf(discriminationIndex));
+                if (!"".equals(discriminationIndex)) {
+                    question.setDiscriminationIndex(Double.valueOf(discriminationIndex));
+                }
             }
-
             quizQuestions.add(question);
         }
 
