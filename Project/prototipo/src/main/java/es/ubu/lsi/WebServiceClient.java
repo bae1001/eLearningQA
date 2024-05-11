@@ -800,7 +800,9 @@ public class WebServiceClient {
                 isCourseQuizzesEngagementCorrect = false;
 
                 registro.guardarAlerta("realization quizzesEngagement",
-                        "El cuestionario: " + quiz.getName() + " no tiene la suficiente participación. Un "
+                        "El cuestionario: <a href=\" " + config.getHost() + "/mod/quiz/view.php?id="
+                                + quiz.getCoursemodule() + "\">" + quiz.getName()
+                                + "</a> no tiene la suficiente participación. Un "
                                 + (int) (quiz.getQuizEngagement() * 100)
                                 + "% de los alumnos realizan los cuestionarios."
                                 + " Lo correcto es un mínimo de "
@@ -947,9 +949,10 @@ public class WebServiceClient {
                     && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isCourseFacilityIndexCorrect = false;
 
-                String message = "Las preguntas de sus cuestionario " + quiz.getName()
-                        + " son demasiado complicadas para el alumnado."
-                        + "Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
+                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
+                        + "/mod/quiz/view.php?id="
+                        + quiz.getCoursemodule() + "\">" + quiz.getName()
+                        + "</a>. Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
                         + "%, cuando lo correcto esta en el intervalo ["
                         + (int) (config.getFacilityIndexMin() * 100)
                         + "% - "
@@ -968,9 +971,10 @@ public class WebServiceClient {
                     && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isCourseFacilityIndexCorrect = false;
 
-                String message = "Las preguntas de sus cuestionario " + quiz.getName()
-                        + " son demasiado fáciles para el alumnado."
-                        + "Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
+                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
+                        + "/mod/quiz/view.php?id="
+                        + quiz.getCoursemodule() + "\">" + quiz.getName()
+                        + "</a>. Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
                         + "%, cuando lo correcto esta en el intervalo ["
                         + (int) (config.getFacilityIndexMin() * 100)
                         + "% - "
@@ -1001,8 +1005,10 @@ public class WebServiceClient {
             if (quiz.getQuizRandomGuessScore() > config.getMaxRandomScoreInQuizz()) {
                 isRandomGuessScoreInQuizzesCorrect = false;
 
-                String message = "Las preguntas de sus cuestionario: " + quiz.getName()
-                        + " tienen una calificación"
+                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
+                        + "/mod/quiz/view.php?id="
+                        + quiz.getCoursemodule() + "\">" + quiz.getName()
+                        + "</a> tienen una calificación"
                         + " aleatoria de " + formatter.format(quiz.getQuizRandomGuessScore() * 100) + "% superior a "
                         + config.getMaxRandomScoreInQuizz() * 100 + "%.";
                 StringBuilder detalles = new StringBuilder();
@@ -1034,9 +1040,10 @@ public class WebServiceClient {
                     && quiz.isVisible() && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isDiscriminationIndexInQuizzesCorrect = false;
 
-                String message = "Las preguntas del cuestionario: "
-                        + quiz.getName()
-                        + " no disponen de un buen índice de discriminación. Su cuestionario tiene un índice de discriminación del "
+                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
+                        + "/mod/quiz/view.php?id="
+                        + quiz.getCoursemodule() + "\">" + quiz.getName()
+                        + "</a> no disponen de un buen índice de discriminación. Su cuestionario tiene un índice de discriminación del "
                         + (int) (quiz.getQuizDiscriminationIndex() * 100)
                         + "%. Los valores recomendados son un " + (int) (config.getMinQuizDiscriminationIndex() * 100)
                         + "% o superior.";
