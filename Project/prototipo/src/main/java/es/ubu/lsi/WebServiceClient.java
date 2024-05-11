@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.*;
 
@@ -990,6 +991,7 @@ public class WebServiceClient {
     public static boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         boolean isRandomGuessScoreInQuizzesCorrect = true;
+        DecimalFormat formatter = new DecimalFormat("#0.00");
         if (SessionService.isSessionExpired()) {
             registro.guardarAlerta("realization",
                     "No se puede obtener las estadísticas de calificación aleatoria estimada de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
@@ -1001,7 +1003,7 @@ public class WebServiceClient {
 
                 String message = "Las preguntas de sus cuestionario: " + quiz.getName()
                         + " tienen una calificación"
-                        + " aleatoria de " + quiz.getQuizRandomGuessScore() * 100 + "% superior a "
+                        + " aleatoria de " + formatter.format(quiz.getQuizRandomGuessScore() * 100) + "% superior a "
                         + config.getMaxRandomScoreInQuizz() * 100 + "%.";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
@@ -1027,9 +1029,9 @@ public class WebServiceClient {
         for (Quiz quiz : quizzes.getQuizzes()) {
             Calendar currentDate = Calendar.getInstance();
 
-            if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex() 
-                    
-            && quiz.isVisible() && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
+            if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex()
+
+                    && quiz.isVisible() && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isDiscriminationIndexInQuizzesCorrect = false;
 
                 String message = "Las preguntas del cuestionario: "
