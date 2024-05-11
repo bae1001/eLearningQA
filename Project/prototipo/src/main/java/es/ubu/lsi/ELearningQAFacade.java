@@ -1,6 +1,8 @@
 package es.ubu.lsi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+
 import es.ubu.lsi.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,7 +69,7 @@ public class ELearningQAFacade {
         Course curso = getCursoPorId(token, courseid);
         List<User> listaUsuarios = WebServiceClient.obtenerUsuarios(token, courseid, config.getHost());
         long siteVersion = WebServiceClient.getMoodleSiteVersion(config.getHost(), token);
-        QuizList quizzes = getQuizzesData(token, curso.getId(), listaUsuarios, siteVersion, registro);
+        QuizList quizzes = getQuizzesData(token, curso.getId(), listaUsuarios, siteVersion);
         StatusList listaEstados = WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios,
                 config.getHost());
         List<es.ubu.lsi.model.Module> listaModulos = WebServiceClient.obtenerListaModulos(token, courseid,
@@ -367,8 +369,7 @@ public class ELearningQAFacade {
                 "</tr></table>";
     }
 
-    private QuizList getQuizzesData(String token, long courseid, List<User> users, long moodleVersion,
-            AlertLog registro) {
+    private QuizList getQuizzesData(String token, long courseid, List<User> users, long moodleVersion) {
         QuizList courseQuizzes = WebServiceClient.getQuizzesByCourse(token, courseid, config.getHost());
         for (Quiz quiz : courseQuizzes.getQuizzes()) {
             quiz.setQuizAttempts(
@@ -376,7 +377,8 @@ public class ELearningQAFacade {
             double quizEngagement = WebServiceClient.getQuizEngagementPercentage(
                     WebServiceClient.getQuizTotalStudentsAttempted(quiz.getQuizAttempts()), users);
             quiz.setQuizEngagement(quizEngagement);
-            String quizStatisticJson = WebServiceClient.getQuizStatisticJson(config.getHost(), quiz.getCoursemodule());
+            JsonArray quizStatisticJson = WebServiceClient.getQuizStatisticJson(config.getHost(),
+                    quiz.getCoursemodule());
             if (MOODLE_V4 <= moodleVersion) {
                 quiz.setQuestions(
                         WebServiceClient.getQuizQuestionsV4(quizStatisticJson, Integer.valueOf(quiz.getId())));

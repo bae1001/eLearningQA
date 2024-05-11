@@ -15,6 +15,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.time.Instant;
 import java.util.*;
@@ -791,7 +792,11 @@ public class WebServiceClient {
     public static boolean isCourseQuizzesEngagementCorrect(QuizList quizzes, AlertLog registro, FacadeConfig config) {
         boolean isCourseQuizzesEngagementCorrect = true;
         for (Quiz quiz : quizzes.getQuizzes()) {
-            if (quiz.getQuizEngagement() < config.getMinQuizEngagementPercentage() && quiz.isVisible()) {
+            Calendar quizDate = Calendar.getInstance();
+            quizDate.setTimeInMillis(quiz.getTimeclose());
+            Calendar currentDate = Calendar.getInstance();
+            if (quiz.getQuizEngagement() < config.getMinQuizEngagementPercentage() && quiz.isVisible()
+                    && currentDate.after(quizDate)) {
                 isCourseQuizzesEngagementCorrect = false;
 
                 registro.guardarAlerta("realization quizzesEngagement",
@@ -905,6 +910,11 @@ public class WebServiceClient {
     public static boolean isCourseFacilityIndexCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         boolean isCourseFacilityIndexCorrect = true;
+        if (SessionService.isSessionExpired()) {
+            registro.guardarAlerta("realization",
+                    "No se puede obtener las estadísticas de ínidces de facilidad de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
+            return false;
+        }
         for (Quiz quiz : quizzes.getQuizzes()) {
             if (quiz.getQuizFacilityIndex() < config.getFacilityIndexMin() && quiz.isVisible()) {
                 isCourseFacilityIndexCorrect = false;
@@ -953,6 +963,11 @@ public class WebServiceClient {
     public static boolean isRandomGuessScoreInQuizzesCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         boolean isRandomGuessScoreInQuizzesCorrect = true;
+        if (SessionService.isSessionExpired()) {
+            registro.guardarAlerta("realization",
+                    "No se puede obtener las estadísticas de calificación aleatoria estimada de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
+            return false;
+        }
         for (Quiz quiz : quizzes.getQuizzes()) {
             if (quiz.getQuizRandomGuessScore() > config.getMaxRandomScoreInQuizz()) {
                 isRandomGuessScoreInQuizzesCorrect = false;
@@ -977,6 +992,11 @@ public class WebServiceClient {
     public static boolean isDiscriminationIndexInQuizzesCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         boolean isDiscriminationIndexInQuizzesCorrect = true;
+        if (SessionService.isSessionExpired()) {
+            registro.guardarAlerta("realization",
+                    "No se puede obtener las estadísticas de índices de discriminación de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
+            return false;
+        }
         for (Quiz quiz : quizzes.getQuizzes()) {
             if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex() && quiz.isVisible()) {
                 isDiscriminationIndexInQuizzesCorrect = false;
@@ -1000,18 +1020,18 @@ public class WebServiceClient {
         return isDiscriminationIndexInQuizzesCorrect;
     }
 
-    public static List<Question> getQuizQuestionsV4(String quizSatisticJson, int quizId) {
+    public static List<Question> getQuizQuestionsV4(JsonArray quizSatisticJson, int quizId) {
         List<Question> quizQuestions = new ArrayList<Question>();
 
         if (quizSatisticJson == null) {
             return quizQuestions;
         }
 
-        if (JsonParser.parseString(quizSatisticJson).getAsJsonArray().size() < 2) {
+        if (quizSatisticJson.size() < 2) {
             return quizQuestions;
         }
 
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        JsonArray jsonArray = quizSatisticJson.get(1).getAsJsonArray();
         for (JsonElement element : jsonArray.asList()) {
             Question question = new Question();
             question.setQuizId(quizId);
@@ -1056,14 +1076,14 @@ public class WebServiceClient {
         return quizQuestions;
     }
 
-    public static List<Question> getQuizQuestionsV3(String quizSatisticJson, int quizId) {
+    public static List<Question> getQuizQuestionsV3(JsonArray quizSatisticJson, int quizId) {
         List<Question> quizQuestions = new ArrayList<Question>();
 
         if (quizSatisticJson == null) {
             return quizQuestions;
         }
 
-        JsonArray jsonArray = JsonParser.parseString(quizSatisticJson).getAsJsonArray().get(1).getAsJsonArray();
+        JsonArray jsonArray = quizSatisticJson.get(1).getAsJsonArray();
         for (JsonElement element : jsonArray.asList()) {
             Question question = new Question();
             question.setQuizId(quizId);
@@ -1102,7 +1122,7 @@ public class WebServiceClient {
         return quizQuestions;
     }
 
-    public static String getQuizStatisticJson(String host, String courseModule) {
+    public static JsonArray getQuizStatisticJson(String host, String courseModule) {
         String sessionKey = sessionService.getSSKey(host);
         if (sessionKey == null) {
             return null;
@@ -1127,7 +1147,12 @@ public class WebServiceClient {
                     .build();
             Response jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest);
 
-            return jsonStatisticsResponse.body().string();
+            JsonParser.parseString(jsonStatisticsResponse.body().string());
+
+            return JsonParser.parseString(jsonStatisticsResponse.body().string()).getAsJsonArray();
+        } catch (JsonSyntaxException jsonMalFormed) {
+            SessionService.setSessionExpired(true);
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
