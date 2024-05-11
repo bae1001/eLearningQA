@@ -23,6 +23,7 @@ public class SessionService {
 	private static OkHttpClient client;
 	private static String sessionKey;
 	private static CookieManager cookie_mannager;
+	private static boolean isSessionExpired;
 
 	private SessionService() {
 		cookie_mannager = new CookieManager();
@@ -37,6 +38,7 @@ public class SessionService {
 		if (SessionService.service == null) {
 			SessionService.service = new SessionService();
 			SessionService.setSSKeyString(username, password, host);
+			SessionService.setSessionExpired(false);
 			return SessionService.service;
 		}
 		return service;
@@ -106,5 +108,13 @@ public class SessionService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static boolean isSessionExpired() {
+		return isSessionExpired;
+	}
+
+	public static void setSessionExpired(boolean isSessionExpired) {
+		SessionService.isSessionExpired = isSessionExpired;
 	}
 }
