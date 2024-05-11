@@ -793,11 +793,9 @@ public class WebServiceClient {
     public static boolean isCourseQuizzesEngagementCorrect(QuizList quizzes, AlertLog registro, FacadeConfig config) {
         boolean isCourseQuizzesEngagementCorrect = true;
         for (Quiz quiz : quizzes.getQuizzes()) {
-            Calendar quizDate = Calendar.getInstance();
-            quizDate.setTimeInMillis(quiz.getTimeclose());
             Calendar currentDate = Calendar.getInstance();
             if (quiz.getQuizEngagement() < config.getMinQuizEngagementPercentage() && quiz.isVisible()
-                    && currentDate.after(quizDate)) {
+                    && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isCourseQuizzesEngagementCorrect = false;
 
                 registro.guardarAlerta("realization quizzesEngagement",
@@ -943,7 +941,9 @@ public class WebServiceClient {
             return false;
         }
         for (Quiz quiz : quizzes.getQuizzes()) {
-            if (quiz.getQuizFacilityIndex() < config.getFacilityIndexMin() && quiz.isVisible()) {
+            Calendar currentDate = Calendar.getInstance();
+            if (quiz.getQuizFacilityIndex() < config.getFacilityIndexMin() && quiz.isVisible()
+                    && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isCourseFacilityIndexCorrect = false;
 
                 String message = "Las preguntas de sus cuestionario " + quiz.getName()
@@ -964,7 +964,7 @@ public class WebServiceClient {
             }
 
             if (quiz.getQuizFacilityIndex() > config.getFacilityIndexMax() && quiz.isVisible()
-                    && (int) System.currentTimeMillis() > quiz.getTimeclose()) {
+                    && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isCourseFacilityIndexCorrect = false;
 
                 String message = "Las preguntas de sus cuestionario " + quiz.getName()
@@ -1025,7 +1025,11 @@ public class WebServiceClient {
             return false;
         }
         for (Quiz quiz : quizzes.getQuizzes()) {
-            if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex() && quiz.isVisible()) {
+            Calendar currentDate = Calendar.getInstance();
+
+            if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex() 
+                    
+            && quiz.isVisible() && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isDiscriminationIndexInQuizzesCorrect = false;
 
                 String message = "Las preguntas del cuestionario: "
