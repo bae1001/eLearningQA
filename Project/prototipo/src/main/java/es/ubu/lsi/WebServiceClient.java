@@ -885,21 +885,6 @@ public class WebServiceClient {
         return attemptsList;
     }
 
-    public static QuizList getQuizzesByCourse(String token, long courseid, String host) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = host
-                + "/webservice/rest/server.php?wsfunction=mod_quiz_get_quizzes_by_courses&moodlewsrestformat=json&wstoken="
-                + token + "&courseids[0]=" + courseid;
-
-        String quizzesList = restTemplate.getForObject(url, String.class);
-        Gson gson = new Gson();
-        QuizList quizzList = gson.fromJson(quizzesList, QuizList.class);
-        if (quizzList == null) {
-            return new QuizList();
-        }
-        return quizzList;
-    }
-
     public static QuizList getQuizzesByCourse(String token, long courseid, List<User> users, long moodleVersion,
             String host) {
         RestTemplate restTemplate = new RestTemplate();
