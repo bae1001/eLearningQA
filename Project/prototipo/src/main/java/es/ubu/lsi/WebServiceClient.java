@@ -919,7 +919,7 @@ public class WebServiceClient {
                 quiz.setQuestions(
                         WebServiceClient.getQuizQuestionsV3(quizStatisticJson, Integer.valueOf(quiz.getId())));
             }
-
+            quiz.setQuizDiscriminationIndex();
             quiz.setQuizFacilityIndex();
             quiz.setQuizRandomGuessScore();
         }
@@ -1010,7 +1010,7 @@ public class WebServiceClient {
                 }
                 registro.guardarAlertaDesplegable("realization randomGuessQuizzes",
                         message,
-                        "Preguntas con índice de discriminación inadecuado", detalles.toString());
+                        "Preguntas con calificación aleatoria estimada inadecuada", detalles.toString());
             }
         }
         return isRandomGuessScoreInQuizzesCorrect;
@@ -1172,11 +1172,8 @@ public class WebServiceClient {
             Request jsonStatisticsRequest = new Request.Builder()
                     .url(statisticFileUrl)
                     .build();
-            Response jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest);
-
-            JsonParser.parseString(jsonStatisticsResponse.body().string());
-
-            return JsonParser.parseString(jsonStatisticsResponse.body().string()).getAsJsonArray();
+            String jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest).body().string();
+            return JsonParser.parseString(jsonStatisticsResponse).getAsJsonArray();
         } catch (JsonSyntaxException jsonMalFormed) {
             SessionService.setSessionExpired(true);
             return null;
