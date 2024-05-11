@@ -25,6 +25,7 @@ public class WebServiceClient {
     private static final String COURSEID = "&courseid=";
     private static final String COURSEIDS_0 = "&courseids[0]=";
     private static SessionService sessionService;
+    private static final long MOODLE_V4 = 2022041900;
 
     private WebServiceClient() {
         throw new IllegalStateException("Utility class");
@@ -897,6 +898,47 @@ public class WebServiceClient {
             return new QuizList();
         }
         return quizzList;
+    }
+
+    public static QuizList getQuizzesByCourse(String token, long courseid, List<User> users, long moodleVersion,
+            String host) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = host
+                + "/webservice/rest/server.php?wsfunction=mod_quiz_get_quizzes_by_courses&moodlewsrestformat=json&wstoken="
+                + token + "&courseids[0]=" + courseid;
+
+        String quizzesListString = restTemplate.getForObject(url, String.class);
+        Gson gson = new Gson();
+        QuizList quizzesList = gson.fromJson(quizzesListString, QuizList.class);
+
+        if (quizzesList == null) {
+            return new QuizList();
+        }
+
+        for (Quiz quiz : quizzesList.getQuizzes()) {
+
+            quiz.setQuizAttempts(
+                    WebServiceClient.getAllAttemptsListInQuiz(quiz.getId(), host, token, users));
+
+            double quizEngagement = WebServiceClient.getQuizEngagementPercentage(
+                    WebServiceClient.getQuizTotalStudentsAttempted(quiz.getQuizAttempts()), users);
+            quiz.setQuizEngagement(quizEngagement);
+
+            JsonArray quizStatisticJson = WebServiceClient.getQuizStatisticJson(host,
+                    quiz.getCoursemodule());
+
+            if (MOODLE_V4 <= moodleVersion) {
+                quiz.setQuestions(
+                        WebServiceClient.getQuizQuestionsV4(quizStatisticJson, Integer.valueOf(quiz.getId())));
+            } else {
+                quiz.setQuestions(
+                        WebServiceClient.getQuizQuestionsV3(quizStatisticJson, Integer.valueOf(quiz.getId())));
+            }
+
+            quiz.setQuizFacilityIndex();
+            quiz.setQuizRandomGuessScore();
+        }
+        return quizzesList;
     }
 
     public static double getQuizEngagementPercentage(double totalStudentsAttempted, List<User> usersList) {
