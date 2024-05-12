@@ -32,6 +32,7 @@ class ELearningQAFacadeTest {
         private static List<List<Assignment>> listasTareasConNotas = new ArrayList<>();
         private static List<List<ResponseAnalysis>> listasAnalisis = new ArrayList<>();
         private static List<List<Survey>> listasSurveys = new ArrayList<>();
+        private static List<QuizList> quizzesList = new ArrayList<>();
         private static AlertLog registro = new AlertLog();
         static long idCurso1 = 66;
         static long idCurso2 = 56;
@@ -96,6 +97,9 @@ class ELearningQAFacadeTest {
                                                 .asList(mapper.readValue(
                                                                 new File(ruta + "Listasurveys" + id + extension),
                                                                 Survey[].class)));
+                                quizzesList.add(mapper.readValue(
+                                                new File(ruta + "Listacuestionarios" + id + extension),
+                                                QuizList.class));
                         }
                 } catch (Exception e) {
                         Logger LOGGER = LogManager.getLogger();
@@ -333,6 +337,56 @@ class ELearningQAFacadeTest {
                 assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(3), registro));
                 assertFalse(fachada.isHayVariedadFormatos(listasModulos.get(4), registro));
                 assertTrue(fachada.isHayVariedadFormatos(listasModulos.get(5), registro));
+        }
+
+        @org.junit.jupiter.api.Test
+        void courseHasDatesAndSummaryDefinde() {
+                assertTrue(fachada.courseHasDatesAndSummaryDefinde(listaCursos.get(0), registro));
+                assertFalse(fachada.courseHasDatesAndSummaryDefinde(listaCursos.get(1), registro));
+                assertFalse(fachada.courseHasDatesAndSummaryDefinde(listaCursos.get(2), registro));
+                assertFalse(fachada.courseHasDatesAndSummaryDefinde(listaCursos.get(3), registro));
+                assertFalse(fachada.courseHasDatesAndSummaryDefinde(listaCursos.get(4), registro));
+                assertTrue(fachada.courseHasDatesAndSummaryDefinde(listaCursos.get(5), registro));
+        }
+
+        @org.junit.jupiter.api.Test
+        void isCourseQuizzesEngagementCorrect() {
+                assertFalse(fachada.isCourseQuizzesEngagementCorrect(quizzesList.get(0), registro));
+                assertFalse(fachada.isCourseQuizzesEngagementCorrect(quizzesList.get(1), registro));
+                assertFalse(fachada.isCourseQuizzesEngagementCorrect(quizzesList.get(2), registro));
+                assertFalse(fachada.isCourseQuizzesEngagementCorrect(quizzesList.get(3), registro));
+                assertFalse(fachada.isCourseQuizzesEngagementCorrect(quizzesList.get(4), registro));
+                assertFalse(fachada.isCourseQuizzesEngagementCorrect(quizzesList.get(5), registro));
+        }
+
+        @org.junit.jupiter.api.Test
+        void isRandomGuessScoreInQuizzesCorrect() {
+                assertFalse(fachada.isRandomGuessScoreInQuizzesCorrect(quizzesList.get(0), registro));
+                assertTrue(fachada.isRandomGuessScoreInQuizzesCorrect(quizzesList.get(1), registro));
+                assertTrue(fachada.isRandomGuessScoreInQuizzesCorrect(quizzesList.get(2), registro));
+                assertTrue(fachada.isRandomGuessScoreInQuizzesCorrect(quizzesList.get(3), registro));
+                assertTrue(fachada.isRandomGuessScoreInQuizzesCorrect(quizzesList.get(4), registro));
+                assertTrue(fachada.isRandomGuessScoreInQuizzesCorrect(quizzesList.get(5), registro));
+        }
+
+        @org.junit.jupiter.api.Test
+        void isDiscriminationIndexInQuizzesCorrect() {
+                assertFalse(fachada.isDiscriminationIndexInQuizzesCorrect(quizzesList.get(0), registro));
+                assertFalse(fachada.isDiscriminationIndexInQuizzesCorrect(quizzesList.get(1), registro));
+                assertFalse(fachada.isDiscriminationIndexInQuizzesCorrect(quizzesList.get(2), registro));
+                assertFalse(fachada.isDiscriminationIndexInQuizzesCorrect(quizzesList.get(3), registro));
+                assertFalse(fachada.isDiscriminationIndexInQuizzesCorrect(quizzesList.get(4), registro));
+                assertFalse(fachada.isDiscriminationIndexInQuizzesCorrect(quizzesList.get(5), registro));
+        }
+
+        @org.junit.jupiter.api.Test
+        void isCourseFacilityIndexCorrect() {
+                assertFalse(fachada.isCourseFacilityIndexCorrect(quizzesList.get(0), registro));
+                assertFalse(fachada.isCourseFacilityIndexCorrect(quizzesList.get(1), registro));
+                assertFalse(fachada.isCourseFacilityIndexCorrect(quizzesList.get(2), registro));
+                assertFalse(fachada.isCourseFacilityIndexCorrect(quizzesList.get(3), registro));
+                assertFalse(fachada.isCourseFacilityIndexCorrect(quizzesList.get(4), registro));
+                assertFalse(fachada.isCourseFacilityIndexCorrect(quizzesList.get(5), registro));
         }
 
         @org.junit.jupiter.api.Test

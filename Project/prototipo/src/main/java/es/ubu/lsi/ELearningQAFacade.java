@@ -1,8 +1,6 @@
 package es.ubu.lsi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-
 import es.ubu.lsi.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
