@@ -1,5 +1,6 @@
 package es.ubu.lsi.model;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class User {
@@ -27,7 +28,6 @@ public class User {
     private List<Preference> preferences;
     private List<Course> enrolledcourses;
     private boolean started;
-
 
     public int getId() {
         return id;
@@ -220,4 +220,15 @@ public class User {
     public void setStarted(boolean started) {
         this.started = started;
     }
+
+    public static Comparator<User> UserNameComparator = new Comparator<User>() {
+
+        public int compare(User firsUser, User secondUser) {
+            String firsUserName = firsUser.getFirstname().toUpperCase();
+            String secondUserName = secondUser.getFirstname().toUpperCase();
+
+            return firsUserName.compareTo(
+                    secondUserName);
+        }
+    };
 }

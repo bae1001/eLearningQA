@@ -434,6 +434,7 @@ public class WebServiceClient {
             FacadeConfig config) {
         StringBuilder detalles = new StringBuilder();
         List<User> listaUsuariosHuerfanos = obtenerAlumnosSinGrupo(listaUsuarios);
+        Collections.sort(listaUsuariosHuerfanos, User.UserNameComparator);
         if (listaUsuariosHuerfanos.isEmpty()) {
             return true;
         } else {
