@@ -430,14 +430,16 @@ public class WebServiceClient {
         return listaEncuestas.getSurveys();
     }
 
-    public static boolean alumnosEnGrupos(List<User> listaUsuarios, AlertLog registro) {
+    public static boolean alumnosEnGrupos(List<User> listaUsuarios, AlertLog registro, long courseId,
+            FacadeConfig config) {
         StringBuilder detalles = new StringBuilder();
         List<User> listaUsuariosHuerfanos = obtenerAlumnosSinGrupo(listaUsuarios);
         if (listaUsuariosHuerfanos.isEmpty()) {
             return true;
         } else {
             for (User alumno : listaUsuariosHuerfanos) {
-                detalles.append(alumno.getFullname()).append("<br>");
+                detalles.append("<a href=\"" + config.getHost() + "/user/view.php?id=" + alumno.getId() + "&course="
+                        + courseId + "\">" + alumno.getFullname() + "</a>").append("<br>");
             }
             registro.guardarAlertaDesplegable("implementation studentsingroups", "Hay alumnos sin grupo en el curso",
                     "Alumnos sin grupo", detalles.toString());

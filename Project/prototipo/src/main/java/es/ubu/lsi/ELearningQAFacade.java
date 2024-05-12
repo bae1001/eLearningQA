@@ -125,7 +125,7 @@ public class ELearningQAFacade {
         if (isAnidamientoCalificadorAceptable(listaCalificadores, registro)) {
             puntosComprobaciones[11]++;
         }
-        if (isAlumnosEnGrupos(listaUsuarios, registro)) {
+        if (isAlumnosEnGrupos(listaUsuarios, registro, curso.getId())) {
             puntosComprobaciones[12]++;
         }
         if (isRespondeATiempo(listaUsuarios, listaPosts, registro)) {
@@ -216,8 +216,8 @@ public class ELearningQAFacade {
         return WebServiceClient.usaSurveys(listaEncuestas, registro);
     }
 
-    public boolean isAlumnosEnGrupos(List<User> listaUsuarios, AlertLog registro) {
-        return WebServiceClient.alumnosEnGrupos(listaUsuarios, registro);
+    public boolean isAlumnosEnGrupos(List<User> listaUsuarios, AlertLog registro, long courseId) {
+        return WebServiceClient.alumnosEnGrupos(listaUsuarios, registro, courseId, config);
     }
 
     public boolean isEstaCorregidoATiempo(List<Assignment> tareasConNotas, List<User> listaUsuarios,

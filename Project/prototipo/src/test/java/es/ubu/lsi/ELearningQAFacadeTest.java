@@ -207,12 +207,12 @@ class ELearningQAFacadeTest {
 
         @org.junit.jupiter.api.Test
         void isAlumnosEnGruposTest() {
-                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(0), registro));
-                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(1), registro));
-                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(2), registro));
-                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(3), registro));
-                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(4), registro));
-                assertTrue(fachada.isAlumnosEnGrupos(listasUsuarios.get(5), registro));
+                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(0), registro, listaCursos.get(0).getId()));
+                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(1), registro, listaCursos.get(1).getId()));
+                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(2), registro, listaCursos.get(2).getId()));
+                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(3), registro, listaCursos.get(3).getId()));
+                assertFalse(fachada.isAlumnosEnGrupos(listasUsuarios.get(4), registro, listaCursos.get(4).getId()));
+                assertTrue(fachada.isAlumnosEnGrupos(listasUsuarios.get(5), registro, listaCursos.get(5).getId()));
         }
 
         @org.junit.jupiter.api.Test

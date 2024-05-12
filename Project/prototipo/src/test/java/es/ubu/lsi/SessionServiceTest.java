@@ -1,5 +1,7 @@
 package es.ubu.lsi;
 
+import es.ubu.lsi.SessionService;
+
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
