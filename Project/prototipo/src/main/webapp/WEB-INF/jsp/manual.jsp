@@ -75,6 +75,7 @@
                     <ul>
                     <li><strong>La mayoría de alumnos responden a los feedbacks:</strong> se comprueba que no hayan muchos alumnos que no respondan a los feedbacks. <u>Responsable:</u> Proveedor <u>Involucrados:</u> Diseñador y Facilitador <u>Perspectivas:</u> Pedagógica, Tecnológica, y Estratégica</li>
                     <li><strong>Se utilizan encuestas de opinión:</strong> se comprueba que el curso contenga encuestas de opinión. <u>Responsable:</u> Proveedor <u>Involucrados:</u> Diseñador y Facilitador <u>Perspectivas:</u> Pedagógica, Tecnológica, y Estratégica</li></ul>
+                <p>Para más información sobre las estadísticas de cuesionarios puede consultar la <a href="https://docs.moodle.org/403/en/images_en/e/e9/Brief_Guide_to_iCMA_reports.pdf">documentación</a>.<p>
           </div>
     </div>
     <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
