@@ -1,7 +1,6 @@
 package es.ubu.lsi;
 
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;

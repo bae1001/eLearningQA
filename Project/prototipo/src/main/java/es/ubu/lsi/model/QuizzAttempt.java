@@ -39,11 +39,11 @@ public class QuizzAttempt {
         this.state = state;
     }
 
-    public String getUserId() {
+    public String getuserid() {
         return userid;
     }
 
-    public void setUserId(String userId) {
+    public void setuserid(String userId) {
         this.userid = userId;
     }
 
