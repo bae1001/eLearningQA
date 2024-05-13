@@ -26,7 +26,7 @@ public class WebServiceClient {
     private static final String COURSEID = "&courseid=";
     private static final String COURSEIDS_0 = "&courseids[0]=";
     private static SessionService sessionService;
-    private static final long MOODLE_V4 = 2022041900;
+    private static final double MOODLE_V4 = 2022041900;
 
     private WebServiceClient() {
         throw new IllegalStateException("Utility class");
@@ -889,7 +889,7 @@ public class WebServiceClient {
         return attemptsList;
     }
 
-    public static QuizList getQuizzesByCourse(String token, long courseid, List<User> users, long moodleVersion,
+    public static QuizList getQuizzesByCourse(String token, long courseid, List<User> users, double moodleVersion,
             String host) {
         RestTemplate restTemplate = new RestTemplate();
         String url = host
@@ -1199,7 +1199,7 @@ public class WebServiceClient {
         }
     }
 
-    public static long getMoodleSiteVersion(String host, String token) {
+    public static double getMoodleSiteVersion(String host, String token) {
         RestTemplate restTemplate = new RestTemplate();
         String url = host
                 + "/webservice/rest/server.php?wsfunction=core_webservice_get_site_info&moodlewsrestformat=json&wstoken="
@@ -1208,7 +1208,7 @@ public class WebServiceClient {
         String jsonResponse = restTemplate.getForObject(url, String.class);
 
         JsonObject siteInfoJson = JsonParser.parseString(jsonResponse).getAsJsonObject();
-        long siteVersion = siteInfoJson.get("version").getAsLong();
+        double siteVersion = siteInfoJson.get("version").getAsDouble();
 
         return siteVersion;
     }

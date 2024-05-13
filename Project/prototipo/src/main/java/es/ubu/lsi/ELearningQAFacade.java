@@ -66,7 +66,7 @@ public class ELearningQAFacade {
     public int[] realizarComprobaciones(String token, long courseid, AlertLog registro) {
         Course curso = getCursoPorId(token, courseid);
         List<User> listaUsuarios = WebServiceClient.obtenerUsuarios(token, courseid, config.getHost());
-        long siteVersion = WebServiceClient.getMoodleSiteVersion(config.getHost(), token);
+        double siteVersion = WebServiceClient.getMoodleSiteVersion(config.getHost(), token);
         QuizList quizzes = WebServiceClient.getQuizzesByCourse(token, curso.getId(), listaUsuarios, siteVersion,
                 config.getHost());
         StatusList listaEstados = WebServiceClient.obtenerListaEstados(token, courseid, listaUsuarios,
