@@ -132,9 +132,10 @@ public class Quiz {
 
         if (countedQuestion != 0) {
             quizDiscriminationIndex = sumOfQuizDiscriminationIndex / countedQuestion;
+        } else {
+            quizDiscriminationIndex = 0;
         }
 
-        quizDiscriminationIndex = 0;
     }
 
 }
