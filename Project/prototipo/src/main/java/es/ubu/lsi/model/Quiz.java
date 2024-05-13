@@ -31,9 +31,10 @@ public class Quiz {
 
         if (countedQuestion != 0) {
             quizFacilityIndex = sumOfQuizFacilityIndex / countedQuestion;
+        } else {
+            quizFacilityIndex = 0;
         }
 
-        quizFacilityIndex = 0;
     }
 
     public double getQuizEngagement() {
