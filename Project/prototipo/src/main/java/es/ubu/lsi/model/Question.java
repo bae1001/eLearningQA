@@ -1,7 +1,7 @@
 package es.ubu.lsi.model;
 
 public class Question {
-    private int questionNumber;
+    private double questionNumber;
     private String questionName;
     private int quizId;
     private double discriminationIndex;
@@ -16,11 +16,11 @@ public class Question {
         this.questionName = questionName;
     }
 
-    public int getQuestionNumber() {
+    public double getQuestionNumber() {
         return questionNumber;
     }
 
-    public void setQuestionNumber(int questionNumber) {
+    public void setQuestionNumber(double questionNumber) {
         this.questionNumber = questionNumber;
     }
 

@@ -962,7 +962,7 @@ public class WebServiceClient {
                         + (int) (config.getFacilityIndexMax() * 100) + "%]";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
                             + ": " + question.getFacilityIndex() + "%<br>");
                 }
                 registro.guardarAlertaDesplegable("realization quizzesfacilityIndex",
@@ -984,7 +984,7 @@ public class WebServiceClient {
                         + (int) (config.getFacilityIndexMax() * 100) + "%]";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
                             + ": " + question.getFacilityIndex() + "%<br>");
                 }
                 registro.guardarAlertaDesplegable("realization quizzesfacilityIndex",
@@ -1016,7 +1016,7 @@ public class WebServiceClient {
                         + config.getMaxRandomScoreInQuizz() * 100 + "%.";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
                             + ": " + question.getRandomGuessScore() + "%<br>");
                 }
                 registro.guardarAlertaDesplegable("realization randomGuessQuizzes",
@@ -1052,7 +1052,7 @@ public class WebServiceClient {
                         + "% o superior.";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + ".- " + question.getQuestionName()
+                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
                             + ": " + question.getDiscriminationIndex() + "%<br>");
                 }
                 registro.guardarAlertaDesplegable("realization quizzesdiscriminationIndex",
@@ -1085,7 +1085,7 @@ public class WebServiceClient {
             JsonElement discriminationIndexJsonValue = element.getAsJsonObject().get("discriminationindex");
 
             if (questionNumber != null) {
-                question.setQuestionNumber(questionNumber.getAsInt());
+                question.setQuestionNumber(questionNumber.getAsDouble());
             }
 
             if (questionName != null) {
