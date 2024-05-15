@@ -109,6 +109,13 @@ public class Quiz {
         for (Question question : questions) {
             quizRandomGuessScore += question.getRandomGuessScore() / 100;
         }
+
+        if (questions.size() == 0) {
+            quizRandomGuessScore = 0;
+        } else {
+            quizRandomGuessScore = quizRandomGuessScore / questions.size();
+        }
+
     }
 
     public String getName() {
