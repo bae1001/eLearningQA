@@ -184,11 +184,72 @@ public class ELearningQAFacade {
         StringBuilder filas = new StringBuilder();
         if (nroCursos == 1) {
             for (int i = 0; i < cantidad; i++) {
+                if (posiciones[0] + i == 9) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\" Se comprueba que la suma de las calificaiones" +
+                                    " aleatorias de las preguntas de los cuestionarios se encuentren por debajo de: "
+                                    + config.getMaxRandomScoreInQuizz() * 100 + "%\"");
+                }
+                if (posiciones[0] + i == 21) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\"Se comprueba que las preguntas de los cuestionarios tienen un índice de facilidad "
+                                    +
+                                    "comprendido en el intervalo ["
+                                    + (int) (config.getFacilityIndexMin() * 100)
+                                    + "% - "
+                                    + (int) (config.getFacilityIndexMax() * 100) + "%]\"");
+                }
+                if (posiciones[0] + i == 22) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\"Se comprueba que los cuestionarios tienen una participación superior al "
+                                    + (int) (config.getMinQuizEngagementPercentage() * 100) + "%\"");
+                }
+                if (posiciones[0] + i == 23) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\"Se comprueba que el índice de discriminación de " +
+                                    "las preguntas de los cuestionarios sea superior al "
+                                    + (int) (config.getMinQuizDiscriminationIndex() * 100) + "%\"");
+                }
+
                 filas.append(camposInformeFases[posiciones[0] + i])
                         .append(generarCampoAbsoluto(puntos[posiciones[1] + i]));
             }
         } else {
             for (int i = 0; i < cantidad; i++) {
+                if (posiciones[0] + i == 9) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\" Se comprueba que la suma de las calificaiones" +
+                                    " aleatorias de las preguntas de los cuestionarios se encuentren por debajo de: "
+                                    + config.getMaxRandomScoreInQuizz() * 100 + "%\"");
+                }
+                if (posiciones[0] + i == 21) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\"Se comprueba que las preguntas de los cuestionarios tienen un índice de facilidad "
+                                    +
+                                    "comprendido en el intervalo ["
+                                    + (int) (config.getFacilityIndexMin() * 100)
+                                    + "% - "
+                                    + (int) (config.getFacilityIndexMax() * 100) + "%]\"");
+                }
+                if (posiciones[0] + i == 22) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\"Se comprueba que los cuestionarios tienen una participación superior al "
+                                    + (int) (config.getMinQuizEngagementPercentage() * 100) + "%\"");
+                }
+                if (posiciones[0] + i == 23) {
+                    camposInformeFases[posiciones[0] + i] = camposInformeFases[posiciones[0] + i].replaceAll(
+                            "titleHere",
+                            "title=\"Se comprueba que el índice de discriminación de " +
+                                    "las preguntas de los cuestionarios sea superior al "
+                                    + (int) (config.getMinQuizDiscriminationIndex() * 100) + "%\"");
+                }
                 filas.append(camposInformeFases[posiciones[0] + i])
                         .append(generarCampoRelativo(puntos[posiciones[1] + i], nroCursos));
             }

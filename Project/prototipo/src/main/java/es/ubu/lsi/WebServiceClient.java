@@ -810,10 +810,7 @@ public class WebServiceClient {
                                 + quiz.getCoursemodule() + "\">" + quiz.getName()
                                 + "</a> no tiene la suficiente participación. Un <b>"
                                 + (int) (quiz.getQuizEngagement() * 100)
-                                + "%</b> de los alumnos realizan los cuestionarios."
-                                + " Lo correcto es un mínimo de "
-                                + (int) (config.getMinQuizEngagementPercentage() * 100)
-                                + "% de participación.");
+                                + "%</b> de los alumnos realizan los cuestionarios.");
             }
         }
         return isCourseQuizzesEngagementCorrect;
@@ -960,10 +957,7 @@ public class WebServiceClient {
                         + "/mod/quiz/view.php?id="
                         + quiz.getCoursemodule() + "\">" + quiz.getName()
                         + "</a>. Tiene un índice de facilidad de <b>" + (int) (quiz.getQuizFacilityIndex() * 100)
-                        + "%</b>, cuando lo correcto esta en el intervalo ["
-                        + (int) (config.getFacilityIndexMin() * 100)
-                        + "% - "
-                        + (int) (config.getFacilityIndexMax() * 100) + "%]</div>";
+                        + "%</b>.</div>";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
                     if (question.getFacilityIndex() < config.getFacilityIndexMin() * 100
@@ -998,8 +992,7 @@ public class WebServiceClient {
                         + quiz.getCoursemodule() + "\">" + quiz.getName()
                         + "</a> tienen una calificación"
                         + " aleatoria de <b>" + formatter.format(quiz.getQuizRandomGuessScore() * 100)
-                        + "%</b> superior a "
-                        + config.getMaxRandomScoreInQuizz() * 100 + "%.</div>";
+                        + "%</b>.</div>";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
                     if (question.getRandomGuessScore() > config.getMaxRandomScoreInQuizz() * 100) {
@@ -1037,9 +1030,7 @@ public class WebServiceClient {
                         + quiz.getCoursemodule() + "\">" + quiz.getName()
                         + "</a> no disponen de un buen índice de discriminación. Su cuestionario tiene un índice de discriminación del <b>"
                         + (int) (quiz.getQuizDiscriminationIndex() * 100)
-                        + "%</b>. Los valores recomendados son un "
-                        + (int) (config.getMinQuizDiscriminationIndex() * 100)
-                        + "% o superior.</div>";
+                        + "%</b>.</div>";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
                     if (question.getDiscriminationIndex() < config.getMinQuizDiscriminationIndex() * 100) {
