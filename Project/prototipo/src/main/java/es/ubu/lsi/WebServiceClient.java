@@ -948,48 +948,30 @@ public class WebServiceClient {
         }
         for (Quiz quiz : quizzes.getQuizzes()) {
             Calendar currentDate = Calendar.getInstance();
-            if (quiz.getQuizFacilityIndex() < config.getFacilityIndexMin() && quiz.isVisible()
+            if ((quiz.getQuizFacilityIndex() < config.getFacilityIndexMin()
+                    || quiz.getQuizFacilityIndex() > config.getFacilityIndexMax()) && quiz.isVisible()
                     && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isCourseFacilityIndexCorrect = false;
 
-                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
+                String message = "<div>Las preguntas de su cuestionario: <a href=\" " + config.getHost()
                         + "/mod/quiz/view.php?id="
                         + quiz.getCoursemodule() + "\">" + quiz.getName()
-                        + "</a>. Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
-                        + "%, cuando lo correcto esta en el intervalo ["
+                        + "</a>. Tiene un índice de facilidad de <b>" + (int) (quiz.getQuizFacilityIndex() * 100)
+                        + "%</b>, cuando lo correcto esta en el intervalo ["
                         + (int) (config.getFacilityIndexMin() * 100)
                         + "% - "
-                        + (int) (config.getFacilityIndexMax() * 100) + "%]";
+                        + (int) (config.getFacilityIndexMax() * 100) + "%]</div>";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
-                            + ": " + question.getFacilityIndex() + "%<br>");
+                    if (question.getFacilityIndex() < config.getFacilityIndexMin() * 100
+                            || question.getFacilityIndex() > config.getFacilityIndexMax() * 100) {
+                        detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
+                                + ": <b>" + question.getFacilityIndex() + "%</b><br>");
+                    }
                 }
                 registro.guardarAlertaDesplegable("realization quizzesfacilityIndex",
                         message,
-                        "Preguntas complejas", detalles.toString());
-            }
-
-            if (quiz.getQuizFacilityIndex() > config.getFacilityIndexMax() && quiz.isVisible()
-                    && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
-                isCourseFacilityIndexCorrect = false;
-
-                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
-                        + "/mod/quiz/view.php?id="
-                        + quiz.getCoursemodule() + "\">" + quiz.getName()
-                        + "</a>. Tiene un índice de facilidad de " + (int) (quiz.getQuizFacilityIndex() * 100)
-                        + "%, cuando lo correcto esta en el intervalo ["
-                        + (int) (config.getFacilityIndexMin() * 100)
-                        + "% - "
-                        + (int) (config.getFacilityIndexMax() * 100) + "%]";
-                StringBuilder detalles = new StringBuilder();
-                for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
-                            + ": " + question.getFacilityIndex() + "%<br>");
-                }
-                registro.guardarAlertaDesplegable("realization quizzesfacilityIndex",
-                        message,
-                        "Preguntas sencillas", detalles.toString());
+                        "Preguntas con índice de facilidad incorrecto", detalles.toString());
             }
         }
         return isCourseFacilityIndexCorrect;
