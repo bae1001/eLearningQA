@@ -8,6 +8,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
@@ -23,6 +25,7 @@ import java.util.*;
 
 public class WebServiceClient {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String COURSEID = "&courseid=";
     private static final String COURSEIDS_0 = "&courseids[0]=";
     private static SessionService sessionService;
@@ -1182,9 +1185,10 @@ public class WebServiceClient {
             return JsonParser.parseString(jsonStatisticsResponse).getAsJsonArray();
         } catch (JsonSyntaxException jsonMalFormed) {
             SessionService.setSessionExpired(true);
+            LOGGER.error("The session has expired, it is necessary to login again.");
             return null;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Unable to retrieve the statistics file", e);
             return null;
         }
     }
