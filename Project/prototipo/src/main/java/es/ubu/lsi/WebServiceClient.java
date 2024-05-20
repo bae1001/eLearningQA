@@ -805,9 +805,9 @@ public class WebServiceClient {
                 registro.guardarAlerta("realization quizzesEngagement",
                         "El cuestionario: <a href=\" " + config.getHost() + "/mod/quiz/view.php?id="
                                 + quiz.getCoursemodule() + "\">" + quiz.getName()
-                                + "</a> no tiene la suficiente participación. Un "
+                                + "</a> no tiene la suficiente participación. Un <b>"
                                 + (int) (quiz.getQuizEngagement() * 100)
-                                + "% de los alumnos realizan los cuestionarios."
+                                + "%</b> de los alumnos realizan los cuestionarios."
                                 + " Lo correcto es un mínimo de "
                                 + (int) (config.getMinQuizEngagementPercentage() * 100)
                                 + "% de participación.");
@@ -1008,16 +1008,20 @@ public class WebServiceClient {
             if (quiz.getQuizRandomGuessScore() > config.getMaxRandomScoreInQuizz()) {
                 isRandomGuessScoreInQuizzesCorrect = false;
 
-                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
+                String message = "<div>Las preguntas de su cuestionario: <a href=\" " + config.getHost()
                         + "/mod/quiz/view.php?id="
                         + quiz.getCoursemodule() + "\">" + quiz.getName()
                         + "</a> tienen una calificación"
-                        + " aleatoria de " + formatter.format(quiz.getQuizRandomGuessScore() * 100) + "% superior a "
-                        + config.getMaxRandomScoreInQuizz() * 100 + "%.";
+                        + " aleatoria de <b>" + formatter.format(quiz.getQuizRandomGuessScore() * 100)
+                        + "%</b> superior a "
+                        + config.getMaxRandomScoreInQuizz() * 100 + "%.</div>";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
-                            + ": " + question.getRandomGuessScore() + "%<br>");
+                    if (question.getRandomGuessScore() > config.getMaxRandomScoreInQuizz() * 100) {
+                        detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
+                                + ": <b>" + question.getRandomGuessScore() + "%</b><br>");
+                    }
+
                 }
                 registro.guardarAlertaDesplegable("realization randomGuessQuizzes",
                         message,
@@ -1043,17 +1047,21 @@ public class WebServiceClient {
                     && quiz.isVisible() && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isDiscriminationIndexInQuizzesCorrect = false;
 
-                String message = "Las preguntas de su cuestionario: <a href=\" " + config.getHost()
+                String message = "<div>Las preguntas de su cuestionario: <a href=\" " + config.getHost()
                         + "/mod/quiz/view.php?id="
                         + quiz.getCoursemodule() + "\">" + quiz.getName()
-                        + "</a> no disponen de un buen índice de discriminación. Su cuestionario tiene un índice de discriminación del "
+                        + "</a> no disponen de un buen índice de discriminación. Su cuestionario tiene un índice de discriminación del <b>"
                         + (int) (quiz.getQuizDiscriminationIndex() * 100)
-                        + "%. Los valores recomendados son un " + (int) (config.getMinQuizDiscriminationIndex() * 100)
-                        + "% o superior.";
+                        + "%</b>. Los valores recomendados son un "
+                        + (int) (config.getMinQuizDiscriminationIndex() * 100)
+                        + "% o superior.</div>";
                 StringBuilder detalles = new StringBuilder();
                 for (Question question : quiz.getQuestions()) {
-                    detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
-                            + ": " + question.getDiscriminationIndex() + "%<br>");
+                    if (question.getDiscriminationIndex() < config.getMinQuizDiscriminationIndex() * 100) {
+                        detalles.append("Pregunta " + question.getQuestionNumber() + " - " + question.getQuestionName()
+                                + ": <b>" + question.getDiscriminationIndex() + "%</b><br>");
+                    }
+
                 }
                 registro.guardarAlertaDesplegable("realization quizzesdiscriminationIndex",
                         message,
