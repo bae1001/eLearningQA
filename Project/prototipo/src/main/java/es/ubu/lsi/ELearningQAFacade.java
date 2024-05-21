@@ -394,6 +394,8 @@ public class ELearningQAFacade {
                 { 3, 1, 1, 0, 0, 0, 0, 0, 0 },
                 { 3, 1, 1, 0, 0, 0, 0, 0, 0 },
                 { 3, 1, 1, 0, 0, 0, 0, 0, 0 },
+                { 3, 1, 1, 0, 0, 0, 3, 1, 1 },
+                { 3, 1, 0, 0, 0, 0, 0, 0, 0 },
                 { 3, 1, 1, 3, 1, 1, 0, 0, 0 },
                 { 1, 3, 1, 1, 3, 1, 0, 0, 0 },
                 { 3, 1, 1, 3, 1, 1, 0, 0, 0 },
@@ -403,12 +405,15 @@ public class ELearningQAFacade {
                 { 1, 3, 1, 1, 3, 1, 0, 0, 0 },
                 { 1, 3, 1, 1, 3, 1, 0, 0, 0 },
                 { 1, 3, 1, 1, 3, 1, 0, 0, 0 },
+                { 1, 3, 1, 1, 3, 1, 1, 3, 1 },
+                { 1, 3, 1, 1, 3, 1, 1, 3, 1 },
+                { 1, 3, 1, 1, 3, 1, 1, 3, 1 },
                 { 1, 1, 3, 1, 1, 3, 1, 1, 3 },
                 { 1, 1, 3, 1, 1, 3, 1, 1, 3 }
         };
         float[] porcentajes = new float[9];
-        int[] puntuacionesMax = new int[] { 34 * numeroCursos, 26 * numeroCursos, 19 * numeroCursos, 17 * numeroCursos,
-                20 * numeroCursos, 17 * numeroCursos, 6 * numeroCursos, 3 * numeroCursos, 10 * numeroCursos };
+        int[] puntuacionesMax = new int[] { 42 * numeroCursos, 37 * numeroCursos, 23 * numeroCursos, 20 * numeroCursos,
+                29 * numeroCursos, 20 * numeroCursos, 12 * numeroCursos, 13 * numeroCursos, 14 * numeroCursos };
         for (int i = 0; i < matrizPuntos.length; i++) {
             for (int j = 0; j < porcentajes.length; j++) {
                 porcentajes[j] += (float) (matrizPuntos[i][j] * puntos[i]) / puntuacionesMax[j];
