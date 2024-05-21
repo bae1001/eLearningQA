@@ -1,5 +1,7 @@
 package es.ubu.lsi;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +16,7 @@ import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
-
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,14 +26,23 @@ public class SessionService {
 	private static String sessionKey;
 	private static CookieManager cookie_mannager;
 	private static boolean isSessionExpired;
+	private static ArrayList<String> trustedSites;
+	private static final Logger LOGGER = LogManager.getLogger();
 
 	private SessionService() {
+		addTrustedSites();
 		cookie_mannager = new CookieManager();
 		cookie_mannager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
 		CookieHandler.setDefault(cookie_mannager);
 		client = new OkHttpClient.Builder().cookieJar(new JavaNetCookieJar(cookie_mannager))
 				.readTimeout(Duration.ofMinutes(5))
 				.build();
+	}
+
+	private void addTrustedSites() {
+		trustedSites = new ArrayList<String>();
+		trustedSites.add("https://school.moodledemo.net");
+		trustedSites.add("https://ubuvirtual.ubu.es/");
 	}
 
 	public static SessionService getInstance(String username, String password, String host) throws IOException {
@@ -66,6 +77,10 @@ public class SessionService {
 
 	private static String webLoging(String username, String password, String host) throws IOException {
 		String loginUrl = host + "/login/index.php";
+		if (!trustedSites.contains(host)) {
+			LOGGER.info("The site introduced is not a trusted site. Contact with the authors");
+			return "";
+		}
 		Request request = new Request.Builder()
 				.url(loginUrl)
 				.build();
