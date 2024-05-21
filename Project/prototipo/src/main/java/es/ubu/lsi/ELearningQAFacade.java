@@ -380,14 +380,14 @@ public class ELearningQAFacade {
     private String addTooltipTitle(String tableRow, int tableRowIndex) {
         String regexTooltip = "titleHere";
         if (tableRowIndex == 9) {
-            tableRow = tableRow.replaceAll(
+            tableRow = tableRow.replace(
                     regexTooltip,
                     "title=\" Se comprueba que la suma de las calificaiones" +
                             " aleatorias de las preguntas de los cuestionarios se encuentren por debajo de: "
                             + config.getMaxRandomScoreInQuizz() * 100 + "%\"");
         }
         if (tableRowIndex == 21) {
-            tableRow = tableRow.replaceAll(
+            tableRow = tableRow.replace(
                     regexTooltip,
                     "title=\"Se comprueba que las preguntas de los cuestionarios tienen un índice de facilidad "
                             +
@@ -397,13 +397,13 @@ public class ELearningQAFacade {
                             + (int) (config.getFacilityIndexMax() * 100) + "%]\"");
         }
         if (tableRowIndex == 22) {
-            tableRow = tableRow.replaceAll(
+            tableRow = tableRow.replace(
                     regexTooltip,
                     "title=\"Se comprueba que los cuestionarios tienen una participación superior al "
                             + (int) (config.getMinQuizEngagementPercentage() * 100) + "%\"");
         }
         if (tableRowIndex == 23) {
-            tableRow = tableRow.replaceAll(
+            tableRow = tableRow.replace(
                     regexTooltip,
                     "title=\"Se comprueba que el índice de discriminación de " +
                             "las preguntas de los cuestionarios sea superior al "
