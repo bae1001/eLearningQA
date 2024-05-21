@@ -43,7 +43,7 @@ public class WebServiceClient {
         try {
             sessionService = SessionService.getInstance(username, password, host);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Unable to get a session");
         }
 
         if (token == null) {

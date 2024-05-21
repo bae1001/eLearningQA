@@ -105,7 +105,6 @@ public class SessionService {
 		} catch (IllegalStateException e) {
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
