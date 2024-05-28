@@ -36,10 +36,14 @@
             fases=fachada.generarInformeFases(puntosComprobaciones,listaCursos.size());
           }else{
             Course curso= fachada.getCursoPorId(token, Integer.parseInt(courseid));
+            session.setAttribute("course",curso);
             alertas.setCourseid(Integer.parseInt(courseid));
             nombreCurso=curso.getFullname();
             session.setAttribute("coursename",nombreCurso);
             puntosComprobaciones = fachada.realizarComprobaciones(token, Integer.parseInt(courseid), alertas);
+            session.setAttribute("puntos",puntosComprobaciones);
+            session.setAttribute("user",fullname);
+            session.setAttribute("facade",fachada);
             porcentajes=fachada.calcularPorcentajesMatriz(puntosComprobaciones,1);
             matriz=fachada.generarMatrizRolPerspectiva(porcentajes);
             fases=fachada.generarInformeFases(puntosComprobaciones,1);
@@ -49,7 +53,7 @@
           }
           }catch(Exception e){
             Logger LOGGER = LogManager.getLogger();
-            LOGGER.error("exception", e);
+            LOGGER.error("Error en la vista", e);
             response.sendRedirect("error");
           }
 
@@ -104,17 +108,17 @@
           <img src="FullLogo.png" width="200" height="32" alt="eLearningQA">
         </div>
         <div class="btn-group col" role="group">
+          <button class="tablink btn btn-primary" onclick="exportExcel()">Exportar excel <img src="excelIcon.png"> </button>
           <button class="tablink btn btn-primary active" style="box-shadow: none;" onclick="openTab(event, 'Fases')">Informe de fases</button>
           <button class="tablink btn btn-primary" style="box-shadow: none;" onclick="openTab(event, 'Matriz')">Evolución del rendimiento</button>
         </div><div class="col m-3 text-center"><a target="_blank" href=<%=vinculo%>><%=nombreCurso%></a></div></header>
                   <div class="d-flex justify-content-center" style="height:85vh;background-image: url('atardecer.jpg');">
                     <div id="Fases" class="tabcontent w-100 p-0" style="display:flex">
                 <div class="card m-2 me-0 p-1" style="width: 60%;overflow:auto;">
-                    <%=fases%>
+                  <%=fases%>
                 </div>
-                              <div class="card m-2 ms-0 p-1" style="width: 40%;overflow:auto;">
-                                <%=alertas%>
-
+                <div class="card m-2 ms-0 p-1" style="width: 40%;overflow:auto;">
+                  <%=alertas%>
                 </div>
         </div>
         <div id="Matriz" class="tabcontent w-100 p-0" style="display:none">
@@ -128,10 +132,45 @@
 
             <a target="_blank" href="./manual">Manual de usuario</a>
             <a target="_blank" href="./about">Acerca de</a>
-            <a href="mailto:rab1002@alu.ubu.es">Contacto</a>
+            <a href="mailto:bae1001@alu.ubu.es">Contacto</a>
           </footer>
           <script>
           <%=grafico%>
+          function string2ArrayByte(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+          }
+
+          function exportExcel() {
+            $.ajax({
+                method: "GET",
+                url: "/excel-report",
+            }).done(function(excel, statusText, statusCode) {
+                if (statusCode.status == 200) {
+                const blob = new Blob([string2ArrayByte(atob(excel))], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64' });
+
+                const excelUrl = window.URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+
+                link.href = excelUrl;
+                link.download = 'excel_report_<%=((Course)session.getAttribute("course")).getFullname()%>.xlsx';
+
+                document.body.appendChild(link);
+                link.click();
+
+                window.URL.revokeObjectURL(excelUrl);
+                } else {
+                  swal({
+                    title: "Error",
+                    text: "No ha sido posible generar el excel",
+                    icon: "error",
+                  });
+                }
+            });
+          }
 
           function openTab(evt, tab) {
             var i, tabcontent, tablinks;
@@ -170,5 +209,7 @@
           return new bootstrap.Tooltip(tooltipTriggerEl)
           })
           </script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

@@ -1,11 +1,24 @@
 package es.ubu.lsi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.graphbuilder.struc.LinkedList;
+
 import es.ubu.lsi.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +30,7 @@ public class ELearningQAFacade {
     private static final int CHECKS_EVALUACION = 2;
     private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION
             + CHECKS_EVALUACION;
+    private static final int FILAS_EXCEL = 28;
 
     protected static String[] camposInformeFases;
     private final FacadeConfig config;
@@ -411,5 +425,63 @@ public class ELearningQAFacade {
         }
 
         return tableRow;
+    }
+
+    public ByteArrayOutputStream writeExcel(Course course, int puntos[], String user) {
+        int contadorDiseno = puntos[0] + puntos[1] + puntos[2] + puntos[3] + puntos[4] + puntos[5] + puntos[6]
+                + puntos[7];
+        int contadorImplementacion = puntos[8] + puntos[9] + puntos[10] + puntos[11] + puntos[12];
+        int contadorRealizacion = puntos[13] + puntos[14] + puntos[15] + puntos[16] + puntos[17] + puntos[18]
+                + puntos[19];
+        int contadorEvaluacion = puntos[20] + puntos[21];
+        int contadorTotal = contadorDiseno + contadorImplementacion + contadorRealizacion + contadorEvaluacion;
+        InputStream ips = ELearningQAFacade.class.getClassLoader().getResourceAsStream("plantilla_excel.xlsx");
+
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(ips);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            workbook.setSheetName(workbook.getSheetIndex(sheet),
+                    sdf.format(Calendar.getInstance().getTime()).toString());
+            LinkedList porcentajes = new LinkedList();
+            porcentajes.addToHead(porcentajeFraccion(contadorEvaluacion, CHECKS_EVALUACION));
+            porcentajes.addToHead(porcentajeFraccion(contadorRealizacion, CHECKS_REALIZACION));
+            porcentajes.addToHead(porcentajeFraccion(contadorImplementacion, CHECKS_IMPLEMENTACION));
+            porcentajes.addToHead(porcentajeFraccion(contadorDiseno, CHECKS_DISENO));
+            porcentajes.addToHead(porcentajeFraccion(contadorTotal, CHECKS_TOTAL));
+            int puntosContados = 0;
+            for (int i = 0; i < FILAS_EXCEL; i++) {
+                XSSFRow row = sheet.getRow(i);
+                XSSFCell cell = row.getCell(1);
+                if (i == 0) {
+                    cell.setCellValue(course.getFullname());
+                } else if (i == 1 || i == 2 || i == 11 || i == 17 || i == 25) {
+                    cell.setCellValue(String.valueOf(porcentajes.removeHead()) + "%");
+                } else {
+                    CellStyle cellStyle = workbook.createCellStyle();
+                    if (puntos[puntosContados] == 1) {
+                        cellStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+                        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                        cell.setCellStyle(cellStyle);
+                    } else {
+                        cellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+                        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                        cell.setCellStyle(cellStyle);
+                    }
+                    puntosContados++;
+                }
+            }
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+            // FileOutputStream outputStream = new FileOutputStream(
+            // "registry/" + course.getFullname() + "_" + user + ".xlsx");
+            workbook.write(outStream);
+            workbook.close();
+            return outStream;
+        } catch (IOException e) {
+            LOGGER.error("No se ha podido guardar el Excel");
+        } catch (Exception e) {
+            LOGGER.error("No se ha podido generar el Excel");
+        }
+        return null;
     }
 }
