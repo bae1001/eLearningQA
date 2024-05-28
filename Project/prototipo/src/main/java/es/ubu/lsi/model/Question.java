@@ -7,6 +7,7 @@ public class Question {
     private double discriminationIndex;
     private double randomGuessScore;
     private double facilityIndex;
+    private double intendedWheight;
 
     public String getQuestionName() {
         return questionName;
@@ -54,5 +55,13 @@ public class Question {
 
     public void setFacilityIndex(double facilityIndex) {
         this.facilityIndex = facilityIndex;
+    }
+
+    public double getIntendedWheight() {
+        return intendedWheight;
+    }
+
+    public void setIntendedWheight(double intendedWheight) {
+        this.intendedWheight = intendedWheight;
     }
 }

@@ -107,7 +107,7 @@ public class Quiz {
 
     public void setQuizRandomGuessScore() {
         for (Question question : questions) {
-            quizRandomGuessScore += question.getRandomGuessScore() / 100;
+            quizRandomGuessScore += (question.getRandomGuessScore() * (question.getIntendedWheight() / 100)) / 100;
         }
 
         if (questions.size() == 0) {

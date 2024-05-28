@@ -1067,6 +1067,7 @@ public class WebServiceClient {
             JsonElement questionName = element.getAsJsonObject().get("questionname");
             JsonElement randomGuessScoreJsonValue = element.getAsJsonObject().get("randomguessscore");
             JsonElement discriminationIndexJsonValue = element.getAsJsonObject().get("discriminationindex");
+            JsonElement intendedWheightJsonValue = element.getAsJsonObject().get("intendedweight");
 
             if (questionNumber != null) {
                 question.setQuestionNumber(questionNumber.getAsDouble());
@@ -1097,6 +1098,16 @@ public class WebServiceClient {
                     question.setDiscriminationIndex(Double.valueOf(discriminationIndex));
                 }
             }
+
+            if (intendedWheightJsonValue != null) {
+                String intededWeight = intendedWheightJsonValue.getAsString().replaceAll("%", "");
+                if (!"".equals(intededWeight)) {
+                    question.setIntendedWheight(Double.valueOf(intededWeight));
+                }
+            } else {
+                question.setIntendedWheight(0);
+            }
+
             quizQuestions.add(question);
         }
 
