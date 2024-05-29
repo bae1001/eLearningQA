@@ -209,7 +209,11 @@
           return new bootstrap.Tooltip(tooltipTriggerEl)
           })
           </script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" 
+          integrity="sha384-rY/jv8mMhqDabXSo+UCggqKtdmBfd3qC2/KvyTDNQ6PcUJXaxK1tMepoQda4g5vB" 
+          crossorigin="anonymous"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" 
+          integrity="sha384-RIQuldGV8mnjGdob13cay/K1AJa+LR7VKHqSXrrB5DPGryn4pMUXRLh92Ev8KlGF" 
+          crossorigin="anonymous"></script>
 </body>
 </html>
