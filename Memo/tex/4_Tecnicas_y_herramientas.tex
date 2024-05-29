@@ -1,0 +1,57 @@
+\capitulo{4}{Técnicas y herramientas}
+Para dar inicio a este capitulo, hay que entender la estructura que tiene y como funciona internamente la aplicación. Para ello hay que pensar en como debe funcionar esta aplicación y como interactua con el usuario.
+
+En primer lugar, hay que recordar que eLearningQA interactúa con una API que le proporciona la mayoría de los datos, esos datos se procesan, se calculan los resultados de las reglas y se muestran. La aplicación debe estar preparada para crecer indefinidamente, ya que una de las barreras existentes actualmente para el cálculo de reglas es la falta de datos, por lo que a medida de que se puedan obtener más datos la aplicación crecerá más. 
+
+Por otro lado, existe una lógica de negocio bastante clara basada en conceptos teóricos de una variedad de estudios y marcos, por lo que es un software que gira entorno a la lógica de negocio. Adicionalmente, nos interesa que sea una aplicación fácil de mantener, ya que hay que tener en cuenta que los costos de mantenimiento son los más altos en el ciclo de vida del producto software \cite{costos-mantenimiento}.
+
+Con esta definición se puede deducir que existen dos patrones interesantes para el funcionamiento de la aplicación.
+
+\section{Diseño dirigido por el dominio}
+Domain Driven Design o Diseño Dirigido por Dominio es una técnica de diseño software que se centra en el análisis y diseño del dominio del problema. El producto estará basada en la lógica de negocio, por lo que el dominio debe estar muy bien definido. 
+
+Puesto que la aplicación aquí desarrollada se basa en la lógica de negocio, esta opción puede parecer muy atractiva, por que además es fácil de mantener y permite escalabilidad. Sin embargo, no es la mejor opción debido a que esta aplicación ya ha tiene versiones anteriores lo que supone un alto incremento en la complejidad para la implementación de este patrón.
+
+\section{Modelo-Vista-Controlador}
+La estructura de este proyecto sigue el patrón Modelo-Vista-Controlador\cite{mvc}. Este patrón arquitectónico divide el software en tres componentes:
+\begin{itemize}
+    \item \textbf{Modelo:} En este componentes se encuentran los datos y toda la lógica relativa a su obtención.
+    \item \textbf{Vista:} En la vista se encuentra la interfaz gráfica y todos aquellos componentes que interactuen directamente con el usuario.
+    \item \textbf{Controlador:}Este componente es el intermediario entre el modelo y la vista, este es el que gestiona las peticiones que se reciben de la vista y decide que datos mostrar y como, es decir, es el que contiene la lógica de negocio.
+\end{itemize}
+
+Con el patrón MVC se pueden construir páginas web escalables mantenibles y fáciles de expandir. Además es una opción atractiva dado su facilidad de implementación y su clara divisón entre Frontend y Backend, lo que facilita la separación de preocupaciones.
+
+\section{Backend}
+Una vez entendida la arquitectura del proyecto se puede profundizar a cada una de las partes que lo componen.
+
+Empezando con el Backend, esta aplicación esta programada en Java utilizando Spring como framework y Maven para el control de dependencias. Además cuenta con cotenerización con Docker.
+
+\subsection{SpringBoot y Maven}
+Spring Framework proporciona un modelo de configuración y programación intuitivo y fácil de usar. El objetivo de Spring Framework\cite{spring-framework} es realizar todas las configuraciones internas necesarias para que los equipos de desarrollo solo tengan que encargarse de desarrollar la lógica de negocio y no dediquen excesivo tiempo a la configuración del proyecto.
+
+Uno de los proyectos que ofrece Spring es SpringBoot\cite{spring-boot} que permite crear stand-alone y ejecutarlas rápidamente. Además cuenta con servidores web embebidos lo que facilita enormemente el desarrollo de una aplicación web.
+
+Para proveer de SpringBoot y de todas las dependencias que necesita esta aplicación se utiliza Maven que proporciona un fichero xml llamado POM que permite añadir todas las dependencias necesarias al proyecto fácilmente.
+
+\subsection{Docker}
+Docker \cite{docker} es una plataforma de desarrollo que permite desacoplar las aplicaciones de la infraestructura de forma que se puede enviar y desplegar aplicaciones rápidamente. Docker se basa en la cotenerización \cite{contenerización}. 
+
+La contenerización consiste en que las aplicaciones son empaquetadas con aquellas bibliotecas del sistema operativo necesarias para que se ejecute, de esta forma se pueden desplegar aplicaciones en cualquier sitio de forma rápida y ligera.
+
+\section{Frontend}
+El frontend se entiende como todos los componentes que interactúan directamente con el usuario y la lógica en ellos. Actualmente, existe una gran variedad de opciónes para implementar el frontend de una aplicación, tales como, Angular \cite{angular}, React \cite{react} o Vue.js \cite{vue}.
+
+En el caso de eLearningQA, se utiliza JSP (Java Server Pages) \cite{jsp}. Las páginas JSP son una mezcla de código HTML, XML y Java que son convertidas a un servlet el cual genera la vista. Esta ,actualmente, no es la mejor opción para el desarrollo frontend, dado que existen opciones más sencillas de implementar y con más capacidades como las nombradas anteriormente. Sin embargo, para hacer interfaces básicas y rápidamente es una buena opción.
+
+\section{Modelo de desarrollo software}
+El modelo de desarrollo software es un enfoque sistemático que describe todas las actividades del ciclo de vida del desarrollo software. Existen varios enfoques \cite{modelo-desarrollo} pero el que se ha aplicado en el desarrollo de este proyecto ha sido el Modelo ágil.
+
+\subsection{Modelo ágil}
+Este modelo se basa en la adaptabilidad, la colaboración y el desarrollo incremental. Además con este modelo fomenta la entrega rápida del software cosa muy valorada en este proyecto.
+
+El modelo ágil consiste en la división del trabajo en iteraciones cortas llamadas sprint. Antes de cada sprint se asigna una cantidad de trabajo a cada participante en orden de prioridad. Cuando comienza el sprint se realiza el trabajo y se realizan reuniones diarias con el equipo para hacer un seguimiento de los avances. A medida que se terminan funcionalidades se integran y se realizan pruebas. Cuando termina el sprint se realiza una revisión de todas las tareas completadas y todos los miembros del equipo hacen sus comentarios sobre el sprint.
+
+
+
+

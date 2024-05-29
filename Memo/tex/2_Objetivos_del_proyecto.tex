@@ -1,0 +1,35 @@
+\capitulo{2}{Objetivos del proyecto}
+
+Los objetivos del proyecto se pueden dividir en dos. Los objetivos funcionales, entendidos como aquellos que comprenden las funcionalidades que deseamos que tenga la aplicación desarrollada, y los objetivos técnicos, entendidos como las características técnicas que debe tener la aplicación.
+
+En cuanto a los objetivos funcionales, queremos que la aplicación permita a las personas que tengan permisos de gestión en cursos de Moodle, poder ver un informe detallado sobre las distintas fases del curso, entre las que encontramos: 
+\begin{itemize}
+    \item Diseño
+    \item Implementación
+    \item Realización
+    \item Evaluación
+\end{itemize}
+
+Cada apartado de estos tiene unas métricas y cada una de estas tienen una puntuación que media en un computo global. Todas estas notas se muestran. Con esto se ve reflejada la calidad del curso.
+
+Por otro lado, queremos que la aplicación sugiera al usuario cambios a realizar para mejorar, estos cambios se basan en las métricas mencionadas anteriormente. Además, se mostrara una gráfica de evolución temporal de la calidad del curso. Esto se hará en base tres roles:
+\begin{itemize}
+    \item Diseñador
+    \item Facilitador
+    \item Proveedor
+\end{itemize}
+Y tres perspectivas:
+\begin{itemize}
+    \item Pedagógica
+    \item Tecnológica
+    \item Estratégica
+\end{itemize}
+
+Además la aplicación debe tener un manual para que el usuario la utilice como guía para utilizar para la aplicación. También debe tener apartados para el contacto con los administradores de la página y un apartado para conocer la 
+gestora de la página.
+
+También queremos realizar el mantenimiento de la versión existente\cite{tfg-robertoArasti} de la aplicación actualizando aquellas dependencias que sean necesarias y programando la compatibilidad con Moodle 4.x, para que se puedan evaluar cursos que estén en estas versiones. 
+
+En cuanto a los objetivos técnicos, queremos que el proyecto siga un desarrollo basado en metodologías ágiles, dividiendo los avances en sprints, en los que se realizan una serie de tareas y se hacen reuniones en la fecha límite en cada uno para ver presentar los avances y recibir retrospectivas. Para seguir este proceso se utilizan herramientas como Zube y las issues de GitHub que permiten que todos los componentes del equipo puedan monitorizar los cambios y avances que se estén realizando. 
+
+Paralelamente, queremos que la aplicación este basada en tecnologías escalables y fácilmente mantenibles. Para esto, se utiliza SpringBoot con Maven, que proporciona la capacidad de desarrollar y desplegar una aplicación rápidamente, además de proporcionar una configuración automática y las ventajas de la inyección de dependencias. Adicionalmente, queremos utilizar patrones de diseño para resolver los problemas que puedan surgir desarrollando la aplicación, siguiendo así unas buenas prácticas.

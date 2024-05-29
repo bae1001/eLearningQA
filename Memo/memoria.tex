@@ -8,11 +8,16 @@
 \usepackage{lmodern} % Scalable font
 \usepackage{microtype}
 \usepackage{placeins}
+\usepackage{float}
+\usepackage{caption}
 
 \RequirePackage{booktabs}
 \RequirePackage[table]{xcolor}
 \RequirePackage{xtab}
 \RequirePackage{multirow}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{adjustbox}
 
 % Links
 \PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
@@ -106,7 +111,7 @@
 %
 % Nuevo comando para tablas pequeñas (menos de una página).
 \newcommand{\tablaSmall}[5]{%
- \begin{table}
+ \begin{table}[H]
   \begin{center}
    \rowcolors {2}{gray!35}{}
    \begin{tabular}{#2}
@@ -125,7 +130,7 @@
 %
 % Nuevo comando para tablas pequeñas (menos de una página).
 \newcommand{\tablaSmallSinColores}[5]{%
- \begin{table}[H]
+ \begin{table}
   \begin{center}
    \begin{tabular}{#2}
     \toprule
@@ -169,29 +174,30 @@
       \otoprule
     }
     \tablehead{
-      \multicolumn{#3}{l}{\small\sl continúa desde la página anterior}\\
+      \multicolumn{#3}{l}{\small continúa desde la página anterior}\\
       \toprule
       #5
       \otoprule
     }
     \tabletail{
       \hline
-      \multicolumn{#3}{r}{\small\sl continúa en la página siguiente}\\
+      \multicolumn{#3}{r}{\small continúa en la página siguiente}\\
     }
     \tablelasttail{
       \hline
     }
     \bottomcaption{#1}
     \rowcolors {2}{gray!35}{}
-    \begin{xtabular}{#2}
-      #6
-      \bottomrule
-    \end{xtabular}
+        \begin{tabular}{#2}
+          #6
+          \bottomrule
+        \end{tabular}% 
     \label{tabla:#4}
   \end{center}
+
 }
 
-%
+
 % Nuevo comando para tablas grandes con cabecera.
 \newcommand{\tablaSinColores}[6]{%
   \begin{center}
@@ -344,7 +350,9 @@
     \noindent\LARGE
     Presentado por \@author{}\\ 
     en Universidad de Burgos --- \@date{}\\
-    Tutor: \@tutor{}\\
+    Tutor: \@tutor{Carlos López Nozal}\\
+    Tutor: \@tutor{Raúl Marticorena Sánchez}\\
+
   }%
   \end{center}%
   \null
@@ -352,12 +360,12 @@
   }
 \makeatother
 
-\newcommand{\nombre}{Nombre del alumno} %%% cambio de comando
+\newcommand{\nombre}{Bilal Azar El Mourabit} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG}
+\title{Evaluación de calidad de cursos implementados en la versión de Moodle 4.x}
 \author{\nombre}
-\tutor{nombre tutor}
+\tutor{}
 \date{\today}
 
 \begin{document}
@@ -374,7 +382,11 @@
 
 \noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
 
-\noindent D. nombre tutor, profesor del departamento de nombre departamento, área de nombre área.
+\noindent D. Carlos López Nozal, profesor del departamento de Ingeniería
+Informática, área de Lenguajes y Sistemas Informáticos.
+
+\noindent D. Raúl Marticorena Sánchez, profesor del departamento de Ingeniería
+Informática, área de Lenguajes y Sistemas Informáticos.
 
 \noindent Expone:
 
@@ -392,14 +404,14 @@ En Burgos, {\large \today}
 \begin{minipage}{0.45\textwidth}
 \begin{flushleft} %\large
 Vº. Bº. del Tutor:\\[2cm]
-D. nombre tutor
+Carlos López Nozal
 \end{flushleft}
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
 \begin{flushleft} %\large
 Vº. Bº. del co-tutor:\\[2cm]
-D. nombre co-tutor
+Raúl Marticorena Sánchez
 \end{flushleft}
 \end{minipage}
 \hfill
@@ -422,13 +434,16 @@ D. nombre co-tutor
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este proyecto se desarrollará una herramienta que muestra la calidad de los cursos de Moodle. Utilizando
-las API que proporciona Moodle se generarán informes para ofrecer al usuario una guía para hacer los cambios necesarios que ayuden a una enseñanza más completa, aprovechando al máximo las capacidades de Moodle. 
+En estos últimos años hemos sido testigos del crecimiento de la docencia en línea en múltiples instituciones académicas y empresas. Según estadísticas \cite{estadisticas-crecimiento-elearning} el elearning ha crecido un 900\% desde el año 2000. Las universidades, las empresas, los centros de formación vial, las academias y muchas más empresas e instituciones están optando por este tipo de educación, por ser más barata, más rápida y la preferida por los estudiantes. La docencia en línea es la nueva forma de educar y requiere de marcos de calidad que ayuden a conseguir los mejores resultados en la educación y la formación a través de internet.
+
+En este proyecto se desarrolla una herramienta para medir la calidad de los cursos de Moodle. Para ello nos apoyamos en el estándar de calidad Quality Reference Framework for the quality of Moocs \cite{quality-reference-framework}. Además partimos de una versión anterior que funciona con las versiones 3.x de Moodle, por lo que una de las primeras ideas es hacer funcionar esta herramienta con versiones 4.x.
+
+Para lograr este objetivo nos servimos de la api de Moodle \cite{moodle-api} que ofrece una cantidad de información suficiente para generar informes de calidad interesantes y útiles para poder aprovechar al máximo las capacidades de Moodle.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-moodle,calidad,springboot,maven,docker,cursos de moodle.
+moodle,calidad,springboot,maven,docker,cursos de moodle,framework de calidad.
 \end{abstract}
 
 \clearpage
@@ -436,12 +451,18 @@ moodle,calidad,springboot,maven,docker,cursos de moodle.
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+In recent years we have witnessed the growth of online teaching in many academic institutions and companies.According to statistics \cite{estadisticas-crecimiento-elearning} e-learning has grown by 900\% since 2000.Universities, companies, road training centers, academies and many more companies and organizations are now using e-learning, academies and many more companies and institutions are opting for this type of education, as it is cheaper, faster and preferred by students. Online education is the new way of education and requires quality frameworks that help achieve the best results in education and formation through the Internet.
+
+Translated with DeepL.com (free version) 
+
+In this project we develop a tool to measure the quality of Moodle courses. For this purpose we rely on the quality standard Quality Reference Framework for the quality of Moocs \cite{quality-reference-framework}. In addition, we start from an earlier version that works with Moodle 3.x versions, so one of the first ideas is to make this tool work with 4.x versions.
+
+In order to achieve this goal we use the Moodle api \cite{moodle-api} which offers a sufficient amount of information to generate interesting and useful quality reports to make the most of Moodle's capabilities.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-keywords separated by commas.
+moodle,quality,springboot,maven,docker,moodle courses,quality framework.
 \end{abstract}
 
 \clearpage
