@@ -150,6 +150,13 @@ public class SpringController {
                 return IOUtils.toByteArray(in);
         }
 
+        @GetMapping(value = "/newIcon.png", produces = MediaType.IMAGE_PNG_VALUE)
+        public @ResponseBody byte[] newIcon() throws IOException {
+                InputStream in = getClass().getClassLoader()
+                                .getResourceAsStream("images/new.png");
+                return IOUtils.toByteArray(in);
+        }
+
         @GetMapping(value = "/excel-report")
         public void exportExcel(HttpServletResponse response, HttpServletRequest request) throws IOException {
                 Course course = (Course) request.getSession().getAttribute("course");

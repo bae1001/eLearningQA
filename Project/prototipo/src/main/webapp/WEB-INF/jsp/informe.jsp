@@ -108,7 +108,7 @@
           <img src="FullLogo.png" width="200" height="32" alt="eLearningQA">
         </div>
         <div class="btn-group col" role="group">
-          <button class="tablink btn btn-primary" onclick="exportExcel()">Exportar excel <img src="excelIcon.png"> </button>
+          <button class="tablink btn btn-primary" onclick="exportExcel()"><img src="newIcon.png">Exportar excel <img src="excelIcon.png"></button>
           <button class="tablink btn btn-primary active" style="box-shadow: none;" onclick="openTab(event, 'Fases')">Informe de fases</button>
           <button class="tablink btn btn-primary" style="box-shadow: none;" onclick="openTab(event, 'Matriz')">Evolución del rendimiento</button>
         </div><div class="col m-3 text-center"><a target="_blank" href=<%=vinculo%>><%=nombreCurso%></a></div></header>
