@@ -9,10 +9,14 @@ import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -476,21 +480,27 @@ public class ELearningQAFacade {
                     cell.setCellValue(String.valueOf(porcentajes.removeHead()) + "%");
                 } else {
                     CellStyle cellStyle = workbook.createCellStyle();
+                    XSSFFont font = workbook.createFont();
+                    font.setFontHeightInPoints((short) 20); // Tamaño de fuente
+                    font.setColor(IndexedColors.WHITE.getIndex());
+                    cellStyle.setFont(font);
+                    cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                    cellStyle.setAlignment(HorizontalAlignment.CENTER);
+                    cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+                    cell.setCellStyle(cellStyle);
                     if (puntos[puntosContados] == 1) {
                         cellStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-                        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                        cell.setCellValue("✓");
                         cell.setCellStyle(cellStyle);
                     } else {
                         cellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
-                        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                        cell.setCellValue("X");
                         cell.setCellStyle(cellStyle);
                     }
                     puntosContados++;
                 }
             }
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-            // FileOutputStream outputStream = new FileOutputStream(
-            // "registry/" + course.getFullname() + "_" + user + ".xlsx");
             workbook.write(outStream);
             workbook.close();
             return outStream;
