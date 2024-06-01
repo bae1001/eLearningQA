@@ -1231,6 +1231,7 @@ public class WebServiceClient {
                     .url(statisticFileUrl)
                     .build();
             String jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest).body().string();
+            LOGGER.info(jsonStatisticsResponse);
             return JsonParser.parseString(jsonStatisticsResponse).getAsJsonArray();
         } catch (JsonSyntaxException jsonMalFormed) {
             SessionService.setSessionExpired(true);
