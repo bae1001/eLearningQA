@@ -70,6 +70,7 @@
                     <li><strong>Los índices de facilidad de las preguntas son adecuados:</strong> se comprueba que los índices de facilidad de las preguntas de los cuestionarios estén dentro de los intervalos definidos.<u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>
                     <li><strong>Los cuestionarios tienen una participación adecuada:</strong> se comprueba que la participación de los cuestionarios sea superior a un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>
                     <li><strong>Las preguntas de los cuestionarios tienen un índice de discriminación adecuado:</strong> se comprueba que los índices de discriminación de las preguntas estén por encima de un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>  
+                    <li><strong>Los cuestionarios tienen un coeficiente de consistencia interna adecuado:</strong> se comprueba que los coeficientes de consistencia interna estén por encima de un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>  
                   </ul>
                     <p><strong>Evaluación:</strong></p>
                     <ul>
