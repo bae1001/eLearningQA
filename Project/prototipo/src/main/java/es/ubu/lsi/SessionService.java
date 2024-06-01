@@ -46,7 +46,7 @@ public class SessionService {
 	}
 
 	public static SessionService getInstance(String username, String password, String host) throws IOException {
-		if (SessionService.service == null) {
+		if (SessionService.service == null || SessionService.isSessionExpired == true) {
 			SessionService.service = new SessionService();
 			SessionService.setSSKeyString(username, password, host);
 			SessionService.setSessionExpired(false);
