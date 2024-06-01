@@ -936,7 +936,7 @@ public class WebServiceClient {
 
             JsonArray quizStatisticJson = WebServiceClient.getQuizStatisticJson(host,
                     quiz.getCoursemodule());
-
+            LOGGER.info(quizStatisticJson.getAsString());
             if (MOODLE_V4 <= moodleVersion) {
                 quiz.setQuestions(
                         WebServiceClient.getQuizQuestionsV4(quizStatisticJson, Integer.valueOf(quiz.getId())));
