@@ -816,6 +816,27 @@ public class WebServiceClient {
         return isCourseQuizzesEngagementCorrect;
     }
 
+    public static boolean isCoefficientOfInternalConsistencyCorrect(QuizList quizzes, AlertLog registro,
+            FacadeConfig config) {
+        boolean isCoefficientOfInternalConsistencyCorrect = true;
+        for (Quiz quiz : quizzes.getQuizzes()) {
+            Calendar currentDate = Calendar.getInstance();
+            if (quiz.getQuizCoefficientOfInternalConsistency() < config.getMinCoeffiecientOfInternalConsistency()
+                    && quiz.isVisible()
+                    && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
+                isCoefficientOfInternalConsistencyCorrect = false;
+
+                registro.guardarAlerta("realization quizzesCoeficientOfInternalConsistency",
+                        "El cuestionario: <a href=\" " + config.getHost() + "/mod/quiz/view.php?id="
+                                + quiz.getCoursemodule() + "\">" + quiz.getName()
+                                + "</a> tiene un coeficiente de consistencia interno bajo: <b>"
+                                + (int) (quiz.getQuizCoefficientOfInternalConsistency() * 100) + "%</b>");
+
+            }
+        }
+        return isCoefficientOfInternalConsistencyCorrect;
+    }
+
     public static boolean courseHasDatesAndSummaryDefinde(Course course, AlertLog registro) {
         boolean datesAndSummaryDefined = true;
         if (course.getStartdate() == 0) {
@@ -923,6 +944,9 @@ public class WebServiceClient {
                 quiz.setQuestions(
                         WebServiceClient.getQuizQuestionsV3(quizStatisticJson, Integer.valueOf(quiz.getId())));
             }
+            double coefficientOfInternalConsistency = getCoefficientOfInternalConsistency(quizStatisticJson,
+                    moodleVersion) / 100;
+            quiz.setQuizCoefficientOfInternalConsistency(coefficientOfInternalConsistency);
             quiz.setQuizDiscriminationIndex();
             quiz.setQuizFacilityIndex();
             quiz.setQuizRandomGuessScore();
@@ -1158,6 +1182,29 @@ public class WebServiceClient {
         }
 
         return quizQuestions;
+    }
+
+    private static double getCoefficientOfInternalConsistency(JsonArray quizSatisticJson, double MoodleVersion) {
+        double coefficientOfInternalConsistency = 0;
+
+        if (quizSatisticJson == null) {
+            return coefficientOfInternalConsistency;
+        }
+
+        JsonArray quizStatistic = quizSatisticJson.get(0).getAsJsonArray();
+        if (quizStatistic.size() > 0) {
+            JsonObject quizStatisticSummary = quizStatistic.get(0).getAsJsonObject();
+            JsonElement coefficientOfInternalConsistencyValue = quizStatisticSummary
+                    .get("coefficientofinternalconsistencyforhighestgradedattempt");
+            if (coefficientOfInternalConsistencyValue != null) {
+                String coefficientOfInternalConsistencyString = coefficientOfInternalConsistencyValue.getAsString()
+                        .replace("%", "");
+                coefficientOfInternalConsistency = Double.valueOf(coefficientOfInternalConsistencyString);
+            }
+        }
+
+        return coefficientOfInternalConsistency;
+
     }
 
     public static JsonArray getQuizStatisticJson(String host, String courseModule) {

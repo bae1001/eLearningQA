@@ -20,6 +20,7 @@ public class FacadeConfig {
     private double minQuizEngagementPercentage;
     private double maxRandomScoreInQuizz;
     private double minQuizDiscriminationIndex;
+    private double minCoeffiecientOfInternalConsistency;
     private String host;
 
     public String getHost() {
@@ -51,6 +52,8 @@ public class FacadeConfig {
             minQuizEngagementPercentage = Double.parseDouble(properties.getProperty("min_quiz_engagement_percentage"));
             maxRandomScoreInQuizz = Double.parseDouble(properties.getProperty("max_random_guess_score"));
             minQuizDiscriminationIndex = Double.parseDouble(properties.getProperty("discrimination_index_min"));
+            minCoeffiecientOfInternalConsistency = Double
+                    .parseDouble(properties.getProperty("coefficient_of_internal_consistency_min"));
 
         } catch (Exception e) {
             LOGGER.error("exception", e);
@@ -107,5 +110,9 @@ public class FacadeConfig {
 
     public double getMinQuizDiscriminationIndex() {
         return minQuizDiscriminationIndex;
+    }
+
+    public double getMinCoeffiecientOfInternalConsistency() {
+        return minCoeffiecientOfInternalConsistency;
     }
 }

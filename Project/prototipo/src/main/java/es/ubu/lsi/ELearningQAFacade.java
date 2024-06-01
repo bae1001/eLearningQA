@@ -26,7 +26,7 @@ public class ELearningQAFacade {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int CHECKS_DISENO = 8;
     private static final int CHECKS_IMPLEMENTACION = 5;
-    private static final int CHECKS_REALIZACION = 7;
+    private static final int CHECKS_REALIZACION = 8;
     private static final int CHECKS_EVALUACION = 2;
     private static final int CHECKS_TOTAL = CHECKS_DISENO + CHECKS_IMPLEMENTACION + CHECKS_REALIZACION
             + CHECKS_EVALUACION;
@@ -102,7 +102,7 @@ public class ELearningQAFacade {
         List<es.ubu.lsi.model.Module> modulosMalFechados = WebServiceClient.obtenerModulosMalFechados(curso,
                 listaModulos);
         List<Resource> recursosDesfasados = WebServiceClient.obtenerRecursosDesfasados(curso, listaRecursos);
-        int[] puntosComprobaciones = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        int[] puntosComprobaciones = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         if (isestaProgresoActivado(listaEstados, registro)) {
             puntosComprobaciones[0]++;
         }
@@ -163,11 +163,14 @@ public class ELearningQAFacade {
         if (isDiscriminationIndexInQuizzesCorrect(quizzes, registro)) {
             puntosComprobaciones[19]++;
         }
-        if (isRespondenFeedbacks(listaAnalisis, listaUsuarios, registro)) {
+        if (isCoefficientOfInternalConsistencyCorrect(quizzes, registro)) {
             puntosComprobaciones[20]++;
         }
-        if (isUsaSurveys(listaSurveys, registro)) {
+        if (isRespondenFeedbacks(listaAnalisis, listaUsuarios, registro)) {
             puntosComprobaciones[21]++;
+        }
+        if (isUsaSurveys(listaSurveys, registro)) {
+            puntosComprobaciones[22]++;
         }
         return puntosComprobaciones;
     }
@@ -177,8 +180,8 @@ public class ELearningQAFacade {
                 + puntos[7];
         int contadorImplementacion = puntos[8] + puntos[9] + puntos[10] + puntos[11] + puntos[12];
         int contadorRealizacion = puntos[13] + puntos[14] + puntos[15] + puntos[16] + puntos[17] + puntos[18]
-                + puntos[19];
-        int contadorEvaluacion = puntos[20] + puntos[21];
+                + puntos[19] + puntos[20];
+        int contadorEvaluacion = puntos[21] + puntos[22];
         int contadorTotal = contadorDiseno + contadorImplementacion + contadorRealizacion + contadorEvaluacion;
         return camposInformeFases[0] + generarCampoRelativo((float) contadorTotal / nroCursos, CHECKS_TOTAL) +
                 camposInformeFases[1] + generarCampoRelativo((float) contadorDiseno / nroCursos, CHECKS_DISENO) +
@@ -189,9 +192,9 @@ public class ELearningQAFacade {
                 camposInformeFases[16]
                 + generarCampoRelativo((float) contadorRealizacion / nroCursos, CHECKS_REALIZACION) +
                 generarFilas(new int[] { 17, 13 }, CHECKS_REALIZACION, puntos, nroCursos) +
-                camposInformeFases[24] + generarCampoRelativo((float) contadorEvaluacion / nroCursos, CHECKS_EVALUACION)
+                camposInformeFases[25] + generarCampoRelativo((float) contadorEvaluacion / nroCursos, CHECKS_EVALUACION)
                 +
-                generarFilas(new int[] { 25, 20 }, CHECKS_EVALUACION, puntos, nroCursos) + camposInformeFases[27];
+                generarFilas(new int[] { 26, 21 }, CHECKS_EVALUACION, puntos, nroCursos) + camposInformeFases[28];
     }
 
     private String generarFilas(int[] posiciones, int cantidad, int[] puntos, int nroCursos) {
@@ -306,6 +309,11 @@ public class ELearningQAFacade {
         return WebServiceClient.isDiscriminationIndexInQuizzesCorrect(quizzes, registro, config);
     }
 
+    public boolean isCoefficientOfInternalConsistencyCorrect(QuizList quizzes,
+            AlertLog registro) {
+        return WebServiceClient.isCoefficientOfInternalConsistencyCorrect(quizzes, registro, config);
+    }
+
     public boolean courseHasDatesAndSummaryDefinde(Course course, AlertLog registro) {
         return WebServiceClient.courseHasDatesAndSummaryDefinde(course, registro);
     }
@@ -365,12 +373,13 @@ public class ELearningQAFacade {
                 { 1, 3, 1, 1, 3, 1, 1, 3, 1 },
                 { 1, 3, 1, 1, 3, 1, 1, 3, 1 },
                 { 1, 3, 1, 1, 3, 1, 1, 3, 1 },
+                { 1, 3, 1, 1, 3, 1, 1, 3, 1 },
                 { 1, 1, 3, 1, 1, 3, 1, 1, 3 },
                 { 1, 1, 3, 1, 1, 3, 1, 1, 3 }
         };
         float[] porcentajes = new float[9];
-        int[] puntuacionesMax = new int[] { 42 * numeroCursos, 37 * numeroCursos, 23 * numeroCursos, 20 * numeroCursos,
-                29 * numeroCursos, 20 * numeroCursos, 12 * numeroCursos, 13 * numeroCursos, 14 * numeroCursos };
+        int[] puntuacionesMax = new int[] { 43 * numeroCursos, 40 * numeroCursos, 24 * numeroCursos, 21 * numeroCursos,
+                32 * numeroCursos, 21 * numeroCursos, 13 * numeroCursos, 16 * numeroCursos, 15 * numeroCursos };
         for (int i = 0; i < matrizPuntos.length; i++) {
             for (int j = 0; j < porcentajes.length; j++) {
                 porcentajes[j] += (float) (matrizPuntos[i][j] * puntos[i]) / puntuacionesMax[j];
@@ -422,6 +431,14 @@ public class ELearningQAFacade {
                     "title=\"Se comprueba que el índice de discriminación de " +
                             "las preguntas de los cuestionarios sea superior al "
                             + (int) (config.getMinQuizDiscriminationIndex() * 100) + "%\"");
+        }
+
+        if (tableRowIndex == 24) {
+            tableRow = tableRow.replace(
+                    regexTooltip,
+                    "title=\"Se comprueba que el índice de consistencia interna de " +
+                            "los cuestionarios sea superior al "
+                            + (int) (config.getMinCoeffiecientOfInternalConsistency() * 100) + "%\"");
         }
 
         return tableRow;

@@ -13,6 +13,7 @@ public class Quiz {
     private double quizFacilityIndex;
     private double quizRandomGuessScore;
     private double quizDiscriminationIndex;
+    private double quizCoefficientOfInternalConsistency;
     private List<Question> questions;
     private List<AttemptsList> quizAttempts;
 
@@ -144,6 +145,14 @@ public class Quiz {
             quizDiscriminationIndex = 0;
         }
 
+    }
+
+    public double getQuizCoefficientOfInternalConsistency() {
+        return quizCoefficientOfInternalConsistency;
+    }
+
+    public void setQuizCoefficientOfInternalConsistency(double quizCoefficientOfInternalConsistency) {
+        this.quizCoefficientOfInternalConsistency = quizCoefficientOfInternalConsistency;
     }
 
 }

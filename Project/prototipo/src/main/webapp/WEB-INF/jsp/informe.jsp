@@ -21,7 +21,7 @@
           String courseid= request.getParameter("courseid");
           vinculo+=courseid;
           if(courseid==null){
-            puntosComprobaciones=new int[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            puntosComprobaciones=new int[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             List<Course> listaCursos=fachada.getListaCursos(token);
             for(Course curso:listaCursos){
               alertas.guardarTitulo(curso.getFullname());

@@ -23,3 +23,5 @@ min_quiz_engagement_percentage=0.8
 max_random_guess_score=0.010
 #Minimum discrimination index for a question in quiz
 discrimination_index_min=0.5
+#Minimum coefficient of internal consistency for a quiz
+coefficient_of_internal_consistency_min=0.75
