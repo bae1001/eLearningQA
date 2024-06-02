@@ -3,6 +3,8 @@
 [![Java CI with Maven](https://github.com/bae1001/eLearningQA/actions/workflows/maven.yml/badge.svg)](https://github.com/bae1001/eLearningQA/actions/workflows/maven.yml)
 [![](https://img.shields.io/github/deployments/RobertoArastiBlanco/eLearningQA/elearningqa?label=Heroku%20deployment&style=plastic)](https://elearningqa.herokuapp.com)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bae1001_eLearningQA&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bae1001_eLearningQA)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ## Description
 
 eLearningQA is a web app that uses Moodle's web service 
