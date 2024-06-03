@@ -805,7 +805,7 @@ public class WebServiceClient {
                     && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isCourseQuizzesEngagementCorrect = false;
 
-                registro.guardarAlerta("realization quizzesEngagement",
+                registro.guardarAlerta("design quizzesEngagement",
                         "El cuestionario: <a href=\" " + config.getHost() + "/mod/quiz/view.php?id="
                                 + quiz.getCoursemodule() + "\">" + quiz.getName()
                                 + "</a> no tiene la suficiente participación. Un <b>"
@@ -1002,8 +1002,9 @@ public class WebServiceClient {
             AlertLog registro, FacadeConfig config) {
         boolean isRandomGuessScoreInQuizzesCorrect = true;
         DecimalFormat formatter = new DecimalFormat("#0.00");
+
         if (SessionService.isSessionExpired()) {
-            registro.guardarAlerta("realization",
+            registro.guardarAlerta("design",
                     "No se puede obtener las estadísticas de calificación aleatoria estimada de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
             return false;
         }
