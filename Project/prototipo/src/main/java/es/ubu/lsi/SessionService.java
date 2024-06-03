@@ -42,7 +42,7 @@ public class SessionService {
 	private void addTrustedSites() {
 		trustedSites = new ArrayList<String>();
 		trustedSites.add("https://school.moodledemo.net");
-		trustedSites.add("https://ubuvirtual.ubu.es/");
+		trustedSites.add("https://ubuvirtual.ubu.es");
 	}
 
 	public static SessionService getInstance(String username, String password, String host) throws IOException {
@@ -107,6 +107,7 @@ public class SessionService {
 	}
 
 	private boolean checkSSKey(String host) {
+		LOGGER.info("Check the sskey");
 		String testUrl = host + "/lib/ajax/service.php?sesskey=" + sessionKey + "&info=core_user_set_user_preferences";
 		String jsonString = "[{\"index\":0,\"methodname\":\"core_user_set_user_preferences\",\"args\":{\"preferences\":[{\"name\":\"drawer-open-index\",\"value\":false,\"userid\":0}]}}]";
 		RequestBody requestBody = RequestBody.create(jsonString, MediaType.parse("application/json"));
@@ -120,6 +121,7 @@ public class SessionService {
 		} catch (IllegalStateException e) {
 			return true;
 		} catch (Exception e) {
+			LOGGER.error("Error checking the sskey");
 			return false;
 		}
 	}

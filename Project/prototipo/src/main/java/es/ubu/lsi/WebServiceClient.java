@@ -1209,7 +1209,9 @@ public class WebServiceClient {
 
     public static JsonArray getQuizStatisticJson(String host, String courseModule) {
         String sessionKey = sessionService.getSSKey(host);
+
         if (sessionKey == null) {
+            LOGGER.info("Session key not avaliable for statistic file retrieval.");
             return null;
         }
         String refreshStatisticReportPageUrl = host + "/mod/quiz/report.php";
@@ -1225,11 +1227,13 @@ public class WebServiceClient {
                 .url(refreshStatisticReportPageUrl)
                 .post(requestBody)
                 .build();
-
+        LOGGER.info("Updating statistic file.");
         try (Response recalculateStatisticsResponse = sessionService.getResponse(recalculationRequest)) {
+            LOGGER.info("Statistic file updated. Response status: " + recalculateStatisticsResponse.code());
             Request jsonStatisticsRequest = new Request.Builder()
                     .url(statisticFileUrl)
                     .build();
+            LOGGER.info("Downloading statistic file");
             String jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest).body().string();
             LOGGER.info(jsonStatisticsResponse);
             return JsonParser.parseString(jsonStatisticsResponse).getAsJsonArray();
