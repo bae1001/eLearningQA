@@ -919,7 +919,7 @@ public class WebServiceClient {
 
         String quizzesListString = restTemplate.getForObject(url, String.class);
         Gson gson = new Gson();
-        QuizList quizzesList = gson.fromJson(quizzesListString, QuizList.class);
+        QuizList quizzesList = gson.fromJson(cambiaFormatoVisible(quizzesListString), QuizList.class);
 
         if (quizzesList == null) {
             return new QuizList();
