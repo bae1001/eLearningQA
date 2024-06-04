@@ -43,6 +43,7 @@ public class SessionService {
 		trustedSites = new ArrayList<String>();
 		trustedSites.add("https://school.moodledemo.net");
 		trustedSites.add("https://ubuvirtual.ubu.es");
+		trustedSites.add("https://formacion.ubuvirtual.ubu.es/G9");
 	}
 
 	public static SessionService getInstance(String username, String password, String host) throws IOException {
