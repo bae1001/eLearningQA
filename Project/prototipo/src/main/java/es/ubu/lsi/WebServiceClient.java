@@ -662,11 +662,13 @@ public class WebServiceClient {
             opendate = 0;
             duedate = 0;
             dates = modulo.getDates();
-            for (Date fecha : dates) {
-                if (fecha.getLabel().contains("pened")) {
-                    opendate = fecha.getTimestamp();
-                } else {
-                    duedate = fecha.getTimestamp();
+            if (dates != null) {
+                for (Date fecha : dates) {
+                    if (fecha.getLabel().contains("pened")) {
+                        opendate = fecha.getTimestamp();
+                    } else {
+                        duedate = fecha.getTimestamp();
+                    }
                 }
             }
             if (!comprobarFechas(startdate, enddate, opendate, duedate)) {
