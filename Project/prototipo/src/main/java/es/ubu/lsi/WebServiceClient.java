@@ -1008,6 +1008,11 @@ public class WebServiceClient {
                     "No se puede obtener las estadísticas de calificación aleatoria estimada de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
             return false;
         }
+
+        if (quizzes.getQuizzes().size() == 0) {
+            return false;
+        }
+
         for (Quiz quiz : quizzes.getQuizzes()) {
             if (quiz.getQuizRandomGuessScore() > config.getMaxRandomScoreInQuizz()) {
                 isRandomGuessScoreInQuizzesCorrect = false;
@@ -1185,22 +1190,38 @@ public class WebServiceClient {
         return quizQuestions;
     }
 
-    private static double getCoefficientOfInternalConsistency(JsonArray quizSatisticJson, double MoodleVersion) {
+    private static double getCoefficientOfInternalConsistency(JsonArray quizSatisticJson, double moodleVersion) {
         double coefficientOfInternalConsistency = 0;
 
         if (quizSatisticJson == null) {
             return coefficientOfInternalConsistency;
         }
 
-        JsonArray quizStatistic = quizSatisticJson.get(0).getAsJsonArray();
-        if (quizStatistic.size() > 0) {
-            JsonObject quizStatisticSummary = quizStatistic.get(0).getAsJsonObject();
-            JsonElement coefficientOfInternalConsistencyValue = quizStatisticSummary
-                    .get("coefficientofinternalconsistencyforhighestgradedattempt");
-            if (coefficientOfInternalConsistencyValue != null) {
-                String coefficientOfInternalConsistencyString = coefficientOfInternalConsistencyValue.getAsString()
-                        .replace("%", "");
-                coefficientOfInternalConsistency = Double.valueOf(coefficientOfInternalConsistencyString);
+        if (moodleVersion >= MOODLE_V4) {
+            JsonArray quizStatistic = quizSatisticJson.get(0).getAsJsonArray();
+            if (quizStatistic.size() > 0) {
+                JsonObject quizStatisticSummary = quizStatistic.get(0).getAsJsonObject();
+                JsonElement coefficientOfInternalConsistencyValue = quizStatisticSummary
+                        .get("coefficientofinternalconsistencyforhighestgradedattempt");
+                if (coefficientOfInternalConsistencyValue != null) {
+                    String coefficientOfInternalConsistencyString = coefficientOfInternalConsistencyValue.getAsString()
+                            .replace("%", "");
+                    coefficientOfInternalConsistency = Double.valueOf(coefficientOfInternalConsistencyString);
+                }
+            }
+        } else {
+
+            JsonArray quizStatistic = quizSatisticJson.get(0).getAsJsonArray();
+            if (quizStatistic.size() > 0) {
+                JsonArray quizStatisticSummary = quizStatistic.get(0).getAsJsonArray().get(0).getAsJsonArray().get(0)
+                        .getAsJsonArray();
+                JsonElement coefficientOfInternalConsistencyValue = quizStatisticSummary.get(11).getAsJsonObject();
+
+                if (coefficientOfInternalConsistencyValue != null) {
+                    String coefficientOfInternalConsistencyString = coefficientOfInternalConsistencyValue.getAsString()
+                            .replace("%", "");
+                    coefficientOfInternalConsistency = Double.valueOf(coefficientOfInternalConsistencyString);
+                }
             }
         }
 
