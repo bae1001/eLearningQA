@@ -1083,10 +1083,12 @@ public class WebServiceClient {
         List<Question> quizQuestions = new ArrayList<Question>();
 
         if (quizSatisticJson == null) {
+            LOGGER.info("None questiones returned because array was null");
             return quizQuestions;
         }
 
         if (quizSatisticJson.size() < 2) {
+            LOGGER.info("None questiones returned because array was too small");
             return quizQuestions;
         }
 
