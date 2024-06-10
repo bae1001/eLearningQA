@@ -967,11 +967,11 @@ public class WebServiceClient {
     public static boolean isCourseFacilityIndexCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         boolean isCourseFacilityIndexCorrect = true;
-        if (SessionService.isSessionExpired()) {
-            registro.guardarAlerta("realization",
-                    "No se puede obtener las estadísticas de ínidces de facilidad de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
+
+        if (quizzes.getQuizzes().size() == 0) {
             return false;
         }
+
         for (Quiz quiz : quizzes.getQuizzes()) {
             Calendar currentDate = Calendar.getInstance();
             if ((quiz.getQuizFacilityIndex() < config.getFacilityIndexMin()
@@ -1004,12 +1004,6 @@ public class WebServiceClient {
             AlertLog registro, FacadeConfig config) {
         boolean isRandomGuessScoreInQuizzesCorrect = true;
         DecimalFormat formatter = new DecimalFormat("#0.00");
-
-        if (SessionService.isSessionExpired()) {
-            registro.guardarAlerta("design",
-                    "No se puede obtener las estadísticas de calificación aleatoria estimada de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
-            return false;
-        }
 
         if (quizzes.getQuizzes().size() == 0) {
             return false;
@@ -1044,16 +1038,15 @@ public class WebServiceClient {
     public static boolean isDiscriminationIndexInQuizzesCorrect(QuizList quizzes,
             AlertLog registro, FacadeConfig config) {
         boolean isDiscriminationIndexInQuizzesCorrect = true;
-        if (SessionService.isSessionExpired()) {
-            registro.guardarAlerta("realization",
-                    "No se puede obtener las estadísticas de índices de discriminación de cuestionarios. Porfavor desconectese y vuelva a intentarlo.");
+
+        if (quizzes.getQuizzes().size() == 0) {
             return false;
         }
+
         for (Quiz quiz : quizzes.getQuizzes()) {
             Calendar currentDate = Calendar.getInstance();
 
             if (quiz.getQuizDiscriminationIndex() < config.getMinQuizDiscriminationIndex()
-
                     && quiz.isVisible() && (int) (currentDate.getTimeInMillis() / 1000) > quiz.getTimeclose()) {
                 isDiscriminationIndexInQuizzesCorrect = false;
 
