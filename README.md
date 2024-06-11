@@ -51,7 +51,7 @@ docker build -t <imageName> .
 ```
 4. To run the image execute:
 ```
-run -p <outSidePort>:8080 <imageName>
+docke run -p <outSidePort>:8080 <imageName>
 ```
 Once the last step is made it will be possible to monitor the application from Docker Desktop.
 
