@@ -27,12 +27,12 @@ teachers using Moodle.
 
 ## Snapshots
 Login page
-![Login page](https://github.com/RobertoArastiBlanco/eLearningQA/blob/main/Memo/plantillaLatex-master/img/Login.PNG?raw=true)
+![Login page](Project/prototipo/src/main/resources/images/Login.PNG?raw=true)
 Main page
-![Main page](https://github.com/RobertoArastiBlanco/eLearningQA/blob/main/Memo/plantillaLatex-master/img/ListaCursos.PNG?raw=true)
+![Main page](Project/prototipo/src/main/resources/images/ListaCursos.PNG?raw=true)
 Report page
-![Phase report](https://github.com/RobertoArastiBlanco/eLearningQA/blob/main/Memo/plantillaLatex-master/img/InformeFases.PNG?raw=true)
-![Evolution graph](https://github.com/RobertoArastiBlanco/eLearningQA/blob/main/Memo/plantillaLatex-master/img/Evolucion.PNG?raw=true)
+![Phase report](Project/prototipo/src/main/resources/images/InformeFases.PNG?raw=true)
+![Evolution graph](Project/prototipo/src/main/resources/images/Evolucion.PNG?raw=true)
 
 
 # Docker in eLearningQA
