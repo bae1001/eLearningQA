@@ -39,6 +39,7 @@
                     <li><strong>Login:</strong> para acceder a la aplicación son necesarias las credenciales de acceso a una cuenta de la plataforma a la que pretenda conectarse. Debe introducir su usuario y contraseña en los campos &quot;Username&quot; y &quot;Password&quot;. También es necesario indicar el host al que conectarse y se puede elegir la configuración de las comprobaciones en el menú desplegable. Para acceder a la página principal, pulse el botón &quot;Entrar&quot; tras haber rellenado el formulario.</li>
                     <li><strong>Desconectar:</strong> desde la página principal, si desea finalizar su sesión, pulse el botón &quot;Desconectar&quot;. Esto invalidará sus credenciales y le impedirá acceder a la aplicación hasta que se registre de nuevo con unas credenciales válidas.</li>
                     <li><strong>Generar informe específico:</strong> la página principal muestra una tabla con todos los cursos en los que se encuentra matriculado el usuario registrado en formato de enlace. Al clicar un enlace, se generará un informe en una pestaña aparte del navegador que mostrará los resultados del análisis que ha realizado la aplicación sobre el curso correspondiente.</li><li><strong>Generar informe global:</strong> en la página principal hay un enlace llamado &quot;Generar informe global&quot;. Al hacer clic sobre este, se generará un informe en una pestaña aparte del navegador que mostrará un resumen de los análisis de todos los cursos en los que se encuentra matriculado el profesor.</li>
+                    <li><strong>Exportar informes de excel:</strong> en la página del reporte de un curso, hay un botón &quot;Exportar Excel&quot; en la cabecera de la página que permite exportar un resumen del informe generado a un archivo .xlsx.</li>
                     </ul>
                     <h3>Explicación de las comprobaciones de los informes:</h3>
                     <p>Las siguientes comprobaciones están relacionadas con los roles, fases, y perspectivas mencionados anteriormente. Los distintos procesos del diseño instruccional se encuentran divididos en fases, con ciertas perspectivas en mente, y son responsabilidad directa o indirecta de ciertos roles. Al estar las comprobaciones ligadas a esos procesos se muestran agrupadas por fases, y después de la explicación se indican los roles responsables e involucrados, además de las perspectivas correspondientes.</p>
@@ -50,7 +51,9 @@
                     <li><strong>El curso tiene actividades grupales:</strong> se comprueba que existan actividades con entrega grupal habilitada en el curso. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica</li>
                     <li><strong>Los estudiantes pueden ver las condiciones necesarias para completar una actividad:</strong> se comprueba que esté habilitada la opción de mostrar las condiciones para completar una actividad en el curso. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica</li>
                     <li><strong>Todas las actividades tienen la misma nota máxima en el calificador:</strong> se comprueba que exista una consistencia en las notas máximas de los items de calificación (tareas, entregas, cuestionarios) del curso. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica</li>
-                    </ul>
+                    <li><strong>El curso tiene fechas y descripción definidas:</strong> se comprueba que estén definidas las fechas de inicio y fín del curso así como una descripción. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica y Estratégica</li>  
+                    <li><strong>Las preguntas de los cuestionarios tienen una calificación aleatoria adecuada:</strong> se comprueba que el índice de calificación aleatoria de los cuestionarios este por debajo de un valor definido. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador <u>Perspectivas:</u> Pedagógica</li>  
+                  </ul>
                     <p><strong>Implementación:</strong></p>
                     <ul>
                     <li><strong>Los recursos están actualizados:</strong> se comprueba que los recursos del curso tengan una fecha de creación reciente. <u>Responsable:</u> Diseñador <u>Involucrados:</u> Facilitador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
@@ -65,11 +68,16 @@
                     <li><strong>Se ofrece retroalimentación de las tareas:</strong> se comprueba que el profesor deje comentarios en la mayoría de calificaciones que haga. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
                     <li><strong>Las tareas están calificadas:</strong> se comprueba que no hayan entregas de alumnos que hayan pasado una semana sin calificación. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
                     <li><strong>El calificador muestra cómo ponderan las diferentes tareas:</strong> se comprueba que el calificador muestre los pesos de los items de calificación. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica y Tecnológica</li>
-                    </ul>
+                    <li><strong>Los índices de facilidad de las preguntas son adecuados:</strong> se comprueba que los índices de facilidad de las preguntas de los cuestionarios estén dentro de los intervalos definidos.<u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>
+                    <li><strong>Los cuestionarios tienen una participación adecuada:</strong> se comprueba que la participación de los cuestionarios sea superior a un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>
+                    <li><strong>Las preguntas de los cuestionarios tienen un índice de discriminación adecuado:</strong> se comprueba que los índices de discriminación de las preguntas estén por encima de un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>  
+                    <li><strong>Los cuestionarios tienen un coeficiente de consistencia interna adecuado:</strong> se comprueba que los coeficientes de consistencia interna estén por encima de un valor definido. <u>Responsable:</u> Facilitador <u>Involucrados:</u> Diseñador y Proveedor <u>Perspectivas:</u> Pedagógica, Estratégica y Tecnológica</li>  
+                  </ul>
                     <p><strong>Evaluación:</strong></p>
                     <ul>
                     <li><strong>La mayoría de alumnos responden a los feedbacks:</strong> se comprueba que no hayan muchos alumnos que no respondan a los feedbacks. <u>Responsable:</u> Proveedor <u>Involucrados:</u> Diseñador y Facilitador <u>Perspectivas:</u> Pedagógica, Tecnológica, y Estratégica</li>
                     <li><strong>Se utilizan encuestas de opinión:</strong> se comprueba que el curso contenga encuestas de opinión. <u>Responsable:</u> Proveedor <u>Involucrados:</u> Diseñador y Facilitador <u>Perspectivas:</u> Pedagógica, Tecnológica, y Estratégica</li></ul>
+                <p>Para más información sobre las estadísticas de cuesionarios puede consultar la <a href="https://docs.moodle.org/403/en/images_en/e/e9/Brief_Guide_to_iCMA_reports.pdf">documentación</a>.<p>
           </div>
     </div>
     <footer class="d-flex justify-content-evenly p-3 bg-dark text-white">
@@ -77,7 +85,7 @@
 
       <a>Manual de usuario</a>
       <a target="_blank" href="./about">Acerca de</a>
-      <a href="mailto:rab1002@alu.ubu.es">Contacto</a>
+      <a href="mailto:bae1001@alu.ubu.es">Contacto</a>
     </footer>
 </body>
 </html>

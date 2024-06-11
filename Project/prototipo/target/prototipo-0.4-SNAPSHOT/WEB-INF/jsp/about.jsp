@@ -18,7 +18,7 @@
           <div class="card w-100 m-3 p-3 min-vh-100">
                 <img src="cabecera.jpg" class="mx-auto" height="150" width="500" alt="Universidad de Burgos">
                 <img src="escudoInfor.png" class="mx-auto" height="300" width="300" alt="Grado en Ingenieria Informática">
-                <p class="mx-auto">Trabajo de fin de grado realizado por Roberto Arasti Blanco (2021-2022). <br>
+                <p class="mx-auto">Trabajo de fin de grado realizado por Bilal Azar El Mourabit (2023-2024). <br>
                 Tutorizado por Raúl Marticorena Sánchez y Carlos López Nozal. <br>
                 Esta aplicación utiliza la Eclipse Public License (<a href="https://www.eclipse.org/org/documents/epl-v10.php">más información</a>).</p>
           </div>
@@ -28,7 +28,7 @@
 
       <a target="_blank" href="./manual">Manual de usuario</a>
       <a>Acerca de</a>
-      <a href="mailto:rab1002@alu.ubu.es">Contacto</a>
+      <a href="mailto:bae1001@alu.ubu.es">Contacto</a>
     </footer>
 </body>
 </html>
