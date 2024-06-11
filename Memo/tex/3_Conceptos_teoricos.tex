@@ -1,6 +1,6 @@
 \capitulo{3}{Conceptos teóricos}
 
-A continuación explicaremos algunos conceptos teóricos, es importante recalcar que los conceptos que explicamos aquí están apoyados en la explicación de los mismo que encontramos en el TFG anterior a este. \footnote{Créditos al proyecto de Roberto Arasti Blanco: eLearningQA\label{tfg-RobertoArasto}}.
+A continuación se van a explicar algunos conceptos teóricos, es importante recalcar que los conceptos que aquí se explican están apoyados en la explicación de los mismo que se encuentran en el TFG anterior \footnote{Proyecto de Roberto Arasti Blanco: eLearningQA\label{tfg-RobertoArasto}}.
 
 \section{Definiciones básicas}
 \begin{itemize}
@@ -15,8 +15,12 @@ A continuación explicaremos algunos conceptos teóricos, es importante recalcar
     \item \textbf{API de Moodle:} conjunto de definiciones y protocolos que permite a software de terceros interactuar con el software de Moodle. Estas definiciones las encontramos en la documentación oficial\cite{moodle-api}.
     \item \textbf{MOOC:} Massive Open Online Courses o Cursos En Línea Gratuitos Masivos, hacen referencia a cursos basados en e-learning que cada vez están más extendidos en los centro educativos de todo el mundo.
     \item \textbf{Gateway:} Puerta de enlace entre datos, archivos y funcionalidades gestionadas por el servidor y los usuarios \cite{gateway}.
+    \item \textbf{Cuestionario:} Actividad utilizada para realizar pruebas de conocimientos sobre alguna materia, mediante el uso de preguntas de distinto.
+    \item \textbf{Índice de Facilidad:} Índice utilizado para determinar la facilidad de las preguntas de un cuestionario \cite{estadisticas-examen}.
+    \item \textbf{Índice de Discriminación:} Índice utilizado para determinar la eficiencia de una pregunta para discriminar entre los alumnos mas habilidosos de los que menos \cite{estadisticas-examen}.
+    \item \textbf{Coeficiente de consistencia interna:} Coeficiente que determina la eficiencia de las preguntas para discriminar entre la habilidad de los alumnos y para determinar la calidad de las preguntas en el conjunto del cuestionario \cite{estadisticas-examen}.
+    \item \textbf{Puntuación aleatoria estimada:} Puntuación que una pregunta puede tener si se responde de forma aleatoria \cite{estadisticas-examen}.
 \end{itemize}
-
 
 \section{Marco de referencia de calidad para MOOCs}
 Uno de los documentos más importantes para el desarrollo de este proyecto es el Marco de referencia de calidad para MOOCs\cite{quality-reference-framework} expedido por la Alianza Europea para la calidad de los MOOCs. Para la creación de este marco se obtuvo retroalimentación de diez mil personas, todas ellas participantes de algún curso en línea, tanto como diseñador,educador,proveedor o consumidor. Con toda la información obtenida de las opiniones de las distintas personas involucradas en el proceso se concluyeron unas visiones generales para que las personas encargadas de la gestión de algún curso en línea puedan seguir.
@@ -24,16 +28,12 @@ Uno de los documentos más importantes para el desarrollo de este proyecto es el
 En primer lugar hay que entender que existen 3 dimensiones a la hora de crear cursos en línea de calidad: las fases, las perspectivas y los roles.
 
 \subsection{Fases}
-En este apartado encontramos 5 fases que definen el proceso previo a la creación del curso hasta la consumición del curso por parte del alumnado.
+En este apartado se encuentran 5 fases \ref{fig:fases-calidad} que definen el proceso previo a la creación del curso hasta la participación del alumno en el curso.
 \begin{enumerate}
     \item \textbf{Análisis:} Se comprenden tareas como la identificación y descripción de casos de uso y requerimientos, así como los límites y las necesidades. Llevado a un caso concreto podríamos pensar en la identificación de los estudiantes objetivo y su nivel académico o la planificación temporal y financiera. El estudio de la necesidad de cuestionarios y sus objetivos.
-    
-    \item \textbf{Diseño:} Se comprenden tareas de conceptualización y diseño de los cursos. Llevado a un caso concreto podríamos pensar en la organización de los conceptos y los roles o la definición de los objetivos de aprendizaje. El diseño de cuestionarios y actividades que animen la interacción.
-    
-    \item \textbf{Implementación:} Se comprenden las tareas de implementación de una versión inicial del MOOC y las pruebas del mismo. Llevado a un caso concreto podemos pensar que una vez creado el curso se implementan contenidos técnicos o recursos y se prueban. Implementación de los cuestionarios diseñados y asegurar su correcto mantenimiento.
-    
-    \item \textbf{Realización:} Se comprenden las tareas de puesta en funcionamiento del MOOC así como el soporte. Llevado a un caso concreto podríamos pensar en la administración del curso o la revista de niveles de competencia. Interacción del estudiantado con los cuestionarios del curso.
-    
+    \item \textbf{Diseño:} Se comprenden tareas de conceptualización y diseño de los cursos. Llevado a un caso concreto podríamos pensar en la organización de los conceptos y los roles o la definición de los objetivos de aprendizaje. El diseño de cuestionarios, preguntas y actividades que animen la interacción.
+    \item \textbf{Implementación:} Se comprenden las tareas de implementación de una versión inicial del MOOC y las pruebas del mismo. Llevado a un caso concreto se puede pensar en que una vez creado el curso se implementan contenidos técnicos o recursos y se prueban. Implementación de los cuestionarios,  preguntas diseñadas y asegurar su correcto mantenimiento.
+    \item \textbf{Realización:} Se comprenden las tareas de puesta en funcionamiento del MOOC así como el soporte. Llevado a un caso concreto podríamos pensar en la administración del curso y la adquisicón por los estudiantes de los niveles de competencia cuando realizan un curso. Un ejemplo de la interacción del estudiantado con los cuestionarios del curso.
     \item \textbf{Evaluación:} En esta fase se comprenden todas las tareas de evaluación del resto de fases. Llevado a un caso concreto podríamos pensar en la evaluación del plan previo, la evaluación  de cursos o las mejoras y la optimización de un curso.
     
 \end{enumerate}
@@ -46,18 +46,12 @@ En este apartado encontramos 5 fases que definen el proceso previo a la creació
 \end{figure}
 
 \subsection{Perspectivas}
-Las perspectivas se pueden entender como las características objetivo de cada uno de los procesos de las fases.
+Las perspectivas se pueden entender como las características objetivo de cada uno de los procesos de las fases: pedagógicas, tecnológicas, estratégicas.
 
-\begin{enumerate}
-    \item \textbf{Pedagógicas}
-    \item \textbf{Tecnológicas}
-    \item \textbf{Estratégicas}
-\end{enumerate}
-
-Ilustremos esto con un ejemplo, en la fase de implementación, en el proceso de implementación de contenido, tenemos dos perspectivas principales: tecnológicas y pedagógicas, ya que solo se engloban aquellas tareas de implementación de los contenidos académicos y de soporte de ese contenido.
+Esto se puede ver con un ejemplo, en la fase de implementación, en el proceso de implementación de contenido, existen dos perspectivas principales: tecnológicas y pedagógicas, ya que solo se engloban aquellas tareas de implementación de los contenidos académicos y de soporte de ese contenido.
 
 \subsection{Roles}
-En esta dimensión encontramos a aquellos actores que tengan alguna responsabilidad o estén involucrados en los procesos de las fases.
+En esta dimensión se encuentran a aquellos actores que tengan alguna responsabilidad o estén involucrados en los procesos de las fases.
 \begin{enumerate}
     \item \textbf{Diseñador:} Se engloban los expertos en contenido, autores de contenido, diseñadores gráficos y expertos en plataformas LMS, así como todos los individuos que puedan contribuir al diseño del MOOC.
     \item \textbf{Facilitador:} Se engloban los expertos pedagógicos como tutores, moderadores y profesores, así como todos los individuos que puedan contribuir al proceso de aprendizaje del MOOC.
@@ -65,7 +59,8 @@ En esta dimensión encontramos a aquellos actores que tengan alguna responsabili
 \end{enumerate}
 
 \section{Buenas prácticas en la docencia en línea}
-En la docencia en línea al igual que en el desarrollo software existen unas buenas prácticas que es conveniente seguir por el equipo educativo. Ilustraremos al lector con varias buenas prácticas basadas en la experiencia de alumnos de UBUVirtual\cite{ubu-virtual}.Además nos hemos basado en conceptos del libro Strategies for Effective Online Teaching and Learning: \cite{inbook}.
+En la docencia en línea al igual que en el desarrollo software existen unas buenas prácticas que es conveniente seguir por el equipo educativo. Estas buenas prácticas se pueden ilustrar con experiencias de alumnos de UBUVirtual\cite{ubu-virtual}. Además de los conceptos encontrados en el libro Strategies for Effective Online Teaching and Learning: \cite{inbook}.
+
 \subsection{Retroalimentaciones a tiempo}
 El personal docente debe proporcionar retroalimentaciones a los estudiantes a tiempo, de esta forma se conseguirá que el alumno siga una cronología acorde a la del curso y pueda llevar una mejor organización de sus objetivos.
 \subsection{Recursos actualizados}
@@ -77,57 +72,69 @@ El principal problema de la docencia en línea es la comunicación. En la docenc
 
 Sin embargo, en la docencia en línea la información que el profesor puede obtener de las comunicaciones es más limitada, por lo que tiene que crear nuevas formas de comunicarse, que proporcionen la mayor cantidad de información posible para impartir una docencia de mayor calidad. 
 
-Esto se tendrá que realizar mediante el uso de herramientas que todos conocemos como foros,tablones de anuncios, grupos o correos. Pero estas herramientas tan usadas no proporcionan una línea de comunicación continua y duradera en un espacio temporal como lo puede hacer conversación presencial, por lo que una muy buena práctica sería proporcionar formas de conversar entre el equipo docente y el alumnado. Esto se puede hacer implementado chats, o haciendo llamadas por medios como Skype o Teams. Además se pueden hacer reuniones semanales para discutir con lo alumnos el avance del curso y los aspectos a mejorar por ambas partes.
+Esto se tendrá que realizar mediante el uso de herramientas conocidas como foros,tablones de anuncios, grupos o correos. Pero estas herramientas tan usadas no proporcionan una línea de comunicación continua y duradera en un espacio temporal como lo puede hacer conversación presencial, por lo que una muy buena práctica sería proporcionar formas de conversar entre el equipo docente y el alumnado. Esto se puede hacer implementado chats, o haciendo llamadas por medios como Skype o Teams. Además se pueden hacer reuniones semanales para discutir con lo alumnos el avance del curso y los aspectos a mejorar por ambas partes.
 
-\subsection{Cuestionarios} 
-Los cuestionarios son una herramienta muy útil para conocer una variedad de información sobre el transcurso del curso. Los cuestionarios nos ofrecen información sobre la actitud del alumnado hacia el curso, el nivel académico de los estudiantes, la evolución y otros datos. Además los LMS, como norma general, ofrecen esta funcionalidad de una forma muy completa, en el caso concreto de Moodle, existen distintas estadísticas que se pueden revisar.Ilustraremos esto con ejemplos de la documentación oficial\cite{estadisticas-examen}. Estas estadísticas proporcionan al personal académico la capacidad de detectar preguntas que están mal planteadas, entender como responden los alumnos a las preguntas y asegurar que las variantes aleatorias no afecten en exceso a los resultados:
+\subsection{Evaluación objetiva mediante cuestionarios} 
+Los cuestionarios son una herramienta muy útil para conocer el nivel de conocimientos de los estudiantes. Los cuestionarios nos ofrecen información sobre la actitud del alumnado hacia el curso, el nivel académico de los estudiantes, la evolución y otros datos. Además los LMS ofrecen esta funcionalidad de una forma muy completa, en el caso concreto de Moodle, existen distintas estadísticas que se pueden revisar.Esto se puede ver con ejemplos de la documentación oficial\cite{estadisticas-examen}. Estas estadísticas proporcionan al personal académico la capacidad de detectar preguntas que están mal planteadas, entender como responden los alumnos a las preguntas y asegurar que las variantes aleatorias no afecten en exceso a los resultados:
+
 \begin{enumerate}
-    \item \textbf{Índice de facilidad:} indica el porcentaje medio de la puntuación de los estudiantes en una pregunta, lo que se puede interpretar como dificultad de la pregunta. La tabla \ref{tabla:1} muestra los intervalos de los índices de facilidad y su interpretación.
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.7\linewidth]{img/formula-indice-facilidad.png}
-        \caption{Fórmula de índice de facilidad de estadísticas de reporte de Moodle}
-        \label{fig:formula-indice-facilidad}
-    \end{figure}
+    \item \textbf{Índice de facilidad:} indica el porcentaje medio de la puntuación de los estudiantes en una pregunta, lo que se puede interpretar como dificultad de la pregunta. La tabla \ref{tabla:indice-facilidad} muestra los intervalos recomendados de los índices de facilidad y su interpretación.
+
+    \tablaSmall{Porcentaje de índices de facilidad con sus dificultades}{l c}{indice-facilidad}
+    { \multicolumn{1}{l}{Índice de facilidad} & Interpretación\\}{ 
+    5\% o menos & Extremadamente difícil\\
+    6\% - 10\%  & Muy difícil\\
+    11\% - 20\% & Difícil\\
+    21\% - 34\%  & Moderadamente difícil\\
+    35\% - 65\% & Correcta para el estudiante promedio\\
+    66\% - 80\%  & Bastante fácil\\
+    81\% - 89\%  & Fácil\\
+    90\% - 94\%  & Muy fácil\\
+    95\% - 100\%  & Extremadamente fácil\\
+    }
+
+    Además, también se puede consultar la fórmula que se utiliza para obtener dicho índice:
+    \begin{center}
+        \begin{math}
+            F_{i} = 100\frac{\bar{x_{i}} - x_{i}(min)}{x_{i}(max) - x_{i}(min)}
+        \end{math}
+    \end{center}
+    
     \item \textbf{Calificación aleatoria estimada:} muestra el resultado medio de una pregunta con respuestas aleatorias, interesante para evitar el fraude, ya que si el porcentaje es 0\% significa que los alumnos nunca podrán aprobar el cuestionario respondiendo a las preguntas aleatoriamente.
     
     \item \textbf{Índice discriminatorio:} Este índice se basa en la idea de que si un alumno ha respondido bien al resto de preguntas del cuestionario, debe responder bien a la pregunta.
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.70\linewidth]{img/formula-indice-discriminacion.png}
-        \caption{Fórmula de índice de discriminación de estadísticas de reporte de Moodle}
-        \label{fig:formula-indice-discriminacion}
-    \end{figure}
+    \begin{center}
+        \begin{math}
+            D_{i} = 100r({x_{i},T}) = 100\frac{C(x_{i}, T)}{\sqrt{V(x_{i})V(T)}}
+        \end{math}
+    \end{center}
     
     \item \textbf{Índice de participación:} Este índice muestra la participación que están teniendo los cuestionarios de un curso comparando los estudiantes de un curso y la participación de un cuestionario.
+
+    \item \textbf{Coeficiente de consistencia interna:} Este coeficiente se utiliza para diferenciar a los alumnos con mejor desarrollo o más  habilidosos del resto. Con este índice se puede saber si las preguntas de un examen son buenas discriminando entre estudiantes o si el cuestionario es homogeneo en cuanto a calidad. Un 75\% es considerado un valor correcto para este índice.
+    \begin{center}
+        \begin{math}
+            CIC = 100\frac{P}{P-1}(1 - \frac{1}{V(T)}\sum_{p\in P} V(x_{p})) 
+        \end{math}
+    \end{center}    
 \end{enumerate}
 
-\tablaSmall{Porcentaje de índices de facilidad con sus dificultades}{l c}{1}
-{ \multicolumn{1}{l}{Índice de facilidad} & Interpretación\\}{ 
-5\% o menos & Extremadamente difícil\\
-6\% - 10\%  & Muy difícil\\
-11\% - 20\% & Difícil\\
-21\% - 34\%  & Moderadamente difícil\\
-35\% - 65\% & Correcta para el estudiante promedio\\
-66\% - 80\%  & Bastante fácil\\
-81\% - 89\%  & Fácil\\
-90\% - 94\%  & Muy fácil\\
-95\% - 100\%  & Extremadamente fácil\\
-} 
-
 \section{Plan de calidad para cursos e-Learning}
-Ya hemos visto los conceptos básicos en los que hemos basado los avances realizados en el proyecto, ahora combinaremos todos los conceptos explicados para obtener un plan de calidad claro en el que se basan las reglas implementadas de la aplicación. En este plan combinamos las distintas dimensiones del marco de referencia de calidad para MOOCs\cite{quality-reference-framework} junto con las buenas prácticas definidas. Como resultado obtenemos una tabla \ref{tabla:2} en la que encontramos los objetivo de calidad que deseamos, la responsabilidad para los roles, las perspectivas de cada uno de los objetivos y el proceso del marco de calidad para MOOCs. 
+Una vez vistos los conceptos básicos en los que se han basado los avances realizados en el proyecto, ahora se combinarán todos los conceptos explicados para obtener un plan de calidad sobre el que se basan las reglas implementadas de la aplicación. En este plan se combinan las distintas dimensiones del marco de referencia de calidad para MOOCs\cite{quality-reference-framework} junto con las buenas prácticas definidas. En la tabla \ref{tabla:2} se encuentran los objetivo de calidad que deseamos, la responsabilidad para los roles, las perspectivas de cada uno de los objetivos y el proceso del marco de calidad 
+para MOOCs. 
+
+\newpage
 
 \begin{center}
     \rowcolors {2}{gray!35}{}
     \centering
     \label{tabla:2}
     \begin{longtable}{p{3cm} c c c c c}
-            \caption{Objetivos de calidad en base a referencias teóricas.\\
+            \caption{Consultas de calidad clasificadas en pespectivas y roles.\\
                 Leyenda:\\
                 \textbf{Responsabilidad:} R=Responsable X=Involucrado\\
-                \textbf{Perspectivas:} P=Pedagógica T=Tecnológica E=Estratégica
+                \textbf{Perspectivas:} P=Pedagógica T=Tecnológica E=Estratégica \\
+                \textbf{*:} Nueva Regla
             }\\
         \hline
         Consulta & Perspectivas & Diseñador & Facilitador & Proveedor & Proceso\\
@@ -145,13 +152,13 @@ Ya hemos visto los conceptos básicos en los que hemos basado los avances realiz
         \hline
         Todas las actividades tienen la misma nota máxima en el calificador & P & R & X & X & \\
         \hline
-        El curso tiene fechas y descripción definidas & P + E & R & X & X & \\
+        El curso tiene fechas y descripción definidas * & P + E & R & X & X & \\
         \hline
-        Las preguntas de los cuestionarios tienen una calificación aleatoria adecuada & P  & R & X &  & \\
+        Las preguntas de los cuestionarios tienen una calificación aleatoria adecuada * & P + T  & R & X &  & \\
         \hline        
-        Las preguntas de los cuestionarios tienen retroalimentación & P & R & X & X & \\
+        Las preguntas de los cuestionarios tienen retroalimentación & P & R & X &  & \\
         \hline
-        Las preguntas de opción múltiple puntúan con una calificación aleatoria estimada de cero & P & R & X & X & \\
+        Las preguntas de opción múltiple puntúan con una calificación aleatoria estimada de cero & P + T & R & X & X & \\
         \hline
         Los recursos están actualizados & P + T & R & X & X & I-1 \\
         \hline
@@ -173,15 +180,17 @@ Ya hemos visto los conceptos básicos en los que hemos basado los avances realiz
         \hline
         El tiempo de los cuestionarios está bien ajustado & P & R & X & X & \\
         \hline
-        Los cuestionarios tienen una dificultad estimada entre unos valores umbrales & P & R & X & X & \\
+        Los cuestionarios tienen una dificultad estimada entre unos valores umbrales & P + T + E & R & X & X & \\
         \hline
-        Las preguntas de los cuestionarios son buenas discriminando & P & R & X & X & \\
+        Las preguntas de los cuestionarios son buenas discriminando & P + T + E & R & X & X & \\
         \hline
-        Los índices de facilidad de las preguntas son adecuados & P + T + E & X & R & X & R-2 \\
+        Los índices de facilidad de las preguntas son adecuados * & P + T + E & X & R & X & R-2 \\
         \hline
-        Los cuestionarios tienen una participación adecuada & P + T + E & X & R & X & R-2 \\
+        Los cuestionarios tienen una participación adecuada * & P + T + E & X & R & X & R-2 \\
         \hline     
-        Las preguntas de los cuestionarios tienen un índice de discriminación adecuado & P + T + E & X & R & X & R-2\\
+        Las preguntas de los cuestionarios tienen un índice de discriminación adecuado * & P + T + E & X & R & X & R-2\\
+        \hline     
+        Los cuestionarios tienen un coeficiente de consistencia interna adecuado * & P + T + E & X & R & X & R-2\\
         \hline             
         La mayoría de alumnos responden a los feedbacks & P + T + E & X & X & R & E-2 \\
         \hline

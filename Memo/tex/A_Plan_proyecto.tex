@@ -1,14 +1,305 @@
 \apendice{Plan de Proyecto Software}
 
 \section{Introducción}
-En este apéndice trata el estudio de la viabilidad del proyecto y la realización de la planificación
-del mismo.
+En este apartado, se explica la planificación del desarrollo para eLearningQA. Se estudian tanto aspectos económicos como técnicos como temporales y legales. De esta forma, con este primer apartado, se podrá dejar una idea clara de todos los aspectos relevantes durante el ciclo de vida de este desarrollo. En primer lugar, es importante comentar que esta no es la primera versión de eLearningQA\footnote{Proyecto de Roberto Arasti Blanco: eLearningQA\label{tfg-RobertoArasto}} y en este desarrollo uno de los objetivos principales es hacer el mantenimiento de la aplicación, así como aumentar funcionalidad.
+
 \section{Planificación temporal}
+La metodología seleccionada para el desarrollo de este proyecto ha sido SCRUM. SCRUM es un framework de las metodologías ágiles que divide los ciclos de desarrollo en sprints y que tiene como objetivo principal entregar valor al final de cada uno de estos. Con esta metodología se asegura la entrega de un mínimo de producto con consistencia y rapidez. Para aplicar este marco de una forma más cómoda se ha utilizado Zube.io \cite{zube}. Con esta herramienta se puede hacer un seguimiento de sprints con su issues, así como analíticas de los progresos.
+
+El ciclo de vida del desarrollo de este proyecto, comenzó con una reunión inicial en la que se vieron los aspectos generales de la aplicación, sus fallos y su estado en términos generales. Con esta reunión se dio comienzo, también, al primer sprint de este ciclo.
+
+\subsection{Configuración y puesta en marcha del proyecto (15/02/2024 - 29/02/2024 ) }
+En este primer sprint se ha analizado la aplicación en su conjunto. Se han analizado las tecnologías utilizadas, la estructura software y el funcionamiento. También se ha investigado sobre las herramientas utilizadas como SonarCloud, Heroku y se han implementado en Github los workflows de SonarCloud \cite{sonar-github} y Java CI with Maven \cite{java-maven-ci}.
+
+\begin{center}
+    \rowcolors {2}{gray!35}{}
+    \centering
+    \label{tabla:2}
+    \begin{longtable}{p{5cm} c c c c c c}
+        \hline
+        Tareas & \rotatebox{90}{Funcionalidad} & \rotatebox{90}{Configuración} & \rotatebox{90}{Documentación} & \rotatebox{90}{Error} & \rotatebox{90}{Investigación} & \rotatebox{90}{Calidad} \\
+        \endhead
+        Actualizar archivo de Maven CI & & X & & & X &  \\ \hline
+        Actualización de herramientas del proyecto & & X & & & &  \\ \hline
+        Solución a errores para arranque del proyecto & & & & X & X &  \\ \hline
+        Investigación sobre herramientas de proyecto y su utilización  & & & X & & X &  \\ \hline
+        \caption{Sprint 1: Configuración y puesta en marcha del proyecto}
+    \end{longtable}
+    \label{tabla:sprint-29-02}
+\end{center}
+
+\subsection{Investigación y documentación sobre aspectos relativos al proyecto (29/02/2024 - 21/03/2024 ) }
+Este sprint se dedicó a la investigación en profundidad de las herramientas existentes, así como de posibles futuras implementaciones. Se hicieron investigaciones sobre la dockerización y el despliegue en Heroku, se investigaron posibles implementaciones para añadir seguridad, se estudió la estructura del proyecto y la posibilidad de cambiar a una arquitectura hexagonal. También se hicieron investigaciones sobre el contenido teórico sobre el que se basa el proyecto y se diseñaron posibles enfoques para el avance del desarrollo.
+
+\begin{center}
+    \rowcolors {2}{gray!35}{}
+    \centering
+    \label{tabla:2}
+    \begin{longtable}{p{5cm} c c c c c c}
+        \hline
+        Tareas & \rotatebox{90}{Funcionalidad} & \rotatebox{90}{Configuración} & \rotatebox{90}{Documentación} & \rotatebox{90}{Error} & \rotatebox{90}{Investigación} & \rotatebox{90}{Calidad} \\
+        \endhead
+        Investigar despliegue del proyecto y alternativas & & &  & & X & \\ \hline
+        Investigar Docker y dockerización de proyectos& & & & & X & \\ \hline
+        Investigación sobre conceptos teóricos de calidad de cursos en línea & & & X & & X &  \\ \hline
+        Investigación sobre Spring Security & & & X & & X &  \\ \hline
+        \caption{Sprint 2: Investigación y documentación sobre aspectos relativos al proyecto}
+    \end{longtable}
+    \label{tabla:sprint-21-03}
+\end{center}
+
+\subsection{Compatibilizar proyecto con nuevas versiones de Moodle (21/03/2024 - 04/04/2024 ) }
+Uno de los principales objetivos de este proyecto era hacer que sea compatible con las nuevas versiones de Moodle. En este sprint se hizo un estudio de causa raíz para determinar la razón de la incompatibilidad y se plantearon soluciones. Seguidamente, se implementó una solución al problema. Además, se dockerizó el entorno para que se pueda hacer un despliegue en contenedores fácil y rápido. 
+
+Por otro lado, se documentaron todos estos cambios debido a su importancia y relevancia en el impacto en el producto final.
+
+\begin{center}
+    \rowcolors {2}{gray!35}{}
+    \centering
+    \label{tabla:2}
+    \begin{longtable}{p{5cm} c c c c c c}
+        \hline
+        Tareas & \rotatebox{90}{Funcionalidad} & \rotatebox{90}{Configuración} & \rotatebox{90}{Documentación} & \rotatebox{90}{Error} & \rotatebox{90}{Investigación} & \rotatebox{90}{Calidad} \\
+        \endhead
+        Solución a error con obtención de rutas desde Java & & & & X & X & \\ \hline
+        Solución a error con Docker en proyecto & & & & X & & \\ \hline
+        Documentación inicial del proyecto & & & X & & &  \\ \hline
+        Solución a error de incompatibilidad con versiones inferiores a 4.X de Moodle & & & & X & X &  \\ \hline
+        \caption{Sprint 3: Compatibilizar proyecto con nuevas versiones de Moodle}
+    \end{longtable}
+    \label{tabla:sprint-04-04}
+\end{center}
+
+\subsection{Estudio de nuevas reglas para el informe y documentación (04/04/2024 - 18/04/2024) }
+El objetivo de este sprint fue estudiar y analizar las posibilidades de implementar ciertas reglas que no se podían obtener mediante la Web API de Moodle, por ello, se estudió la posibilidad de obtener la información mediante web scraping y como se podría implementar esto en el proyecto. Así pues, se realizaron múltiples pruebas para la obtención de una sesión y las pruebas con distintas peticiones en la página de Moodle de pruebas.
+
+Por otro lado, se analizaron los errores reportados por SonarCloud y se le dio solución para  mantener los niveles de calidad de código deseados.
+
+\begin{center}
+    \rowcolors {2}{gray!35}{}
+    \centering
+    \label{tabla:2}
+    \begin{longtable}{p{5cm} c c c c c c}
+        \hline
+        Tareas & \rotatebox{90}{Funcionalidad} & \rotatebox{90}{Configuración} & \rotatebox{90}{Documentación} & \rotatebox{90}{Error} & \rotatebox{90}{Investigación} & \rotatebox{90}{Calidad} \\
+        \endhead
+        Documentación de avances en el proyecto & & & X & & & \\ \hline
+        Estudio de la viabilidad de obtención de sesión de Moodle para operaciones de web scraping & & & & & X & \\ \hline
+        Investigación de Web API de Moodle para la obtención de nuevas reglas & & & & & X &  \\ \hline
+        Arreglar problemas de calidad reportados por SonarCloud & & & & & & X \\ \hline
+        \caption{Sprint 4: Estudio de nuevas reglas para el informe y documentación}
+    \end{longtable}
+    \label{tabla:sprint-18-04}
+\end{center}
+
+\subsection{Implementación de reglas de estadísticas sobre cuestionarios (19/04/2024 - 02/05/2024 ) }
+Con los resultados del sprint anterior se procedió a hacer las implementaciones en este sprint. En primer lugar, se implementó la funcionalidad de conseguir una sesión al iniciar sesión y mantener esa sesión mientras sea válida. Con esa funcionalidad se puedo implementar la descarga del fichero estadístico del que disponen los profesores de Moodle para analizar los diferentes índices. Con este fichero se implementó la lectura y la adaptación de los datos al modelo de la aplicación. 
+
+Con todo esto, se pudo proceder a la implementación de la primera regla de este desarrollo, el índice de facilidad de los cuestionarios de un curso.
+
+Por otro lado, utilizando la API de Moodle, se ha implementado la regla de participación en cuestionarios, que calcula la participación de alumnos en los cuestionarios de un curso.
+
+Finalmente, se documentaron todos estos avances para dejar constancia de la metodología utilizada para futuros usos.
+
+\begin{center}
+    \rowcolors {2}{gray!35}{}
+    \centering
+    \label{tabla:2}
+    \begin{longtable}{p{5cm} c c c c c c}
+        \hline
+        Tareas & \rotatebox{90}{Funcionalidad} & \rotatebox{90}{Configuración} & \rotatebox{90}{Documentación} & \rotatebox{90}{Error} & \rotatebox{90}{Investigación} & \rotatebox{90}{Calidad} \\
+        \endhead
+        Implementar obtención de la sesión de Moodle para operaciones de web scraping & X & & & & & \\ \hline
+        Implementar lógica de regla de participación de cuestionarios & X & & & & & \\ \hline
+        Implementar lógica de regla de índice de facilidad & X & & & & & \\ \hline
+        Estudiar e implementar descarga de fichero estadístico de cuestionarios  & X & & & & X &  \\ \hline
+        Documentar avances realizados  & & X & & & & \\ \hline
+        \rowcolor{white}
+        \caption{Sprint 5: Implementación de reglas de estadísticas sobre cuestionarios}
+    \end{longtable}
+    \label{tabla:sprint-02-05}
+\end{center}
+
+\subsection{Diseño e implementación de nuevas reglas y documentación (03/05/2024 - 16/05/2024 ) }
+En este sprint se implementaron la mayoría de las reglas y nuevas funcionalidades de este ciclo. En primer lugar se implementaron las reglas de índice de discriminación, calificación aleatoria de preguntas, definición de fechas y descripción de los cursos, 
+
+Por otro lado, se implementó el conjunto de las reglas en el frontend, y se hicieron cambios en los datos mostrados, como quitar de las sugerencias de mejora aquellas preguntas que estaban dentro de los valores adecuados de las reglas. Se ordenaron listas y se añadieron enlaces a los cuestionarios que no cumplen las reglas implementadas. Además, se añadieron dichas reglas al manual de usuario. 
+
+Adicionalmente, se añadieron los valores al archivo de configuración para tener una gestión de los límites de las reglas centralizado, también, se implementaron test para que las nuevas funcionalidades estén probadas. Con todo esto y unos pequeños arreglos en la interfaz de usuario se logró presentar la mayoría de los cambios importantes al final del sprint.
+
+Finalmente, importante recordar, que se realizaron tareas de mantenimiento de la calidad, refactorizando código y corrigiendo errores que mostraba SonarCloud, además, se realizaron tareas de documentación.
+
+\begin{center}
+    \rowcolors {2}{gray!35}{}
+    \centering
+    \label{tabla:2}
+    \begin{longtable}{p{5cm} c c c c c c}
+        \hline
+        Tareas & \rotatebox{90}{Funcionalidad} & \rotatebox{90}{Configuración} & \rotatebox{90}{Documentación} & \rotatebox{90}{Error} & \rotatebox{90}{Investigación} & \rotatebox{90}{Calidad} \\
+        \endhead
+        Implementar lógica de regla de índice de discriminación & X & & & & & \\ \hline
+        Implementar lógica de regla de calificación aleatoria de preguntas & X & & & & & \\ \hline
+        Implementar nuevas reglas a interfaz de usuario & X & & & & & \\ \hline
+        Añadir enlaces a sugerencias de índices & X & & & & & \\ \hline
+        Filtrar cuestionarios utilizados por fechas en fase de realización & X & & & & & \\ \hline
+        Cambios estéticos en interfaz de usuario & X & & & & & \\ \hline
+        Arreglar fallo en el cálculo de porcentaje de calificación aleatoria & & & & X & & \\ \hline
+        Arreglar fallo en conversión de tipos en la obtención de la versión de Moodle & & & & X & & \\ \hline
+        Arreglar asignación de valorea a índices de discriminación en cuestionarios & & & & X & & \\ \hline
+        Arreglar error con sesión vencida &  & & & X & & \\ \hline
+        Refactorizar código implementado & & & & & & X \\ \hline
+        Documentación nuevos cambios & & & X & & &  \\ \hline
+        \caption{Sprint 6: Diseño e implementación de nuevas reglas y documentación}
+        \end{longtable}
+    \label{tabla:sprint-16-05}
+\end{center}
+
+\subsection{Últimas reglas, mejorar aspectos visuales y documentación (19/05/2024 - 30/05/2024) }
+En este sprint se implementó una de las nuevas funcionalidades importantes, exportación en Excel, además de una nueva regla: coeficiente de consistencia interna adecuada.
+
+Por otro lado, se realizaron pruebas en distintas plataformas y versiones para detectar errores y solucionarlos. También, se realizaron cambios en la interfaz, como mover textos de sugerencia repetitivos a los tooltip de cada regla y corregir erratas en distintos textos. Además, se realizaron tareas de mantenimiento de calidad de código y seguridad. 
+
+Por otro lado, se documentaron todos los cambios y se explicaron en profundidad en la memoria del proyecto.
+
+En conclusión, este sprint ha sido útiles para mejorar la calidad visual y funcional de la aplicación y para añadir dos nuevas funcionales que pueden aportar utilidad y valor al usuario.
+
+\begin{center}
+    \rowcolors {2}{gray!35}{}
+    \centering
+    \label{tabla:2}
+    \begin{longtable}{p{5cm} c c c c c c}
+        \hline
+        Tareas & \rotatebox{90}{Funcionalidad} & \rotatebox{90}{Configuración} & \rotatebox{90}{Documentación} & \rotatebox{90}{Error} & \rotatebox{90}{Investigación} & \rotatebox{90}{Calidad} \\
+        \endhead
+        Ponderar media de calificación aleatoria estimada & & & & X & & \\ \hline
+        Arreglar problema de seguridad con la importación de scripts externos & & & & & & X \\ \hline
+        Corregir erratas en la interfaz de usuario y mejorar estética & X & & & X & & \\ \hline
+        Implementar exportación de reporte a fichero Excel & X & & & & &  \\ \hline
+        Activar Logger para nuevas funcionalidades & X & & & & & X \\ \hline
+        Arreglar problemas reportados por SonarCloud & & & & X & & X \\ \hline
+        Documentar últimos avances & & & X & & & \\ \hline
+        \rowcolor{white}
+        \caption{Sprint 7: Últimas reglas, mejorar aspectos visuales y documentación}
+    \end{longtable}
+    \label{tabla:sprint-30-05}
+\end{center}
 
 \section{Estudio de viabilidad}
+En este apartado, se estudia tanto la viabilidad económica como legal del proyecto. El objetivo es que se pueda determinar con exactitud las barreras que puede encontrar este proyecto al ser llevado a cabo. Todo producto software debe contar con un plan fijo y concreto para poder hacer un desarrollo con éxito, el estudio de viabilidades forma parte de ese plan, ya que puede aportar una visión más crítica y analítica para poder tomar decisiones que lleven a un desarrollo exitoso.
 
 \subsection{Viabilidad económica}
+En este apartado se realiza el estudio de viabilidad económica en la que se calculan los costes del desarrollo del proyecto. Para este  se han destinado unas 336 horas de trabajo. Con esta información se puede calcular el costo total del personal, se utiliza un salario por horas de 15 euros.\cite{smi}.
+\begin{center}
+    \begin{math}  21 \frac{h}{sem} \times 15 \frac{eur}{h} \times 4 \frac{sem}{mes} = 1260  \end{math}    
+\end{center}
+
+
+Este es el sueldo mensual sin contar los impuestos a pagar por la empresa \cite{tabla-impuestos}, que se calculan de la siguiente  manera:
+\begin{center}
+    \begin{math}1260 \frac{eur}{mes} \times (1 + (0.236 + 0.02 + 0.055 + 0.015+0.001)) = 1672,02 \frac{eur}{mes}\end{math}
+\end{center}
+
+Por ende, 1672,02 sería el coste mensual del empleado, como las horas dedicadas han sido de 336, los costes serían de 3511,24 euros.
+
+Por otro lado, hay que calcular los costes del equipamiento necesario para poder hacer el desarrollo. Para un desarrollador hace falta un ordenador portátil. Para un ordenador con las características válidas para este tipo de proyecto se calcula un coste de 600 euros.
+
+\begin{table}[H]
+	\centering
+	\caption{Costes de hardware}
+	\resizebox{0.5\textwidth}{!}{%
+		\begin{tabular}{l c c}
+			\hline
+			\textbf{Concepto}        & \textbf{Coste} & \textbf{Amortización} \\ \hline
+			Ordenador portátil       & 600€ & 62.5€\\ \hline
+            Total                   &       &  662.5€ \\ \hline
+		\end{tabular}%
+  \label{tabla:costes-hardware}
+	}
+\end{table}
+
+Además, hay que contar con gastos indirectos, como luz o internet. Para este cálculo nos basaremos en el consumo medio de un portátil \cite{consumo-portatil} y los precios de estos servicios en 2024 \cite{evolución-precios-OCU}, para dos meses de desarrollo. 
+
+\begin{table}[H]
+	\centering
+	\caption{Costes de servicios}
+	\resizebox{0.5\textwidth}{!}{%
+		\begin{tabular}{l c}
+			\hline
+			\textbf{Concepto}        & \textbf{Coste}\\ \hline
+			Electricidad       & 54.51€ \\
+            Internet       & 60€ \\ \hline
+            Total                   &  104.51€ \\ \hline
+		\end{tabular}%
+  \label{tabla:costes-servicios}
+	}
+\end{table}
+
+Con todos estos gastos calculados. se puede estimar los gastos totales \ref{tabla:costes-totales} de este desarrollo,
+con estos gastos se puede tomar decisiones en cuanto a la rentabilización del proyecto, así como la monetización del mismo. Hay que recalcar, que este proyecto no está desplegado en ningún servidor, por lo que para ofrecer este producto al público, sería necesario publicarlo en la web, lo que acarraría gastos adicionales. 
+
+Finalmente, una de las formas con las que esta aplicación se puede capitalizar es con un sistema de subscripciones, que por un pago periódico permita a sus usuarios disponer de este software para la calidad de sus cursos de Moodle.
+
+\begin{table}[H]
+	\centering
+	\caption{Costes Totales}
+	\resizebox{0.5\textwidth}{!}{%
+		\begin{tabular}{l c}
+			\hline
+			\textbf{Concepto}        & \textbf{Coste}\\ \hline
+			Coste de personal       & 3511,24€ \\
+            Coste de hardware       & 662.5€ \\ 
+            Costes de servicios                  &  104.51€ \\ \hline
+            Total                  &  4278.25€ \\ \hline
+		\end{tabular}%
+  \label{tabla:costes-totales}
+	}
+\end{table}
 
 \subsection{Viabilidad legal}
+Otro de los aspectos relevantes en el desarrollo de un software es el estudio de la viabilidad legal. En este apartado se estudia todo lo relativo al proyecto que pueda tener implicaciones legales. En el caso de la utilización de software los derechos que hay que tener en cuentas son los de autoría \cite{derechos-autoria}. 
+
+La aplicación en torno a la que gira el proyecto, utiliza software con el que realiza algunas de sus funcionalidades, por ello, hay que analizar estas dependencias y sus licencias.
+
+\begin{table}[H]
+	\centering
+	{%
+		\begin{tabular}{|p{3cm} | p{5cm} | c |}
+			\hline
+			\textbf{Librería}   & \textbf{Descripciín} & \textbf{Licencia}\\ \hline
+			Spring Framework    & Framework para aplicaciones web & Apache 2.0 \\ \hline
+			Tomcat Embed Jasper & Implementación de Tomcat que incluye Jasper, el parser de JSP de Tomcat   & Apache 2.0 \\ \hline
+			JUnit               & Framework para tests unitarios en Java & EPL \\ \hline
+			Apache Commons IO   & Librería de utilidades varias (usado en  traducción de imágenes a arrays de bytes) & Apache 2.0  \\ \hline
+			Apache Log4j        & Librería para registro de logs & Apache 2.0 \\ \hline
+			Bootstrap           & Librerías CSS y JavaScript para páginas web & MIT \\ \hline
+			Plotly.js           & Librería JavaScript de generación de gráficos & MIT \\ \hline
+            OkHttp           & Implementa un cliente HTTP para el intercambio de datos y archivos & Apache 2.0 \\ \hline
+            Gson           & Librería para representación de objetos json a  objetos java y viceversa  & Apache 2.0 \\ \hline
+		\end{tabular}%
+  \caption{Licencias de dependencias del proyecto}
+  \label{tabla:licencias}
+	}
+\end{table}
+
+ La licencia Eclipse (EPL), de la cual dispone esta aplicación, es compatible con todas las mostradas en la tabla \ref{tabla:licencias}. A continuación, se pueden ver las posibilidades y obligaciones del uso de esta licencia:
+
+ \begin{itemize}
+     \item \textbf{Permite:} uso, reproducción, distribución, modificación, uso comercial
+y uso de patentes.
+     \item \textbf{Obliga:} revelar la fuente y el autor, mantener la misma licencia al
+redistribuir el software, distribuir el software libre de regalías.
+     \item \textbf{Prohíbe:} responsabilizar al autor o contribuidores por posibles
+daños, utilizar marcas propiedad del autor para promoción o publicidad.
+ \end{itemize}
+
+ En este proyecto, se debe tener en cuenta las licencias de Moodle y sus derechos. Moodle es una marca registrada y solo los partners registrados de Moodle pueden utilizar su nombre ni logo en la aplicación, en palabras clave relacionadas con la publicidad ni en la descripción de servicios que inciten a pensar en que existe una asociación con Moodle.
+
+ Por ende, aunque esta aplicación solo sea funcional para Moodle, y realmente gire en torno a Moodle, no se puede incluir ni su nombre ni su logo, para no violar los derechos del autor.
+
+
+
+
+
+
 
 

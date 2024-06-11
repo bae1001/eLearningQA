@@ -2,7 +2,8 @@
 
 Los objetivos del proyecto se pueden dividir en dos. Los objetivos funcionales, entendidos como aquellos que comprenden las funcionalidades que deseamos que tenga la aplicación desarrollada, y los objetivos técnicos, entendidos como las características técnicas que debe tener la aplicación.
 
-En cuanto a los objetivos funcionales, queremos que la aplicación permita a las personas que tengan permisos de gestión en cursos de Moodle, poder ver un informe detallado sobre las distintas fases del curso, entre las que encontramos: 
+\section{Objetivos funcionales}
+En cuanto a los objetivos funcionales, se quiere que la aplicación permita a las personas que tengan permisos de gestión en cursos de Moodle, poder ver un informe detallado sobre las distintas fases del curso, entre las que encontramos: 
 \begin{itemize}
     \item Diseño
     \item Implementación
@@ -10,26 +11,21 @@ En cuanto a los objetivos funcionales, queremos que la aplicación permita a las
     \item Evaluación
 \end{itemize}
 
-Cada apartado de estos tiene unas métricas y cada una de estas tienen una puntuación que media en un computo global. Todas estas notas se muestran. Con esto se ve reflejada la calidad del curso.
+ Cada fase esta compuesta por un conjunto de reglas de calidad. La definición de las reglas de calidad se formaliza calculando métricas/consultas sobre el LMS y comparándolo con unos valores umbrales. Los valores umbrales de las medidas son referencias documentadas y pueden ser configurables por el usuario. La evaluación de calidad de cada fase de un curso en línea se corresponde con el  porcentaje de  medidas/consultas sobre el curso cuyos valores están de dentro de los umbrales. Adicionalmente, el informe de calidad generado se debe poder exporta a un archivo Excel y se debe guardar un registro de los informes de calidad generados en cada curso en un archivo .csv en local.
 
-Por otro lado, queremos que la aplicación sugiera al usuario cambios a realizar para mejorar, estos cambios se basan en las métricas mencionadas anteriormente. Además, se mostrara una gráfica de evolución temporal de la calidad del curso. Esto se hará en base tres roles:
-\begin{itemize}
-    \item Diseñador
-    \item Facilitador
-    \item Proveedor
-\end{itemize}
-Y tres perspectivas:
-\begin{itemize}
-    \item Pedagógica
-    \item Tecnológica
-    \item Estratégica
-\end{itemize}
+Por otro lado, se desea que la aplicación sugiera al usuario cambios a realizar para mejorar, estos cambios se basan en la identificación de recursos o actividades del curso que no cumplen las reglas de calidad. Además, se mostrara una gráfica de evolución temporal de la calidad del curso, utilizando los registros de todas las evaluaciones del curso realizadas. Las reglas también se pueden agrupar en otras dos posibles , la categoría de roles que se clasifica en diseñador, facilitador, proveedor y la categoría de perspectivas que se clasifica en pedagógica, tecnológica, estratégica
 
-Además la aplicación debe tener un manual para que el usuario la utilice como guía para utilizar para la aplicación. También debe tener apartados para el contacto con los administradores de la página y un apartado para conocer la 
-gestora de la página.
+Finalmente los objetivos se pueden enumerar como los siguientes:
+\begin{enumerate}
+    \item Mantenimiento de la aplicación, entendido como, actualización de dependencias, solución a errores.
+    \item Compatibilizar la aplicación con nuevas versiones de Moodle.
+    \item Añadir nuevas reglas relativas a cuestionarios
+    \item Añadir exportación de informes de calidad a un archivo Excel.
+    \item Disponer de un manual de usuario para la orientación en la aplicación.
+    \item Apartado de contacto y ``about'' de la página.
+\end{enumerate}
 
-También queremos realizar el mantenimiento de la versión existente\cite{tfg-robertoArasti} de la aplicación actualizando aquellas dependencias que sean necesarias y programando la compatibilidad con Moodle 4.x, para que se puedan evaluar cursos que estén en estas versiones. 
+\section{Objetivos técnicos}
+En cuanto a los objetivos técnicos, se desea que el proyecto siga un desarrollo basado en metodologías ágiles, dividiendo los avances en sprints, en los que se realizan una serie de tareas y se hacen reuniones en la fecha límite en cada uno para ver presentar los avances y recibir retrospectivas. Para seguir este proceso se utilizan herramientas como Zube y las issues de GitHub que permiten que todos los componentes del equipo puedan monitorizar los cambios y avances que se estén realizando. 
 
-En cuanto a los objetivos técnicos, queremos que el proyecto siga un desarrollo basado en metodologías ágiles, dividiendo los avances en sprints, en los que se realizan una serie de tareas y se hacen reuniones en la fecha límite en cada uno para ver presentar los avances y recibir retrospectivas. Para seguir este proceso se utilizan herramientas como Zube y las issues de GitHub que permiten que todos los componentes del equipo puedan monitorizar los cambios y avances que se estén realizando. 
-
-Paralelamente, queremos que la aplicación este basada en tecnologías escalables y fácilmente mantenibles. Para esto, se utiliza SpringBoot con Maven, que proporciona la capacidad de desarrollar y desplegar una aplicación rápidamente, además de proporcionar una configuración automática y las ventajas de la inyección de dependencias. Adicionalmente, queremos utilizar patrones de diseño para resolver los problemas que puedan surgir desarrollando la aplicación, siguiendo así unas buenas prácticas.
+Paralelamente, es conveniente que la aplicación este basada en tecnologías escalables y fácilmente mantenibles. Para esto, se utiliza SpringBoot con Maven, que proporciona la capacidad de desarrollar y desplegar una aplicación rápidamente, además de proporcionar una configuración automática y las ventajas de la inyección de dependencias. Adicionalmente, queremos utilizar patrones de diseño para resolver los problemas que puedan surgir desarrollando la aplicación, siguiendo así unas buenas prácticas.

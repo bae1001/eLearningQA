@@ -7,14 +7,14 @@ Al menos el 60\% de los costes de un software va dirigido al mantenimiento, ya s
 Al inicio de este proyecto la aplicación fallaba con las versiones de Moodle superiores a la 4.0 . La información que obtuvimos era poca, recibíamos un puntero a nulo en algún punto del código.
 \subsection{Análisis y obtención de datos}
 Para solucionar el problema, se ha estudiado los puntos en los que se generaban los errores, y se han obtenido datos de todas las trazas de los errores. Esto se ha conseguido gracias a un análisis de la aplicación minucioso con la función de debug del IDE.
-Además se ha probado la aplicación con la versione 3.9 de Moodle, en este caso la aplicación funcionaba correctamente.
+Además, se ha probado la aplicación con la versione 3.9 de Moodle, en este caso la aplicación funcionaba correctamente.
 
-Esto lleva a pensar que algún dato de la API ha cambiado, generando un nulo al intentar mapear dicho dato en la aplicación.
+Esto lleva a pensar que algún dato de la Web API de Moodle ha cambiado, generando un nulo al intentar mapear dicho dato en la aplicación.
 
-Tras más pruebas pudimos detectar que este error se debía a la variable visible de algunas respuestas de la API de Moodle. Esta variable ha cambiado de tipo desde la versión 3.10 hasta las nuevas versiones, provocando fallos en el mapeo. Esto debido que la aplicación dispone de un modelo que representa los datos que se reciben desde la API en formato JSON. Estos datos se guardan en atributos en las distintas clases del modelo. El cambio de tipo de entero a boleano en uno de los datos ha generado una incompatibilidad con varias clases del modelo. 
+Tras más pruebas pudimos detectar que este error se debía a la variable visible de algunas respuestas de la Web API de Moodle. Esta variable ha cambiado de tipo desde la versión 3.10 hasta las nuevas versiones, provocando fallos en el mapeo. Esto debido que la aplicación dispone de un modelo que representa los datos que se reciben desde la Web API de Moodle en formato JSON. Estos datos se guardan en atributos en las distintas clases del modelo. El cambio de tipo de entero a booleano en uno de los datos ha generado una incompatibilidad con varias clases del modelo. 
 
 \subsection{Solución}
-La solución elegida ha sido interceptar el dato antes de mapearlo en nuestra aplicación. Esto consiste en recibir los datos en formato JSON de la API localizar los tipos que nos generar conflicto y convertirlos manualmente al tipo que nos interesa, seguidamente podremos vincularlo al atributo de la clase. De esta forma la aplicación funciona correctamente tanto para las versiones anteriores como las nuevas. Es una solución que se asemeja a un microservicio de interceptación \cite{interceptor}
+La solución elegida ha sido interceptar el dato antes de mapearlo en nuestra aplicación. Esto consiste en recibir los datos en formato JSON de la Web API de Moodle, localizar los tipos que generan conflicto y convertirlos manualmente al tipo que interesa, seguidamente se podrá vincular al atributo de la clase. De esta forma la aplicación funciona correctamente tanto para las versiones anteriores como las nuevas. Es una solución que se asemeja a un microservicio de interceptación \cite{interceptor}.
 
 Esta interceptación se podía hacer de varias formas, nosotros hemos optado por hacerla en el mismo servicio, pero existen formas para hacerlo en la clase que hace la llamada a la API\cite{spring-interceptor}.
 
@@ -22,36 +22,48 @@ Esta interceptación se podía hacer de varias formas, nosotros hemos optado por
 Una de las ventajas de Spring Boot es la capacidad de crear y configurar aplicaciones portables rápidamente. Sin embargo la portabilidad de nuestra aplicación fallaba, por lo que no estábamos aprovechando esas ventajas que proporciona Spring Boot al máximo. 
 \subsection{Planteamiento del problema}
 El problema encontrado es que al ejecutar el comando: 
-"java -jar prototipo-0.4-SNAPSHOT.war", el error que recibíamos era un puntero a nulo en varios lugares del código. Este error no permitía mostrar páginas más que las de manual de usuario. y "about". Como dato importante, el ejecutable si que funcionaba cuando estaba en el target que genera Maven al ejecutar el comando "mvn install".
+"java -jar prototipo-0.4-SNAPSHOT.war", el error que recibíamos era un puntero a nulo en varios lugares del código. Este error no permitía mostrar páginas más que las de manual de usuario. y ``about''. Como dato importante, el ejecutable si que funcionaba cuando estaba en el target que genera Maven al ejecutar el comando "mvn install".
 \subsection{Análisis y obtención de datos}
 Tras analizar el código hemos podido descubrir que los nulos proceden de todas las instrucciones que utilizaban alguna ruta predeterminada, por lo que podemos suponer que el problema se originaba de la obtención de ficheros mediante rutas. 
 
 \subsection{Solución}
 Para solucionar este problema hemos decidido aprovechar la carpeta de recursos que la extensión de Spring Boot empaqueta con nuestro .war \cite{read-file-from-resources}. De esta forma se asegura que todos los ficheros que utiliza el código estén dentro del .war y alcanzables en todo momento.
 
-Por otro lado, hemos cambiado la forma de obtener los fichero en el código utilizando los InputStream\cite{inputstream}
+Por otro lado, hemos cambiado la forma de obtener los ficheros en el código utilizando los InputStream \cite{inputstream}.
 
 \section{Implementación de Docker en el proyecto}
 Una de las nuevas características de este proyecto es la capacidad de  ser desplegado con Docker \cite{docker}. Con Docker la aplicación puede ser desplegada con rapidez y eficiencia en numerosos entornos, además abre la posibilidad de dividir el frontend y el backend y ser igual de rápido y eficiente que ahora. Esto permitirá tener una interfaz mas completa e interesante de lo que pueden ofrecer las hojas JSP.
 
 \section{Nueva regla: Definición de fechas y descripción del curso}
-En el marco de calidad QRF \cite{quality-reference-framework} uno de los estándares de calidad es la correcta definición del curso en la fase de diseño, esto incluye especificar una fecha de inicio y una fecha de fin. Esto ha definido un requisito funcional para una nueva funcionalidad en la aplicación.
+En el marco de calidad QRF \cite{quality-reference-framework} uno de los estándares de calidad es la correcta definición del curso en la fase de diseño, esto incluye especificar una fecha de inicio y una fecha de fin. Esto ha definido un requisito funcional para la aplicación.
 
-Para la implementación de esta regla se utiliza la API que proporciona información general sobre cada curso. Entre esta información se encuentra la descripción del curso, que si se encuentra como un String vacío se interpreta que no tiene y las fechas que se devuelven en formato "timestamp", que si es 0 significa que no están definidas. Con estos datos, se ha programado esta regla que permite a los profesores saber si están cumpliendo estas sencillas condiciones para tener un curso de calidad.
+Para la implementación de esta regla se utiliza la API que proporciona información general sobre cada curso. Entre esta información se encuentra la descripción del curso, que si se encuentra como un String vacío se interpreta que no tiene y las fechas que se devuelven en formato``timestamp'', que si es 0 significa que no están definidas. Con estos datos, se ha programado esta regla que permite a los profesores saber si están cumpliendo estas sencillas condiciones para tener un curso de calidad.
+
+\section{Implementación de gestión de sesión para web scraping}
+Una de las barreras para la implementación de muchas de las reglas que nos proporcionan los marcos teóricos es la falta de información, esto debido a que la API de Moodle \cite{moodle-api} no proporciona todos los datos necesarios para implementar ciertas reglas. Por ello es necesario la implementación de funcionalidades que se sirvan de web scraping para la obtención de esta información. Pero para obtener los datos mediante web scraping también surgen algunos problemas.
+
+\subsection{Planteamiento del problema}
+Se necesita obtener datos de la página de Moodle, ya que la API de Moodle no proporciona los datos necesarios. Para poder acceder a la página de Moodle se necesita una sesión de la que no se dispone mediante la API.
+
+\subsection{Análisis y obtención de datos}
+Siempre que se inicia sesión en Moodle desde su página se obtiene una sesión para poder acceder y realizar operaciones. Con esa sesión se podría obtener los datos necesarios desde la aplicación y de esa forma calcular las reglas
+
+\subsection{Solución}
+En base a una solución similar de UbuMonitor \cite{ubu-monitor}, se ha creado una clase que gestiona la sesión del usuario, para que este disponga de una llave de sesisón que podrá introducir en aquellas peticiones que se hagan desde la web y no de la Web API de Moodle. De esta forma se abren las puertas al web scraping y se multiplican las posibilidades de implementación de reglas. 
 
 \section{Implementación de reglas de cuestionarios}
 Una de las principales herramientas que permiten acreditar la comprensión de los contenido impartidos en un curso son los cuestionarios \cite{evaluacion-de-educacion-virtual}. Desde la perspectiva estratégica los cuestionarios guían a los involucrados en el proceso educativo mostrando la adaptación y el desarrollo de los estudiantes en el curso y sus contenido.
 
 Dado que los cuestionarios son tan importantes, también es importante que estén bien hechos y con un mínimo de calidad para asegurar el máximo aprovechamiento de la herramienta. Por ello, se han definido reglas en este proyecto que permiten al usuario ver varios datos importantes para la calidad de cuestionarios.
 
-En cuanto a la implementación de reglas de este tipo, esta aplicación utiliza datos que proporciona la Api de Moodle \cite{moodle-api} y reportes estadísticos \cite{estadisticas-examen} que tienen a su disposición los profesores y tutores con permisos en su organización. Para la obtención de los reportes estadísticos se ha utilizado web scraping \cite{web-scraping}. Además, para todos las reglas, sin incluir la regla de calificación aleatorio se utilizan los  cuestionarios visibles y con fecha de finalización inferior a la fecha actual o sin fecha de finalización definida. 
+En cuanto a la implementación de reglas de este tipo, esta aplicación utiliza datos que proporciona la Web API de Moodle \cite{moodle-api} e informes estadísticos \cite{estadisticas-examen} que tienen a su disposición los profesores y tutores con permisos en su organización. Para la obtención de los informes estadísticos se ha utilizado web scraping \cite{web-scraping}. Además, para todos las reglas, sin incluir la regla de calificación aleatoria se utilizan los  cuestionarios visibles y con fecha de finalización inferior a la fecha actual o sin fecha de finalización definida. 
 
 \subsection{Nueva regla: Los cuestionario tiene una participación mínima}
 La finalidad de los cuestionarios es que el facilitador pueda ver si sus alumnos están entendiendo los contenidos impartidos. Si los alumnos no realizan estos cuestionarios el facilitador no puede aprovechar esta herramienta. Por ende, para poder sacar conclusiones de los resultados de los cuestionarios es importante que un mínimo de alumnos participe en ellos. 
 
 Con estas bases se ha diseñado e implementado una nueva regla en el proyecto. En esta nueva funcionalidad se compara los estudiantes de un curso con los participantes de un cuestionario finalizado. De esta comparación se obtiene un porcentaje y si está por debajo del valor definido en el fichero de configuración se considera que el cuestionario tiene una baja participación.
 
-El porcentaje de participación en caso de que sea baja se muestra al usuario para que pueda tomar las medidas convenientes para aumentar esa cifra.
+El porcentaje de participación en caso de que sea baja se muestra al usuario para que pueda tomar las medidas convenientes para aumentar esa cifra, los valores recomendables se encuentran por encima del 80\%.
 
 \subsection{Nueva regla: Los cuestionarios tienen un índice de facilidad correcto}
 El índice de facilidad es la puntuación media de los alumnos en una pregunta de un cuestionario.Esta estadística que proporciona Moodle en su reporte estadístico de cuestionarios ayuda a entender a los facilitadores y diseñadores la dificultad de los cuestionarios. Según la documentación de Moodle respecto a las estadísticas de cuestionarios \cite{estadisticas-examen} los valores adecuados para el estudiante medio se encuentran entre el 35\% y 65\%.
@@ -63,7 +75,7 @@ Esta regla da una guía clara a los facilitadores e incluso a los diseñadores p
 \subsection{Nueva regla: Los cuestionarios tienen un índice de de calificación aleatoria adecuado}
 El índice de calificación aleatoria es la media de calificación que el estudiante obtendría realizando la pregunta en cuestión aleatoriamente. Este índice solo esta disponible para preguntas de opción múltiple. El objetivo de esta estadística es que los profesores sepan cuál podría ser la calificación máxima de un estudiante sin que tenga conocimiento alguno sobre la pregunta. Según la documentación oficial de Moodle \cite{estadisticas-examen} los valores correctos se encuentran por debajo del 40\% en cada pregunta.
 
-Para implementar esta regla se lee el índice del archivo de reporte estadístico de cada cuestionario y se realiza una media con todas las preguntas contadas y se obtiene un porcentaje.Si este porcentaje supera un valor definido se considera que está mal planteado, por lo que sería necesario corregir algunas preguntas para considerarse correcto.
+Para implementar esta regla se lee el índice del archivo de reporte estadístico de cada cuestionario y se realiza una media con todas las preguntas contadas y se obtiene un porcentaje. Si este porcentaje supera un valor definido se considera que está mal planteado, por lo que sería necesario corregir algunas preguntas para considerarse correcto.
 
 \subsection{Nueva regla: Los cuestionarios tienen un índice de discriminación adecuado}
 El índice de discriminación relaciona la puntuación en una pregunta con las puntuaciones del resto de las preguntas. Este índice indica la efectividad de la pregunta para diferenciar a los estudiantes más hábiles en la materia de los que no lo son. Según la documentación oficial \cite{estadisticas-examen} una buena discriminación se encuentra por encima del 50\%.
@@ -71,6 +83,25 @@ El índice de discriminación relaciona la puntuación en una pregunta con las p
 Para implementar esta regla se accede nuevamente al fichero de estadísticas de cuestionarios y se lee el índice de cada pregunta, con los índices de todas las preguntas se hace una media y se comprueba que esa media este por encima de un valor definido. Si esta por debajo se considera que el cuestionario esta mal planteado y requiere revisión. Con el fin de localizar las preguntas que requieren revisión, se muestran las preguntas con sus respectivos índices.
 
 Con este índice los facilitadores podrán identificar aquellas preguntas de los cuestionarios que no se adaptan correctamente al nivel de los estudiantes.
+\subsection{Nueva regla: Los cuestionarios tienen un coeficiente de consistencia interna adecuado}
+El coeficiente de consistencia interna se utiliza para hacer una discriminación entre estudiantes de distinta habilidad. Los valores adecuados se encuentran por encima de un 75\%. Cuando el valor está por debajo del 60\% se considera que se deben tomar medidas correctivas, ya que es posible que los resultados estén asociados al azar o que las preguntas estén evaluando una calidad diferente que el resto de preguntas por lo que el cuestionario no es homogeneo en su conjunto.
+
+A este coeficiente está vinculada la tasa de error que dado los valores de la siguiente tabla se puede determinar que porcentaje de los resultados se deben a efectos aleatorios y cuales a diferencias en la habilidad del estudiante.
+
+
+\tablaSmall{Relación entre coeficiente de consistencia interna y tasa de error}{l c}{1}
+{ \multicolumn{1}{l}{Coeficiente de consistencia interna} & Tasa de error\\}{ 
+100 & 0\\
+99  & 10\\
+96 & 20\\
+91  & 30\\
+84 & 40\\
+75  & 50\\
+64  & 60\\
+51  & 70\\
+} 
+
+Los valores de la tasa indican el porcentaje de resultados dados por efectos aleatorios, siendo el restante el porcentaje de discriminación. Valores por encima del 50\% se consideran insatisfactorios.
 
 \subsection{Diferencias entre versiones inferiores y superiores a 4.0 de Moodle}
 Como se ha mencionado anteriormente, para la implementación de la mayoría de los cuestionarios ha sido necesaria la lectura de un fichero de reporte estadístico mediante web scraping. 
@@ -82,11 +113,11 @@ Para la resolución de este conflicto ha sido necesario realizar una proceso int
 Con esto se logra que los usuarios de cualquier versión puedan acceder a las funcionalidades implementadas, de esta forma se obtiene un mayor alcance de usuarios.
 
 \section{Implementación de funcionalidad de exportación de informe en Excel}
-Hasta el momento,en la aplicación, para visualizar un informe ha sido necesario conectarse, generar un informe y visualizarlo en el momento. No existía la capacidad de guardar el informe de ningún modo, lo que suponía una dificultad para el usuario hacer un seguimiento completo en el tiempo. 
+Hasta el momento, en la aplicación, para visualizar un informe ha sido necesario conectarse, generar un informe y visualizarlo en el momento. No existía la capacidad de guardar el informe de ningún modo, lo que suponía una dificultad para el usuario hacer un seguimiento completo en el tiempo. 
 
-Para poder dar la opción de llevar un seguimiento de todos los informes generados existen dos opciones: que los informes sean mostrados por la aplicación o que el usuario pueda tener uno o varios archivos con los informes que desee. Para la primera opción sería necesario guardar los informes en una base de datos o en una carpeta con los informes guardados en archivos tipo JSON, Excel o incluso imagen. Sin embargo, esta opción aumentaría mucho la complejidad y el peso de la aplicación. Por lo que resulta más atractiva la segunda opción.
+Para poder dar la opción de llevar un seguimiento de todos los informes de calidad generados existen dos opciones: que los informes de calidad sean mostrados por la aplicación o que el usuario pueda tener uno o varios archivos con los informes de calidad que desee. Para la primera opción sería necesario guardar los informes en una base de datos o en una carpeta con los informes de calidad guardados en archivos tipo JSON, Excel o incluso imagen. Sin embargo, esta opción aumentaría mucho la complejidad, por lo que resulta más atractiva la segunda opción.
 
-En virtud de lo cual, se optó por implementar la funcionalidad de exportación de informes a Excel formato ".xlsx". Para esta implementación, se ha diseñado una plantilla con las reglas y sus descripciones. A continuación, se ha implementado una función que rellena dicha plantilla con los datos del informe del curso en cuestión. Hay que puntualizar que solo se genera un Excel para cada curso, es decir, no se puede generar un Excel con los informes de varios cursos. Esta función es llamada desde la gateway que se utiliza desde la vista para obtener el Excel completo. 
+En virtud de lo cual, se optó por implementar la funcionalidad de exportación de informes de calidad a Excel formato ".xlsx". Para esta implementación, se ha diseñado una plantilla con las reglas y sus descripciones. A continuación, se ha implementado una función que rellena dicha plantilla con los datos del informe del curso en cuestión. Hay que puntualizar que solo se genera un Excel para cada curso, es decir, no se puede generar un Excel con los informes de calidad de varios cursos. Esta función es llamada desde la gateway que se utiliza desde la vista para obtener el Excel completo. 
 
 
 
