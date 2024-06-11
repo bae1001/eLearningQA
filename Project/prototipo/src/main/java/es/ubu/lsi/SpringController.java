@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class SpringController {
 
-        private static final Logger LOGGER = LogManager.getLogger();
-
         @GetMapping({ "/", "/login" })
         public String login() {
                 return "login";
@@ -33,7 +31,6 @@ public class SpringController {
                 return "list";
         }
 
-        // @ModelAttribute String username
         @GetMapping("/informe")
         public String informe() {
                 return "informe";

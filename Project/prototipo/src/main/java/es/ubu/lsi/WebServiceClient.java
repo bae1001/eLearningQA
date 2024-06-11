@@ -1081,7 +1081,7 @@ public class WebServiceClient {
         }
 
         if (quizSatisticJson.size() < 2) {
-            LOGGER.info("None questiones returned because array was too small");
+            LOGGER.info("None questions found on quiz: " + quizId);
             return quizQuestions;
         }
 
@@ -1254,14 +1254,13 @@ public class WebServiceClient {
                     .build();
             LOGGER.info("Downloading statistic file");
             String jsonStatisticsResponse = sessionService.getResponse(jsonStatisticsRequest).body().string();
-            LOGGER.info(jsonStatisticsResponse);
             return JsonParser.parseString(jsonStatisticsResponse).getAsJsonArray();
         } catch (JsonSyntaxException jsonMalFormed) {
             SessionService.setSessionExpired(true);
-            LOGGER.error("The session has expired, it is necessary to login again.");
+            LOGGER.error("There has been a problem retriving a file of the coursemoduie: " + courseModule + ".");
             return null;
         } catch (Exception e) {
-            LOGGER.error("Unable to retrieve the statistics file", e);
+            LOGGER.error("Unable to retrieve the statistics file of the course", e);
             return null;
         }
     }
