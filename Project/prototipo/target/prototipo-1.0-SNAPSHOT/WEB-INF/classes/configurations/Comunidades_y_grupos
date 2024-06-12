@@ -1,0 +1,27 @@
+#Minimum number of different resource formats required
+format_num_threshold=3
+#Amount of nesting at which a grade table is considered to be hard to read
+excessive_nesting=5
+#Seconds since a student's doubt is posted on a forum before it is considered unanswered
+forum_response_time=604800
+#Minimum required ratio of student grades with comments on them
+min_comment_percentage=0.7
+#Seconds since an assignment's deadline before it is considered not graded on time
+assignment_grading_time=2592000
+#Minimum required ratio of students filling feedback forms
+min_feedback_answer_percentage=0.7
+#Seconds after posting before a forum post is considered irrelevant for checks
+forum_relevance_period=2592000
+#Seconds after deadline before an assignment is considered irrelevant for checks
+assignment_relevance_period=5184000
+#Interval for facility index
+facility_index_min=0.35
+facility_index_max=0.65
+#Minimum engagement required in a quiz
+min_quiz_engagement_percentage=0.8
+#Maximum random guess score in a quiz
+max_random_guess_score=0.010
+#Minimum discrimination index for a question in quiz
+discrimination_index_min=0.5
+#Minimum coefficient of internal consistency for a quiz
+coefficient_of_internal_consistency_min=0.75
